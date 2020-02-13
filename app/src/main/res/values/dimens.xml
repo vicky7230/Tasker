@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="popup_width">220dp</dimen>
+    <dimen name="popup_vertical_offset">-15dp</dimen>
+</resources>
