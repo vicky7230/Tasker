@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Tasker</string>
+    <string name="otp_message">We will send you a One Time EMAIL.\n Carrier data rates may apply.</string>
 </resources>
