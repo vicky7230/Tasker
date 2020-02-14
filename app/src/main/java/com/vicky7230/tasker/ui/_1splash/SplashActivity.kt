@@ -1,11 +1,10 @@
-package com.vicky7230.tasker.ui.splash
+package com.vicky7230.tasker.ui._1splash
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import com.vicky7230.tasker.R
-import com.vicky7230.tasker.ui.base.BaseActivity
-import com.vicky7230.tasker.ui.home.HomeActivity
-import com.vicky7230.tasker.ui.login.LoginActivity
+import com.vicky7230.tasker.ui._0base.BaseActivity
+import com.vicky7230.tasker.ui._2login.LoginActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

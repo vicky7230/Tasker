@@ -1,4 +1,4 @@
-package com.vicky7230.tasker.ui.base
+package com.vicky7230.tasker.ui._0base
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -7,6 +7,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
+import com.vicky7230.tasker.R
 import com.vicky7230.tasker.utils.CommonUtils
 
 @SuppressLint("Registered")
@@ -36,7 +37,7 @@ open class BaseActivity : AppCompatActivity() {
     private fun displayError(message: String) {
         val snackBar =
             Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT)
-        snackBar.view.setBackgroundResource(android.R.color.holo_red_light)
+        snackBar.view.setBackgroundResource(R.drawable.curved_bg_error)
         snackBar.show()
     }
 

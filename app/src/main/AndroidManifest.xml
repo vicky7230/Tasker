@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.vicky7230.tasker">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".TaskerApplication"
         android:allowBackup="true"
@@ -11,10 +13,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.login.LoginActivity"></activity>
+        <activity android:name=".ui._3verifyOTP.VerifyOtpActivity"></activity>
         <activity
-            android:name=".ui.splash.SplashActivity"
+            android:name=".ui.newTask.NewTaskActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui._2login.LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name=".ui._1splash.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,13 +36,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.home.HomeActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.newTask.NewTaskActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

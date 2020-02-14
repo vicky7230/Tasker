@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.login.LoginActivity">
+    tools:context=".ui._2login.LoginActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="110dp"
@@ -20,51 +20,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:gravity="center"
         android:layout_marginBottom="15dp"
-        app:layout_constraintBottom_toTopOf="@id/email_parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:textColor="@color/colorBlue"
+        android:gravity="center"
         android:text="@string/otp_message"
-        android:textSize="16sp" />
+        android:textColor="@color/colorBlue"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/email_edit_text"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/email_parent"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="250dp"
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/email_edit_text"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/outline_email"
+        android:drawablePadding="10dp"
         android:hint="Your Email Here"
+        android:inputType="textEmailAddress"
+        android:paddingBottom="20dp"
         android:textColorHint="@color/colorHits"
+        android:textSize="18sp"
+        app:backgroundTint="@color/colorHits"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.4"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:textSize="16sp"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintVertical_bias="0.4"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_task_button"
+        android:id="@+id/send_otp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="16dp"
         android:layout_marginBottom="44dp"
         app:backgroundTint="@color/colorBlue"
         app:borderWidth="0dp"
         app:fabSize="normal"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/email_parent"
-        app:srcCompat="@drawable/ic_arrow_right"
+        app:srcCompat="@drawable/ic_arrow_forward"
         app:tint="@color/colorWhite" />
 
 

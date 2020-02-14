@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.ViewModelProvider
 import com.vicky7230.tasker.R
-import com.vicky7230.tasker.ui.base.BaseActivity
+import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.ui.newTask.NewTaskActivity
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*

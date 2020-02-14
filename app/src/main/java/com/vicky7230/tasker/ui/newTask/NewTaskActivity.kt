@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.vicky7230.tasker.R
-import com.vicky7230.tasker.ui.base.BaseActivity
+import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.utils.KeyboardUtils
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_new_task.*

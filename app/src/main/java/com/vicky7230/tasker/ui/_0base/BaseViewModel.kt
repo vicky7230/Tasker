@@ -1,4 +1,4 @@
-package com.vicky7230.tasker.ui.base
+package com.vicky7230.tasker.ui._0base
 
 import androidx.lifecycle.ViewModel
 import com.vicky7230.tasker.data.network.RetrofitResult
