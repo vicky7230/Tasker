@@ -19,7 +19,10 @@ class LoginViewModel @Inject constructor(
     var otpGeerated = MutableLiveData<Boolean>()
 
     fun generateOTP(email: String) {
-        viewModelScope.launch {
+
+        otpGeerated.value = true
+
+        /*viewModelScope.launch {
             loading.value = true
 
             val response = safeApiCall { dataManager.generateOtp(email) }
@@ -41,6 +44,6 @@ class LoginViewModel @Inject constructor(
             }
 
             loading.value = false
-        }
+        }*/
     }
 }
