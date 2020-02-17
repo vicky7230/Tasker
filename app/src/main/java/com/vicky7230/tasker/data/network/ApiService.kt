@@ -14,4 +14,11 @@ interface ApiService {
     suspend fun generateOtp(
         @Field("email") email: String
     ): Response<JsonElement>
+
+    @FormUrlEncoded
+    @POST("api/LoginApi/verifyOTP")
+    suspend fun verifyOtp(
+        @Field("email") email: String,
+        @Field("otp") otp: String
+    ): Response<JsonElement>
 }

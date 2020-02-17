@@ -7,4 +7,6 @@ import retrofit2.Response
 interface ApiHelper {
 
     suspend fun generateOtp(email: String): Response<JsonElement>
+
+    suspend fun verifyOtp(email: String, otp: String): Response<JsonElement>
 }

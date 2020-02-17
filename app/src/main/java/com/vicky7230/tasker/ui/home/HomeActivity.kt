@@ -35,7 +35,9 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
 
     companion object {
         fun getStartIntent(context: Context): Intent {
-            return Intent(context, HomeActivity::class.java)
+            val intent = Intent(context, HomeActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            return intent
         }
     }
 

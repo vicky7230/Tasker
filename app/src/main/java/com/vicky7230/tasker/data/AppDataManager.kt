@@ -19,6 +19,10 @@ constructor(
         return appApiHelper.generateOtp(email)
     }
 
+    override suspend fun verifyOtp(email: String, otp: String): Response<JsonElement> {
+        return appApiHelper.verifyOtp(email, otp)
+    }
+
     override suspend fun insertTodo(task: Task) {
         appDbHelper.insertTodo(task)
     }

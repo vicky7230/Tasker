@@ -1,29 +1,26 @@
-package com.vicky7230.tasker.ui._2login
+package com.vicky7230.tasker.ui._3verifyOTP
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.google.gson.JsonElement
-import com.google.gson.JsonObject
 import com.vicky7230.tasker.data.DataManager
 import com.vicky7230.tasker.data.network.RetrofitResult
 import com.vicky7230.tasker.ui._0base.BaseViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class LoginViewModel @Inject constructor(
+class VerifyOtpViewModel @Inject constructor(
     private val dataManager: DataManager
 ) : BaseViewModel() {
 
     var loading = MutableLiveData<Boolean>()
     var error = MutableLiveData<String>()
-    var otpGenerated = MutableLiveData<Boolean>()
+    var otpVerified = MutableLiveData<Boolean>()
 
-    fun generateOTP(email: String) {
-
+    fun verifyOtp(email: String, otp: String) {
         viewModelScope.launch {
             loading.value = true
 
-            val response = safeApiCall { dataManager.generateOtp(email) }
+            val response = safeApiCall { dataManager.verifyOtp(email, otp) }
 
             when (response) {
                 is RetrofitResult.Success -> {
@@ -31,7 +28,7 @@ class LoginViewModel @Inject constructor(
                     val jsonObject = response.data.asJsonObject
 
                     if (jsonObject.get("success").asBoolean) {
-                        otpGenerated.value = true
+                        otpVerified.value = true
                     } else {
                         error.value = jsonObject.get("message").asString
                     }

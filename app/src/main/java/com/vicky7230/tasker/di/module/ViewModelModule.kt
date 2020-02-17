@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.vicky7230.tasker.ViewModelFactory
 import com.vicky7230.tasker.di.ViewModelKey
 import com.vicky7230.tasker.ui._2login.LoginViewModel
+import com.vicky7230.tasker.ui._3verifyOTP.VerifyOtpViewModel
 import com.vicky7230.tasker.ui.home.HomeViewModel
 import com.vicky7230.tasker.ui.newTask.NewTaskViewModel
 import dagger.Binds
@@ -32,12 +33,12 @@ abstract class ViewModelModule {
     @ViewModelKey(LoginViewModel::class)
     internal abstract fun postLoginViewModel(loginViewModel: LoginViewModel): ViewModel
 
-    /*@Binds
-    @IntoMap
-    @ViewModelKey(CityWeatherViewModel::class)
-    internal abstract fun postCityWeatherViewModel(cityWeatherViewModel: CityWeatherViewModel): ViewModel
-
     @Binds
+    @IntoMap
+    @ViewModelKey(VerifyOtpViewModel::class)
+    internal abstract fun postVerifyOtpViewModell(verifyOtpViewModel: VerifyOtpViewModel): ViewModel
+
+    /*@Binds
     @IntoMap
     @ViewModelKey(SavedCitiesViewModel::class)
     internal abstract fun postSavedCitiesViewModel(savedCitiesViewModel: SavedCitiesViewModel): ViewModel

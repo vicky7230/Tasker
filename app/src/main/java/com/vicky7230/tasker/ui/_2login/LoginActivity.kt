@@ -63,7 +63,7 @@ class LoginActivity : BaseActivity() {
             }
         }
 
-        loginViewModel.otpGeerated.observe(this, Observer {
+        loginViewModel.otpGenerated.observe(this, Observer {
             if (it)
                 startActivity(
                     VerifyOtpActivity.getStartIntent(
