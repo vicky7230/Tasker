@@ -32,7 +32,6 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
 
     var products = arrayListOf("Task", "List")
 
-
     companion object {
         fun getStartIntent(context: Context): Intent {
             val intent = Intent(context, HomeActivity::class.java)

@@ -27,5 +27,37 @@ constructor(
         appDbHelper.insertTodo(task)
     }
 
+    override fun getAccessToken(): String? {
+        return appPreferencesHelper.getAccessToken()
+    }
+
+    override fun setAccessToken(accessToken: String) {
+        appPreferencesHelper.setAccessToken(accessToken)
+    }
+
+    override fun getUserEmail(): String? {
+        return appPreferencesHelper.getUserEmail()
+    }
+
+    override fun setUserEmail(email: String) {
+        appPreferencesHelper.setUserEmail(email)
+    }
+
+    override fun getUserId(): String? {
+        return appPreferencesHelper.getUserId()
+    }
+
+    override fun setUserId(userId: String) {
+        appPreferencesHelper.setUserId(userId)
+    }
+
+    override fun getUserLoggedIn(): Boolean {
+        return appPreferencesHelper.getUserLoggedIn()
+    }
+
+    override fun setUserLoggedIn() {
+        appPreferencesHelper.setUserLoggedIn()
+    }
+
 
 }

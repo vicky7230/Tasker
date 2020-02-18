@@ -27,7 +27,13 @@ class VerifyOtpViewModel @Inject constructor(
 
                     val jsonObject = response.data.asJsonObject
 
-                    if (jsonObject.get("success").asBoolean) {
+                    if (jsonObject["success"].asBoolean) {
+
+                        dataManager.setUserLoggedIn()
+                        dataManager.setAccessToken(jsonObject["token"].asString)
+                        dataManager.setUserId(jsonObject["user_id"].asString)
+                        dataManager.setUserEmail(jsonObject["email"].asString)
+
                         otpVerified.value = true
                     } else {
                         error.value = jsonObject.get("message").asString
