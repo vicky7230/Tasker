@@ -15,4 +15,8 @@ class AppApiHelper @Inject constructor(private val apiService: ApiService) : Api
         return apiService.verifyOtp(email, otp)
     }
 
+    override suspend fun getUserTaskLists(userId: String?, token: String?): Response<JsonElement> {
+        return apiService.getUserTaskLists(userId, token)
+    }
+
 }

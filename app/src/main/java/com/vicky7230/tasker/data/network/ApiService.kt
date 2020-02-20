@@ -21,4 +21,14 @@ interface ApiService {
         @Field("email") email: String,
         @Field("otp") otp: String
     ): Response<JsonElement>
+
+
+    @FormUrlEncoded
+    @POST("api/TaskApi/getUserTaskLists")
+    suspend fun getUserTaskLists(
+        @Field("userID") userId: String?,
+        @Field("token") token: String?
+    ): Response<JsonElement>
+
+
 }

@@ -11,6 +11,7 @@ import android.widget.AdapterView
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.ui._0base.BaseActivity
@@ -26,9 +27,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var homeViewModel: HomeViewModel
-    private lateinit var popupMenu: ListPopupWindow
-
-    lateinit var listPopupWindow: ListPopupWindow
+    private lateinit var listPopupWindow: ListPopupWindow
 
     var products = arrayListOf("Task", "List")
 
@@ -52,9 +51,22 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
 
     private fun init() {
 
-        popupMenu = createPopup()
+        createPopup()
 
         add_task_button.setOnClickListener { rotateFab() }
+
+        homeViewModel.loading.observe(this, Observer {
+            if (it)
+                showLoading()
+            else
+                hideLoading()
+        })
+
+        homeViewModel.error.observe(this, Observer {
+            showError(it)
+        })
+
+        homeViewModel.getAllList()
     }
 
     private fun rotateFab() {
@@ -71,7 +83,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
             .setInterpolator(LinearInterpolator())
             .start()
 
-        popupMenu.show()
+        listPopupWindow.show()
     }
 
     private fun rotateBack() {
