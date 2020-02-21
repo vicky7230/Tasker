@@ -7,8 +7,8 @@ import com.vicky7230.tasker.di.ViewModelKey
 import com.vicky7230.tasker.ui._1splash.SplashViewModel
 import com.vicky7230.tasker.ui._2login.LoginViewModel
 import com.vicky7230.tasker.ui._3verifyOTP.VerifyOtpViewModel
-import com.vicky7230.tasker.ui.home.HomeViewModel
-import com.vicky7230.tasker.ui.newTask.NewTaskViewModel
+import com.vicky7230.tasker.ui._4home.HomeViewModel
+import com.vicky7230.tasker.ui._5newTask.NewTaskViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

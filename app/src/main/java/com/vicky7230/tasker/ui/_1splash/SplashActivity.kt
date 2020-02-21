@@ -7,7 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.ui._2login.LoginActivity
-import com.vicky7230.tasker.ui.home.HomeActivity
+import com.vicky7230.tasker.ui._4home.HomeActivity
 import dagger.android.AndroidInjection
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

@@ -6,10 +6,10 @@ import com.vicky7230.tasker.ui._2login.LoginActivity
 import com.vicky7230.tasker.ui._2login.LoginModule
 import com.vicky7230.tasker.ui._3verifyOTP.VerifyOtpActivity
 import com.vicky7230.tasker.ui._3verifyOTP.VerifyOtpModule
-import com.vicky7230.tasker.ui.home.HomeActivity
-import com.vicky7230.tasker.ui.home.HomeModule
-import com.vicky7230.tasker.ui.newTask.NewTaskActivity
-import com.vicky7230.tasker.ui.newTask.NewTaskModule
+import com.vicky7230.tasker.ui._4home.HomeActivity
+import com.vicky7230.tasker.ui._4home.HomeModule
+import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
+import com.vicky7230.tasker.ui._5newTask.NewTaskModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

@@ -9,5 +9,7 @@ interface DbHelper {
 
     fun getAllLists(): Flow<List<TaskList>>
 
+    suspend fun insertTaskLists(taskLists: List<TaskList>): List<Long>
+
     suspend fun insertTodo(task: Task)
 }

@@ -66,6 +66,10 @@ constructor(
         return appDbHelper.getAllLists()
     }
 
+    override suspend fun insertTaskLists(taskLists: List<TaskList>): List<Long> {
+        return appDbHelper.insertTaskLists(taskLists)
+    }
+
     override suspend fun insertTodo(task: Task) {
         appDbHelper.insertTodo(task)
     }

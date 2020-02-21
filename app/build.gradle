@@ -8,7 +8,7 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.vicky7230.tasker"
         minSdkVersion 21
@@ -68,13 +68,14 @@ dependencies {
     kapt 'com.google.dagger:dagger-android-processor:2.26'
     kapt 'com.google.dagger:dagger-compiler:2.26'
 
-    implementation "androidx.room:room-runtime:2.2.3"
-    implementation "androidx.room:room-ktx:2.2.3"
-    kapt "androidx.room:room-compiler:2.2.3"
+    implementation "androidx.room:room-runtime:2.2.4"
+    implementation "androidx.room:room-ktx:2.2.4"
+    kapt "androidx.room:room-compiler:2.2.4"
 
     implementation "androidx.preference:preference-ktx:1.1.0"
 
     implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.0'
+    implementation 'com.github.applikeysolutions:cosmocalendar:1.0.4'
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 

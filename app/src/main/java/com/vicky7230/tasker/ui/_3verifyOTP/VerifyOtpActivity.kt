@@ -3,15 +3,12 @@ package com.vicky7230.tasker.ui._3verifyOTP
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.ui._0base.BaseActivity
-import com.vicky7230.tasker.ui._2login.LoginViewModel
-import com.vicky7230.tasker.ui.home.HomeActivity
+import com.vicky7230.tasker.ui._4home.HomeActivity
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_verify_otp.*
 import javax.inject.Inject

@@ -20,11 +20,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
         <activity
-            android:name=".ui.newTask.NewTaskActivity"
+            android:name=".ui._5newTask.NewTaskActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.home.HomeActivity"
+            android:name=".ui._4home.HomeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui._2login.LoginActivity"

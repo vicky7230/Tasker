@@ -15,5 +15,5 @@ interface TaskListDao {
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTaskLists(vararg taskLists: TaskList): List<Long>
+    suspend fun insertTaskLists(taskLists: List<TaskList>): List<Long>
 }

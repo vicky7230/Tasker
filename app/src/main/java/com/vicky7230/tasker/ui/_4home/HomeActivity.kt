@@ -1,4 +1,4 @@
-package com.vicky7230.tasker.ui.home
+package com.vicky7230.tasker.ui._4home
 
 import android.content.Context
 import android.content.Intent
@@ -13,11 +13,13 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.ui._0base.BaseActivity
-import com.vicky7230.tasker.ui.newTask.NewTaskActivity
+import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -25,6 +27,8 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var taskListsAdapter: TaskListsAdapter
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var listPopupWindow: ListPopupWindow
@@ -55,6 +59,9 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
 
         add_task_button.setOnClickListener { rotateFab() }
 
+        task_lists.layoutManager = LinearLayoutManager(this)
+        task_lists.adapter = taskListsAdapter
+
         homeViewModel.loading.observe(this, Observer {
             if (it)
                 showLoading()
@@ -64,6 +71,11 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
 
         homeViewModel.error.observe(this, Observer {
             showError(it)
+        })
+
+        homeViewModel.taskList.observe(this, Observer {
+            Timber.d(it.toString())
+            taskListsAdapter.updateItems(it)
         })
 
         homeViewModel.getAllList()

@@ -12,6 +12,10 @@ class AppDbHelper @Inject constructor(private val appDatabase: AppDatabase) : Db
         return appDatabase.tasklistDao().getAllLists()
     }
 
+    override suspend fun insertTaskLists(taskLists: List<TaskList>): List<Long> {
+        return appDatabase.tasklistDao().insertTaskLists(taskLists)
+    }
+
     override suspend fun insertTodo(task: Task) {
         appDatabase.todoDao().insertTodo(task)
     }

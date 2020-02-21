@@ -1,4 +1,4 @@
-package com.vicky7230.tasker.ui.newTask
+package com.vicky7230.tasker.ui._5newTask
 
 import dagger.Module
 
