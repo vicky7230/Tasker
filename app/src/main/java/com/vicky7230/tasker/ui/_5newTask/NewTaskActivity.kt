@@ -58,8 +58,12 @@ class NewTaskActivity : BaseActivity() {
 
         calendar_view.isShowDaysOfWeek = true
         calendar_view.isShowDaysOfWeekTitle = false
+        calendar_view.nextMonthIconRes = R.drawable.ic_chevron_right
+        calendar_view.previousMonthIconRes = R.drawable.ic_chevron_left
 
-        val disabledDaysSet: MutableSet<Long> = HashSet()
+        calendar_view.selectionManager.toggleDay(currentDay)
+
+        /*val disabledDaysSet: MutableSet<Long> = HashSet()
 
         var job: Job? = null
         calendar_view.setOnMonthChangeListener { month: Month ->
@@ -77,27 +81,17 @@ class NewTaskActivity : BaseActivity() {
                 calendar_view.disabledDays = disabledDaysSet
                 //}
             }
-        }
-
-
-        //calendar_view.
-
-        //calendar_view.selectionManager.
-
-        //calendar_view.disabledDaysCriteria = DisabledDaysCriteria(1, 31, DisabledDaysCriteriaType.DAYS_OF_MONTH)
-
-        //calendar_view.selectionManager.toggleDay(Day(calendarInstance))
-
-        //PreviousMonthCriteria
-
+        }*/
 
         calendar_button.setOnClickListener { view: View ->
             if (view.isSelected) {
                 view.isSelected = false
                 calendar_view.visibility = View.GONE
+                calendar_view_controls.visibility = View.GONE
             } else {
                 view.isSelected = true
                 calendar_view.visibility = View.VISIBLE
+                calendar_view_controls.visibility = View.VISIBLE
             }
         }
     }
