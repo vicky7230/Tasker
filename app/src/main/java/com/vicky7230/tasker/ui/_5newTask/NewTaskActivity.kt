@@ -1,5 +1,6 @@
 package com.vicky7230.tasker.ui._5newTask
 
+import android.animation.AnimatorSet
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -8,18 +9,17 @@ import android.view.View
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.applikeysolutions.cosmocalendar.model.Day
-import com.applikeysolutions.cosmocalendar.model.Month
-import com.applikeysolutions.cosmocalendar.utils.CalendarUtils
 import com.applikeysolutions.cosmocalendar.utils.SelectionType
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.ui._0base.BaseActivity
+import com.vicky7230.tasker.utils.AnimUtils
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_new_task.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import timber.log.Timber
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
+import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -41,6 +41,19 @@ class NewTaskActivity : BaseActivity() {
     }
 
     private fun init() {
+
+        KeyboardVisibilityEvent.setEventListener(
+            this,
+            this,
+            object : KeyboardVisibilityEventListener {
+                override fun onVisibilityChanged(isOpen: Boolean) {
+                    if (isOpen) {
+                        calendar_view_container.visibility = View.GONE
+                        time_view_container.visibility = View.GONE
+                    }
+                }
+            })
+
         //KeyboardUtils.showSoftInput(task_edit_text, this)
 
         val calendarInstance = Calendar.getInstance()
@@ -84,15 +97,66 @@ class NewTaskActivity : BaseActivity() {
         }*/
 
         calendar_button.setOnClickListener { view: View ->
-            if (view.isSelected) {
-                view.isSelected = false
-                calendar_view.visibility = View.GONE
-                calendar_view_controls.visibility = View.GONE
-            } else {
+            UIUtil.hideKeyboard(this)
+            calendar_view_container.visibility = View.VISIBLE
+            //AnimUtils.slideView(calendar_view_container, 0, calendar_view_container.layoutParams.height)
+            //view.isSelected = true
+
+            lifecycleScope.launch {
+                delay(50)
                 view.isSelected = true
-                calendar_view.visibility = View.VISIBLE
-                calendar_view_controls.visibility = View.VISIBLE
+                calendar_view_container.visibility = View.VISIBLE
+                time_view_container.visibility = View.GONE
+
+                calendar_view_container.layoutParams.height = 0
+                AnimUtils.slideView(
+                    calendar_view_container,
+                    0,
+                    calendar_view_container.layoutParams.height
+                )
+
             }
         }
+
+        date_cancel_button.setOnClickListener {
+            calendar_view_container.visibility = View.GONE
+        }
+
+        date_done_button.setOnClickListener {
+            if (calendar_view.selectedDates.size > 0) {
+
+                if (calendar_view.selectedDates[0][Calendar.DAY_OF_MONTH] < calendarInstance[Calendar.DAY_OF_MONTH]) {
+                    showError("Selected Date should be today or ahead.")
+                    return@setOnClickListener
+                }
+
+                val formatter = SimpleDateFormat("d LLL YYYY", Locale.ENGLISH)
+                val formattedDate = formatter.format(calendar_view.selectedDates[0].time)
+                task_date.text = formattedDate
+
+                calendar_view_container.visibility = View.GONE
+            } else {
+                showError("Please select a date.")
+            }
+        }
+
+        time_view.setIs24HourView(true)
+
+        time_button.setOnClickListener { view: View ->
+            UIUtil.hideKeyboard(this)
+            time_view_container.visibility = View.VISIBLE
+            val height = time_view_container.layoutParams.height
+            time_view_container.layoutParams.height = 0
+            AnimUtils.slideView(calendar_view_container, 0, height)
+            /*lifecycleScope.launch {
+                delay(50)
+                view.isSelected = true
+                time_view_container.visibility = View.VISIBLE
+                calendar_view_container.visibility = View.GONE
+
+                AnimUtils.slideView(calendar_view_container, 0, time_view_container.layoutParams.height)
+            }*/
+        }
+
     }
 }

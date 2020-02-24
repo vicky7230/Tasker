@@ -80,30 +80,51 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="59dp"
+            android:layout_height="60dp"
             android:layout_weight="1">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/calendar_button"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginLeft="14dp"
+                android:layout_width="44dp"
+                android:layout_height="0dp"
                 android:clickable="true"
                 android:focusable="true"
+                android:paddingLeft="14dp"
+                android:paddingTop="18dp"
+                android:paddingRight="6dp"
+                android:paddingBottom="18dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/calendar_pressable" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/alarm"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginLeft="25dp"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/task_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="24 Feb 2020"
+                android:textColor="@color/colorDarkGray"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/calendar_button"
+                app:layout_constraintRight_toLeftOf="@id/time_button"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/time_button"
+                android:layout_width="44dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="5dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingLeft="14dp"
+                android:paddingTop="18dp"
+                android:paddingRight="6dp"
+                android:paddingBottom="18dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/task_date"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_alarm" />
+                app:srcCompat="@drawable/alarm_pressable" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/which_task_list"
@@ -128,50 +149,115 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.applikeysolutions.cosmocalendar.view.CalendarView
-            android:id="@+id/calendar_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorGray" />
 
-        <FrameLayout
-            android:id="@+id/calendar_view_controls"
+        <LinearLayout
+            android:id="@+id/calendar_view_container"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:animateLayoutChanges="true"
-            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:visibility="gone">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/date_cancel_button"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                app:srcCompat="@drawable/ic_close" />
+            <com.applikeysolutions.cosmocalendar.view.CalendarView
+                android:id="@+id/calendar_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/date_done_button"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="end|center_vertical"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:src="@drawable/ic_done" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorGray" />
 
-        </FrameLayout>
+            <FrameLayout
+                android:id="@+id/calendar_view_controls"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:animateLayoutChanges="true"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/date_cancel_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    app:srcCompat="@drawable/ic_close" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/date_done_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end|center_vertical"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:src="@drawable/ic_done" />
+
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/time_view_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TimePicker
+                android:id="@+id/time_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/TimePickerTheme"
+                android:timePickerMode="spinner"
+                android:visibility="visible" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorGray" />
+
+            <FrameLayout
+                android:id="@+id/time_view_controls"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:animateLayoutChanges="true"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/time_cancel_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    app:srcCompat="@drawable/ic_close" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/time_done_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end|center_vertical"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:src="@drawable/ic_done" />
+
+            </FrameLayout>
+        </LinearLayout>
 
     </LinearLayout>
 
