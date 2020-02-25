@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.activity_new_task.*
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil
-import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -44,6 +43,8 @@ class NewTaskActivity : BaseActivity() {
                     if (isOpen) {
                         calendar_view_container.visibility = View.GONE
                         time_view_container.visibility = View.GONE
+                        calendar_button.isSelected = false
+                        time_button.isSelected = false
                     }
                 }
             })
@@ -93,19 +94,24 @@ class NewTaskActivity : BaseActivity() {
         }
 
         calendar_button.setOnClickListener { view: View ->
-            UIUtil.hideKeyboard(this)
-            view.isSelected = true
-            calendar_view_container.visibility = View.VISIBLE
-            time_view_container.visibility = View.GONE
-            AnimUtils.slideView(calendar_view_container, 0, calendarViewContainerHeight)
+            if (!view.isSelected) {
+                UIUtil.hideKeyboard(this)
+                view.isSelected = true
+                calendar_view_container.visibility = View.VISIBLE
+                time_view_container.visibility = View.GONE
+                time_button.isSelected = false
+                AnimUtils.slideView(calendar_view_container, 0, calendarViewContainerHeight)
+            }
         }
 
         date_cancel_button.setOnClickListener {
+            calendar_button.isSelected = false
             //calendar_view_container.visibility = View.GONE
             AnimUtils.slideView(calendar_view_container, calendarViewContainerHeight, 0)
         }
 
         date_done_button.setOnClickListener {
+            calendar_button.isSelected = false
             //calendar_view_container.visibility = View.GONE
             AnimUtils.slideView(calendar_view_container, calendarViewContainerHeight, 0)
         }
@@ -118,20 +124,24 @@ class NewTaskActivity : BaseActivity() {
         }
 
         time_button.setOnClickListener { view: View ->
-            UIUtil.hideKeyboard(this)
-            view.isSelected = true
-            time_view_container.visibility = View.VISIBLE
-            calendar_view_container.visibility = View.GONE
-            Timber.d("Height of time widget : ${time_view_container.height}")
-            AnimUtils.slideView(time_view_container, 0, timeViewContainerHeight)
+            if (!view.isSelected) {
+                UIUtil.hideKeyboard(this)
+                view.isSelected = true
+                time_view_container.visibility = View.VISIBLE
+                calendar_view_container.visibility = View.GONE
+                calendar_button.isSelected = false
+                AnimUtils.slideView(time_view_container, 0, timeViewContainerHeight)
+            }
         }
 
         time_cancel_button.setOnClickListener {
+            time_button.isSelected = false
             //time_view_container.visibility = View.GONE
             AnimUtils.slideView(time_view_container, timeViewContainerHeight, 0)
         }
 
         time_done_button.setOnClickListener {
+            time_button.isSelected = false
             //time_view_container.visibility = View.GONE
             AnimUtils.slideView(time_view_container, timeViewContainerHeight, 0)
         }
