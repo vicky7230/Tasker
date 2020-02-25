@@ -159,7 +159,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="invisible">
 
             <com.applikeysolutions.cosmocalendar.view.CalendarView
                 android:id="@+id/calendar_view"
@@ -210,15 +210,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="invisible">
 
             <TimePicker
                 android:id="@+id/time_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:theme="@style/TimePickerTheme"
-                android:timePickerMode="spinner"
-                android:visibility="visible" />
+                android:timePickerMode="spinner" />
 
             <View
                 android:layout_width="match_parent"
