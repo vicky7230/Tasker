@@ -37,7 +37,7 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(VerifyOtpViewModel::class)
-    internal abstract fun postVerifyOtpViewModell(verifyOtpViewModel: VerifyOtpViewModel): ViewModel
+    internal abstract fun postVerifyOtpViewModel(verifyOtpViewModel: VerifyOtpViewModel): ViewModel
 
     @Binds
     @IntoMap
