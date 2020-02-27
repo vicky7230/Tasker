@@ -46,6 +46,7 @@ class HomeViewModel @Inject constructor(
                             taskListsJsonArray.forEach { taskListJsonElement: JsonElement ->
                                 taskListsFromNetwork.add(
                                     TaskList(
+                                        0,
                                         taskListJsonElement.asJsonObject["list_slack"].asString,
                                         taskListJsonElement.asJsonObject["name"].asString,
                                         taskListJsonElement.asJsonObject["color"].asString

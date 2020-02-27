@@ -12,11 +12,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vicky7230.tasker.R
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.vicky7230.tasker.data.db.entities.TaskList
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.utils.AnimUtils
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_new_task.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil
@@ -62,8 +65,14 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
                     if (isOpen) {
                         calendar_view_container.visibility = View.GONE
                         time_view_container.visibility = View.GONE
+                        task_list_view_container.visibility = View.GONE
                         calendar_button.isSelected = false
                         time_button.isSelected = false
+                        which_task_list.isSelected = false
+                        lifecycleScope.launch {
+                            delay(100)
+                            task_edit_text.requestFocus()
+                        }
                     }
                 }
             })

@@ -8,8 +8,11 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "lists")
 data class TaskList(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
+    var id: Long,
+
+    @ColumnInfo(name = "list_slack")//this is the server identifier of this tasklist
     var listSlack: String,
 
     @ColumnInfo(name = "name")

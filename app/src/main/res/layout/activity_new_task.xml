@@ -57,6 +57,7 @@
         android:layout_marginRight="16dp"
         android:background="@android:color/transparent"
         android:gravity="top"
+        android:cursorVisible="true"
         android:hint="What do you want to do?"
         app:layout_constraintBottom_toTopOf="@id/lower_layer"
         app:layout_constraintLeft_toRightOf="@id/ring"
