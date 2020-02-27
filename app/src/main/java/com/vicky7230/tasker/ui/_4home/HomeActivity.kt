@@ -74,7 +74,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
         })
 
         homeViewModel.taskList.observe(this, Observer {
-            Timber.d(it.toString())
+            //Timber.d(it.toString())
             taskListsAdapter.updateItems(it)
         })
 
