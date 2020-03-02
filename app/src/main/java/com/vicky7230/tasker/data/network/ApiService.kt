@@ -22,13 +22,11 @@ interface ApiService {
         @Field("otp") otp: String
     ): Response<JsonElement>
 
-
     @FormUrlEncoded
     @POST("api/TaskApi/getUserTaskLists")
     suspend fun getUserTaskLists(
         @Field("userID") userId: String?,
         @Field("token") token: String?
     ): Response<JsonElement>
-
 
 }
