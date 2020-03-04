@@ -8,5 +8,5 @@ import com.vicky7230.tasker.data.db.entities.Task
 @Dao
 interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTodo(task: Task)
+    suspend fun insertTask(task: Task) :Long
 }

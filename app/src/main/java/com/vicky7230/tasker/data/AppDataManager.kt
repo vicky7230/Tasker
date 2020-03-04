@@ -74,8 +74,8 @@ constructor(
         return appDbHelper.insertTaskLists(taskLists)
     }
 
-    override suspend fun insertTodo(task: Task) {
-        appDbHelper.insertTodo(task)
+    override suspend fun insertTask(task: Task): Long {
+        return appDbHelper.insertTask(task)
     }
 
 }

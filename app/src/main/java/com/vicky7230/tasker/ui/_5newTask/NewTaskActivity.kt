@@ -18,6 +18,7 @@ import androidx.work.BackoffPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import com.vicky7230.tasker.data.db.entities.Task
 import com.vicky7230.tasker.data.db.entities.TaskList
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.utils.AnimUtils
@@ -237,17 +238,33 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
         }
 
         done_button.setOnClickListener {
-            val taskSyncWorkerRequest = OneTimeWorkRequestBuilder<TaskSyncWorker>()
-                .setInitialDelay(20, TimeUnit.SECONDS)
-                .setBackoffCriteria(
-                    BackoffPolicy.LINEAR,
-                    OneTimeWorkRequest.MIN_BACKOFF_MILLIS,
-                    TimeUnit.MILLISECONDS
+            task_edit_text.text?.isNotEmpty().apply {
+                newTaskViewModel.saveTaskInDB(
+                    Task(
+                        0,
+                        (-1).toString(),
+                        task_edit_text.text.toString(), calendarInstance.time.time,
+                        selectedTaskList2.listSlack
+                    )
                 )
-                .build()
-
-            WorkManager.getInstance(this).enqueue(taskSyncWorkerRequest)
+            }
         }
+
+        newTaskViewModel.taskInserted.observe(this, Observer {
+            if (it) {
+                /*val taskSyncWorkerRequest = OneTimeWorkRequestBuilder<TaskSyncWorker>()
+                   .setInitialDelay(20, TimeUnit.SECONDS) // TODO remove this code
+                   .setBackoffCriteria(
+                       BackoffPolicy.LINEAR,
+                       OneTimeWorkRequest.MIN_BACKOFF_MILLIS,
+                       TimeUnit.MILLISECONDS
+                   )
+                   .build()
+
+               WorkManager.getInstance(this).enqueue(taskSyncWorkerRequest)*/
+                finish()
+            }
+        })
 
         newTaskViewModel.getAllList()
     }
