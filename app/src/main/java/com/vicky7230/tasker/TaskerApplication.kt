@@ -3,7 +3,7 @@ package com.vicky7230.tasker
 import android.app.Application
 import androidx.work.Configuration
 import androidx.work.WorkManager
-import com.vicky7230.tasker.di.WorkerFactory_
+import com.vicky7230.tasker.di.MyWorkerFactory
 import com.vicky7230.tasker.di.component.DaggerApplicationComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -16,7 +16,7 @@ class TaskerApplication : Application(), HasAndroidInjector {
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
     @Inject
-    lateinit var workerFactory_: WorkerFactory_
+    lateinit var myWorkerFactory: MyWorkerFactory
 
     override fun onCreate() {
         super.onCreate()
@@ -35,7 +35,7 @@ class TaskerApplication : Application(), HasAndroidInjector {
 
         WorkManager.initialize(
             this,
-            Configuration.Builder().setWorkerFactory(workerFactory_).build()
+            Configuration.Builder().setWorkerFactory(myWorkerFactory).build()
         )
     }
 

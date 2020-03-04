@@ -7,7 +7,7 @@ import androidx.work.WorkerParameters
 import javax.inject.Inject
 import javax.inject.Provider
 
-class WorkerFactory_ @Inject constructor(
+class MyWorkerFactory @Inject constructor(
     val workers: Map<Class<out ListenableWorker>, @JvmSuppressWildcards Provider<ChildWorkerFactory>>
 ) : WorkerFactory() {
 
