@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import androidx.core.content.ContextCompat
@@ -13,9 +14,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.vicky7230.tasker.R
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.work.BackoffPolicy
+import androidx.work.OneTimeWorkRequest
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.vicky7230.tasker.data.db.entities.TaskList
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.utils.AnimUtils
+import com.vicky7230.tasker.worker.TaskSyncWorker
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_new_task.*
 import kotlinx.coroutines.delay
@@ -26,6 +32,7 @@ import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -33,6 +40,7 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
     @Inject
     lateinit var taskListsAdapter2: TaskListsAdapter2
 
@@ -228,6 +236,19 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
             AnimUtils.slideView(task_list_view_container, taskListViewContainerHeight, 0)
         }
 
+        done_button.setOnClickListener {
+            val taskSyncWorkerRequest = OneTimeWorkRequestBuilder<TaskSyncWorker>()
+                .setInitialDelay(20, TimeUnit.SECONDS)
+                .setBackoffCriteria(
+                    BackoffPolicy.LINEAR,
+                    OneTimeWorkRequest.MIN_BACKOFF_MILLIS,
+                    TimeUnit.MILLISECONDS
+                )
+                .build()
+
+            WorkManager.getInstance(this).enqueue(taskSyncWorkerRequest)
+        }
+
         newTaskViewModel.getAllList()
     }
 
@@ -236,4 +257,5 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
         which_task_list.text = selectedTaskList2.name
         curved_dot.backgroundTintList = ColorStateList.valueOf(Color.parseColor(taskList2.color))
     }
+
 }

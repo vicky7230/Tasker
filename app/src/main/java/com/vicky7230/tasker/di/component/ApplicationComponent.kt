@@ -1,10 +1,7 @@
 package com.vicky7230.tasker.di.component
 
 import com.vicky7230.tasker.TaskerApplication
-import com.vicky7230.tasker.di.module.ActivityBindingModule
-import com.vicky7230.tasker.di.module.ApplicationModule
-import com.vicky7230.tasker.di.module.NetworkModule
-import com.vicky7230.tasker.di.module.ViewModelModule
+import com.vicky7230.tasker.di.module.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
@@ -20,7 +17,9 @@ import javax.inject.Singleton
         NetworkModule::class,
         ApplicationModule::class,
         ActivityBindingModule::class,
-        ViewModelModule::class
+        ViewModelModule::class,
+        WorkerAssistedInjectModule::class,
+        WorkerModule::class
     ]
 )
 interface ApplicationComponent {

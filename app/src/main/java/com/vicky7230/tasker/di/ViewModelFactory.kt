@@ -1,4 +1,4 @@
-package com.vicky7230.tasker
+package com.vicky7230.tasker.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

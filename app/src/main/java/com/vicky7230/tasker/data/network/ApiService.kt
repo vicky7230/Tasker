@@ -29,4 +29,10 @@ interface ApiService {
         @Field("token") token: String?
     ): Response<JsonElement>
 
+    @FormUrlEncoded
+    @POST("api/TaskApi/syncSingleTask")
+    suspend fun syncSingleTask(
+        @Field("userID") userId: String?,
+        @Field("token") token: String?
+    ) : Response<JsonElement>
 }

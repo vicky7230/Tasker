@@ -29,6 +29,10 @@ constructor(
         return appApiHelper.getUserTaskLists(userId, token)
     }
 
+    override suspend fun syncSingleTask(userId: String?, token: String?): Response<JsonElement> {
+        return appApiHelper.syncSingleTask(userId, token)
+    }
+
     override fun getAccessToken(): String? {
         return appPreferencesHelper.getAccessToken()
     }

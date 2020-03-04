@@ -2,7 +2,7 @@ package com.vicky7230.tasker.di.module
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.vicky7230.tasker.ViewModelFactory
+import com.vicky7230.tasker.di.ViewModelFactory
 import com.vicky7230.tasker.di.ViewModelKey
 import com.vicky7230.tasker.ui._1splash.SplashViewModel
 import com.vicky7230.tasker.ui._2login.LoginViewModel
