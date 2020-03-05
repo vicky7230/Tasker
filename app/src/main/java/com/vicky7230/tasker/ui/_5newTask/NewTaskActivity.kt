@@ -252,27 +252,31 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
 
         newTaskViewModel.taskInserted.observe(this, Observer { taskLongId: Long ->
 
-            val constraints = Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build()
-            val taskToSync = workDataOf(TaskSyncWorker.TASK_LONG_ID to taskLongId)
-            val taskSyncWorkerRequest = OneTimeWorkRequestBuilder<TaskSyncWorker>()
-                .setInitialDelay(20, TimeUnit.SECONDS) // TODO remove this code
-                .setBackoffCriteria(
-                    BackoffPolicy.LINEAR,
-                    OneTimeWorkRequest.MIN_BACKOFF_MILLIS,
-                    TimeUnit.MILLISECONDS
-                )
-                .setInputData(taskToSync)
-                .setConstraints(constraints)
-                .build()
-            WorkManager.getInstance(this).enqueue(taskSyncWorkerRequest)
+            syncTask(taskLongId)
 
             finish()
 
         })
 
         newTaskViewModel.getAllList()
+    }
+
+    private fun syncTask(taskLongId: Long) {
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+        val taskToSync = workDataOf(TaskSyncWorker.TASK_LONG_ID to taskLongId)
+        val taskSyncWorkerRequest = OneTimeWorkRequestBuilder<TaskSyncWorker>()
+            .setInitialDelay(20,TimeUnit.SECONDS)
+            .setBackoffCriteria(
+                BackoffPolicy.LINEAR,
+                OneTimeWorkRequest.MIN_BACKOFF_MILLIS,
+                TimeUnit.MILLISECONDS
+            )
+            .setInputData(taskToSync)
+            .setConstraints(constraints)
+            .build()
+        WorkManager.getInstance(this).enqueue(taskSyncWorkerRequest)
     }
 
     override fun onTaskListClick(taskList2: TaskList2) {

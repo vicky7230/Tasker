@@ -9,7 +9,7 @@ import com.vicky7230.tasker.data.DataManager
 import com.vicky7230.tasker.di.ChildWorkerFactory
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.supervisorScope
 import timber.log.Timber
 
 class TaskSyncWorker @AssistedInject constructor(
@@ -26,7 +26,11 @@ class TaskSyncWorker @AssistedInject constructor(
         var success = false
         val taskLongId = inputData.getLong(TASK_LONG_ID, -1L)
         if (taskLongId != -1L) {
-            coroutineScope {
+
+            /**
+             * @see <a href="https://stackoverflow.com/questions/60543770/android-coroutineworker-retry-when-exception-is-thrown">Link</a>
+             */
+            supervisorScope {
 
                 val getTaskFromDbJob = async {
                     dataManager.getTask(taskLongId)
@@ -49,8 +53,6 @@ class TaskSyncWorker @AssistedInject constructor(
                     if (response.isSuccessful) {
                         //val jsonObject = response.body()!!.asJsonObject
                         success = true
-                    } else {
-                        success = false
                     }
                 } catch (e: Exception) {
                     if (e is CancellationException) {
