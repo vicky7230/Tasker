@@ -12,4 +12,6 @@ interface DbHelper {
     suspend fun insertTaskLists(taskLists: List<TaskList>): List<Long>
 
     suspend fun insertTask(task: Task): Long
+
+    suspend fun getTask(taskLongId: Long): Task
 }

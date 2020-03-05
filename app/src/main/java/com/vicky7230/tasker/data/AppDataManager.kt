@@ -6,6 +6,7 @@ import com.vicky7230.tasker.data.db.entities.TaskList
 import com.vicky7230.tasker.data.db.entities.Task
 import com.vicky7230.tasker.data.network.AppApiHelper
 import com.vicky7230.tasker.data.prefs.AppPreferencesHelper
+import com.vicky7230.tasker.worker.TaskSync
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 import javax.inject.Inject
@@ -29,8 +30,8 @@ constructor(
         return appApiHelper.getUserTaskLists(userId, token)
     }
 
-    override suspend fun syncSingleTask(userId: String?, token: String?): Response<JsonElement> {
-        return appApiHelper.syncSingleTask(userId, token)
+    override suspend fun syncSingleTask(taskSync: TaskSync): Response<JsonElement> {
+        return appApiHelper.syncSingleTask(taskSync)
     }
 
     override fun getAccessToken(): String? {
@@ -76,6 +77,10 @@ constructor(
 
     override suspend fun insertTask(task: Task): Long {
         return appDbHelper.insertTask(task)
+    }
+
+    override suspend fun getTask(taskLongId: Long): Task {
+        return appDbHelper.getTask(taskLongId)
     }
 
 }

@@ -14,10 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.vicky7230.tasker.R
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.work.BackoffPolicy
-import androidx.work.OneTimeWorkRequest
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.work.*
 import com.vicky7230.tasker.data.db.entities.Task
 import com.vicky7230.tasker.data.db.entities.TaskList
 import com.vicky7230.tasker.ui._0base.BaseActivity
@@ -194,9 +191,11 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
 
             val taskList2 = arrayListOf<TaskList2>()
             taskList.forEach {
-                if (it.name == "Work")
-                    taskList2.add(TaskList2(it.listSlack, it.name, it.color, true))
-                else
+                if (it.name == "Work") {
+                    val taskList2Item = TaskList2(it.listSlack, it.name, it.color, true)
+                    selectedTaskList2 = taskList2Item
+                    taskList2.add(taskList2Item)
+                } else
                     taskList2.add(TaskList2(it.listSlack, it.name, it.color))
             }
             taskListsAdapter2.updateItems(taskList2)
@@ -243,27 +242,34 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
                     Task(
                         0,
                         (-1).toString(),
-                        task_edit_text.text.toString(), calendarInstance.time.time,
+                        task_edit_text.text.toString(),
+                        calendarInstance.time.time,
                         selectedTaskList2.listSlack
                     )
                 )
             }
         }
 
-        newTaskViewModel.taskInserted.observe(this, Observer {
-            if (it) {
-                /*val taskSyncWorkerRequest = OneTimeWorkRequestBuilder<TaskSyncWorker>()
-                   .setInitialDelay(20, TimeUnit.SECONDS) // TODO remove this code
-                   .setBackoffCriteria(
-                       BackoffPolicy.LINEAR,
-                       OneTimeWorkRequest.MIN_BACKOFF_MILLIS,
-                       TimeUnit.MILLISECONDS
-                   )
-                   .build()
+        newTaskViewModel.taskInserted.observe(this, Observer { taskLongId: Long ->
 
-               WorkManager.getInstance(this).enqueue(taskSyncWorkerRequest)*/
-                finish()
-            }
+            val constraints = Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
+            val taskToSync = workDataOf(TaskSyncWorker.TASK_LONG_ID to taskLongId)
+            val taskSyncWorkerRequest = OneTimeWorkRequestBuilder<TaskSyncWorker>()
+                .setInitialDelay(20, TimeUnit.SECONDS) // TODO remove this code
+                .setBackoffCriteria(
+                    BackoffPolicy.LINEAR,
+                    OneTimeWorkRequest.MIN_BACKOFF_MILLIS,
+                    TimeUnit.MILLISECONDS
+                )
+                .setInputData(taskToSync)
+                .setConstraints(constraints)
+                .build()
+            WorkManager.getInstance(this).enqueue(taskSyncWorkerRequest)
+
+            finish()
+
         })
 
         newTaskViewModel.getAllList()

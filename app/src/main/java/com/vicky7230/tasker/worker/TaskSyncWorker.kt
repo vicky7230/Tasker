@@ -18,29 +18,51 @@ class TaskSyncWorker @AssistedInject constructor(
     private val dataManager: DataManager
 ) : CoroutineWorker(appContext, params) {
 
+    companion object {
+        const val TASK_LONG_ID = "taskLongId"
+    }
+
     override suspend fun doWork(): Result {
         var success = false
-        coroutineScope {
-            val job = async {
-                dataManager.syncSingleTask(
-                    dataManager.getUserId(),
-                    dataManager.getAccessToken()
-                )
-            }
+        val taskLongId = inputData.getLong(TASK_LONG_ID, -1L)
+        if (taskLongId != -1L) {
+            coroutineScope {
 
-            try {
-                val response = job.await()
-                if (response.isSuccessful) {
-                    val jsonObject = response.body()!!.asJsonObject
-                    success = true
+                val getTaskFromDbJob = async {
+                    dataManager.getTask(taskLongId)
                 }
-            } catch (e: Exception) {
-                if (e is CancellationException) {
-                    Timber.d("Job was Cancelled....")
+
+                val task = getTaskFromDbJob.await()
+
+                val taskNetworkSyncJob = async {
+                    dataManager.syncSingleTask(
+                        TaskSync(
+                            dataManager.getUserId(),
+                            dataManager.getAccessToken(),
+                            task
+                        )
+                    )
                 }
-                //Log exception
-                Timber.e(e)
+
+                try {
+                    val response = taskNetworkSyncJob.await()
+                    if (response.isSuccessful) {
+                        //val jsonObject = response.body()!!.asJsonObject
+                        success = true
+                    } else {
+                        success = false
+                    }
+                } catch (e: Exception) {
+                    if (e is CancellationException) {
+                        Timber.d("Job was Cancelled....")
+                    }
+                    //Log exception
+                    Timber.e("Handling Exception......")
+                    Timber.e(e)
+                }
             }
+        } else {
+            success = true
         }
 
         return if (success)

@@ -2,6 +2,8 @@ package com.vicky7230.tasker.data.network
 
 
 import com.google.gson.JsonElement
+import com.vicky7230.tasker.data.db.entities.Task
+import com.vicky7230.tasker.worker.TaskSync
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -19,8 +21,8 @@ class AppApiHelper @Inject constructor(private val apiService: ApiService) : Api
         return apiService.getUserTaskLists(userId, token)
     }
 
-    override suspend fun syncSingleTask(userId: String?, token: String?): Response<JsonElement> {
-        return apiService.syncSingleTask(userId, token)
+    override suspend fun syncSingleTask(taskSync: TaskSync): Response<JsonElement> {
+        return apiService.syncSingleTask(taskSync)
     }
 
 }

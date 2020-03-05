@@ -12,7 +12,7 @@ import com.vicky7230.tasker.data.db.entities.TaskList
 @Database(entities = [Task::class, TaskList::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun todoDao(): TaskDao
+    abstract fun taskDao(): TaskDao
 
     abstract fun tasklistDao(): TaskListDao
 

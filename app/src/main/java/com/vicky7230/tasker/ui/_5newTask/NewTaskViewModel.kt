@@ -18,7 +18,7 @@ class NewTaskViewModel @Inject constructor(
 
     private val _taskList = MutableLiveData<List<TaskList>>()
     val taskList: LiveData<List<TaskList>> = _taskList
-    var taskInserted  = MutableLiveData<Boolean>()
+    var taskInserted  = MutableLiveData<Long>()
 
     fun getAllList() {
         viewModelScope.launch {
@@ -31,8 +31,8 @@ class NewTaskViewModel @Inject constructor(
 
     fun saveTaskInDB(task: Task) {
         viewModelScope.launch {
-            dataManager.insertTask(task)
-            taskInserted.value = true
+            val taskId = dataManager.insertTask(task)
+            taskInserted.value = taskId
         }
     }
 }
