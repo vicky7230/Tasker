@@ -11,7 +11,6 @@ import com.vicky7230.tasker.data.network.Resource
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.ui._3verifyOTP.VerifyOtpActivity
 import com.vicky7230.tasker.utils.CommonUtils
-import com.vicky7230.tasker.utils.KeyboardUtils
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
@@ -46,7 +45,7 @@ class LoginActivity : BaseActivity() {
                 is Resource.Loading -> showLoading()
                 is Resource.Error -> {
                     hideLoading()
-                    showError(it.message)
+                    showError(it.exception.localizedMessage)
                 }
                 is Resource.Success -> {
                     hideLoading()

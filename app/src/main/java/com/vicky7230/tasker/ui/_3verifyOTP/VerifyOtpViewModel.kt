@@ -7,6 +7,7 @@ import com.vicky7230.tasker.data.DataManager
 import com.vicky7230.tasker.data.network.Resource
 import com.vicky7230.tasker.ui._0base.BaseViewModel
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 class VerifyOtpViewModel @Inject constructor(
@@ -17,14 +18,14 @@ class VerifyOtpViewModel @Inject constructor(
 
     fun verifyOtp(email: String, otp: String) {
         viewModelScope.launch {
-            resource.value = Resource.Loading()
+            resource.value = Resource.Loading
 
             val response = safeApiCall { dataManager.verifyOtp(email, otp) }
 
             when (response) {
                 is Resource.Success -> {
 
-                    val jsonObject = response.data!!.asJsonObject
+                    val jsonObject = response.data.asJsonObject
 
                     if (jsonObject["success"].asBoolean) {
 
@@ -35,7 +36,7 @@ class VerifyOtpViewModel @Inject constructor(
 
                         resource.value = response
                     } else {
-                        resource.value = Resource.Error(jsonObject.get("message").asString)
+                        resource.value =  Resource.Error(IOException(jsonObject.get("message").asString))
                     }
                 }
                 is Resource.Error -> {

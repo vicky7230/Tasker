@@ -20,7 +20,6 @@ import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
-import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -28,6 +27,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
     @Inject
     lateinit var taskListsAdapter: TaskListsAdapter
 
@@ -68,11 +68,11 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
                 is Resource.Loading -> showLoading()
                 is Resource.Error -> {
                     hideLoading()
-                    showError(it.message)
+                    showError(it.exception.localizedMessage)
                 }
                 is Resource.Success -> {
                     hideLoading()
-                    it.data?.let { it1 -> taskListsAdapter.updateItems(it1) }
+                    taskListsAdapter.updateItems(it.data)
                 }
             }
         })

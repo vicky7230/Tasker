@@ -5,6 +5,7 @@ import com.vicky7230.tasker.data.network.Resource
 import kotlinx.coroutines.CancellationException
 import retrofit2.Response
 import timber.log.Timber
+import java.io.IOException
 
 open class BaseViewModel : ViewModel() {
 
@@ -19,16 +20,16 @@ open class BaseViewModel : ViewModel() {
             } else {
                 return when (response.code()) {
                     401 -> {
-                        Resource.Error("HTTP ${response.code()} : Unauthorized")
+                        Resource.Error(IOException("HTTP ${response.code()} : Unauthorized"))
                     }
                     in 400..499 -> {
-                        Resource.Error("HTTP ${response.code()} : Client Error")
+                        Resource.Error(IOException("HTTP ${response.code()} : Client Error"))
                     }
                     in 500..599 -> {
-                        Resource.Error("HTTP ${response.code()} : Server Error")
+                        Resource.Error(IOException("HTTP ${response.code()} : Server Error"))
                     }
                     else -> {
-                        Resource.Error("HTTP ${response.code()} : Something went wrong")
+                        Resource.Error(IOException("HTTP ${response.code()} : Something went wrong"))
                     }
                 }
             }
@@ -38,7 +39,7 @@ open class BaseViewModel : ViewModel() {
             }
             //Log exception
             Timber.e(e)
-            return e.localizedMessage?.let { Resource.Error(it) }
+            return Resource.Error(e)
         }
     }
 }

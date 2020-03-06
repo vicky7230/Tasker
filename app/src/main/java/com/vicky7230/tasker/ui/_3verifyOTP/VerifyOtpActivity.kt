@@ -51,7 +51,7 @@ class VerifyOtpActivity : BaseActivity() {
                 is Resource.Loading -> showLoading()
                 is Resource.Error -> {
                     hideLoading()
-                    showError(it.message)
+                    showError(it.exception.localizedMessage)
                 }
                 is Resource.Success -> {
                     hideLoading()
