@@ -1,9 +1,6 @@
 package com.vicky7230.tasker.data.db.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.vicky7230.tasker.data.db.entities.Task
 
 @Dao
@@ -13,4 +10,7 @@ interface TaskDao {
 
     @Query("SELECT * FROM tasks WHERE id =:taskLongId")
     suspend fun getTask(taskLongId: Long): Task
+
+    @Update
+    suspend fun updateTask(task: Task): Int
 }

@@ -13,7 +13,7 @@ data class Task(
     var id: Long,
 
     @ColumnInfo(name = "task_slack")//this is the server identifier of this task
-    var serverPrimaryKey: String,
+    var taskSlack: String,
 
     @ColumnInfo(name = "task")
     var task: String,

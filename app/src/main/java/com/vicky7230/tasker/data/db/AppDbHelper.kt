@@ -24,4 +24,8 @@ class AppDbHelper @Inject constructor(private val appDatabase: AppDatabase) : Db
         return  appDatabase.taskDao().getTask(taskLongId)
     }
 
+    override suspend fun updateTask(task: Task): Int{
+        return appDatabase.taskDao().updateTask(task)
+    }
+
 }

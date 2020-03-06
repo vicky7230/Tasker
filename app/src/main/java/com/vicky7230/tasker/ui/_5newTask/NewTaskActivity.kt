@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
@@ -236,18 +237,27 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
             AnimUtils.slideView(task_list_view_container, taskListViewContainerHeight, 0)
         }
 
+        cancel_button.setOnClickListener {
+            finish()
+        }
+
         done_button.setOnClickListener {
-            task_edit_text.text?.isNotEmpty().apply {
-                newTaskViewModel.saveTaskInDB(
-                    Task(
-                        0,
-                        (-1).toString(),
-                        task_edit_text.text.toString(),
-                        calendarInstance.time.time,
-                        selectedTaskList2.listSlack
-                    )
-                )
+
+            if (TextUtils.isEmpty(task_edit_text.text)) {
+                showError("Task is empty.")
+                return@setOnClickListener
             }
+
+            newTaskViewModel.saveTaskInDB(
+                Task(
+                    0,
+                    (-1).toString(),
+                    task_edit_text.text.toString(),
+                    calendarInstance.time.time,
+                    selectedTaskList2.listSlack
+                )
+            )
+
         }
 
         newTaskViewModel.taskInserted.observe(this, Observer { taskLongId: Long ->
@@ -267,7 +277,7 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
             .build()
         val taskToSync = workDataOf(TaskSyncWorker.TASK_LONG_ID to taskLongId)
         val taskSyncWorkerRequest = OneTimeWorkRequestBuilder<TaskSyncWorker>()
-            .setInitialDelay(20,TimeUnit.SECONDS)
+            .setInitialDelay(20, TimeUnit.SECONDS)
             .setBackoffCriteria(
                 BackoffPolicy.LINEAR,
                 OneTimeWorkRequest.MIN_BACKOFF_MILLIS,

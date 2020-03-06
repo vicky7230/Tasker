@@ -56,9 +56,11 @@
         android:layout_marginTop="30dp"
         android:layout_marginRight="16dp"
         android:background="@android:color/transparent"
-        android:gravity="top"
         android:cursorVisible="true"
+        android:gravity="top"
         android:hint="What do you want to do?"
+        android:imeOptions="actionDone"
+        android:inputType="text"
         app:layout_constraintBottom_toTopOf="@id/lower_layer"
         app:layout_constraintLeft_toRightOf="@id/ring"
         app:layout_constraintRight_toRightOf="parent"
@@ -142,10 +144,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginRight="8dp"
-                android:text="Work"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
+                android:text="Work"
                 android:textColor="@color/task_lists_pressable"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/curved_dot"
@@ -291,8 +293,8 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/task_lists_2"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" />
 
                 <View
                     android:layout_width="match_parent"

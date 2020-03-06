@@ -14,4 +14,6 @@ interface DbHelper {
     suspend fun insertTask(task: Task): Long
 
     suspend fun getTask(taskLongId: Long): Task
+
+    suspend fun updateTask(task: Task): Int
 }

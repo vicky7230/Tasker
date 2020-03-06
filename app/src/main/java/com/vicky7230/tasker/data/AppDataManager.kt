@@ -83,4 +83,8 @@ constructor(
         return appDbHelper.getTask(taskLongId)
     }
 
+    override suspend fun updateTask(task: Task): Int {
+        return appDbHelper.updateTask(task)
+    }
+
 }

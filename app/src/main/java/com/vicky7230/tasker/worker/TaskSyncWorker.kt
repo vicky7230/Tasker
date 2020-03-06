@@ -51,8 +51,16 @@ class TaskSyncWorker @AssistedInject constructor(
                 try {
                     val response = taskNetworkSyncJob.await()
                     if (response.isSuccessful) {
-                        //val jsonObject = response.body()!!.asJsonObject
-                        success = true
+                        val jsonObject = response.body()!!.asJsonObject
+                        if (jsonObject["success"].asBoolean && jsonObject["synced"].asBoolean) {
+                            task.taskSlack = jsonObject["task_slack"].asString
+                            val updateTaskSlackJob = async {
+                                dataManager.updateTask(task)
+                            }
+                            val rowsUpdated = updateTaskSlackJob.await()
+                            if (rowsUpdated > 0)
+                                success = true
+                        }
                     }
                 } catch (e: Exception) {
                     if (e is CancellationException) {
