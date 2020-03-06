@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vicky7230.tasker.R
+import com.vicky7230.tasker.data.network.Resource
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
 import dagger.android.AndroidInjection
@@ -62,20 +63,18 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
         task_lists.layoutManager = LinearLayoutManager(this)
         task_lists.adapter = taskListsAdapter
 
-        homeViewModel.loading.observe(this, Observer {
-            if (it)
-                showLoading()
-            else
-                hideLoading()
-        })
-
-        homeViewModel.error.observe(this, Observer {
-            showError(it)
-        })
-
-        homeViewModel.taskList.observe(this, Observer {
-            //Timber.d(it.toString())
-            taskListsAdapter.updateItems(it)
+        homeViewModel.resource.observe(this, Observer {
+            when (it) {
+                is Resource.Loading -> showLoading()
+                is Resource.Error -> {
+                    hideLoading()
+                    showError(it.message)
+                }
+                is Resource.Success -> {
+                    hideLoading()
+                    it.data?.let { it1 -> taskListsAdapter.updateItems(it1) }
+                }
+            }
         })
 
         homeViewModel.getAllList()

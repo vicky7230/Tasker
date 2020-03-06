@@ -7,6 +7,7 @@ import android.text.TextUtils
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.vicky7230.tasker.R
+import com.vicky7230.tasker.data.network.Resource
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.ui._3verifyOTP.VerifyOtpActivity
 import com.vicky7230.tasker.utils.CommonUtils
@@ -40,15 +41,23 @@ class LoginActivity : BaseActivity() {
 
     private fun init() {
 
-        loginViewModel.loading.observe(this, Observer {
-            if (it)
-                showLoading()
-            else
-                hideLoading()
-        })
-
-        loginViewModel.error.observe(this, Observer {
-            showError(it)
+        loginViewModel.resource.observe(this, Observer {
+            when (it) {
+                is Resource.Loading -> showLoading()
+                is Resource.Error -> {
+                    hideLoading()
+                    showError(it.message)
+                }
+                is Resource.Success -> {
+                    hideLoading()
+                    startActivity(
+                        VerifyOtpActivity.getStartIntent(
+                            this,
+                            email_edit_text.text.toString()
+                        )
+                    )
+                }
+            }
         })
 
         email_edit_text.requestFocus()
@@ -62,15 +71,5 @@ class LoginActivity : BaseActivity() {
                 showError("Invalid Email")
             }
         }
-
-        loginViewModel.otpGenerated.observe(this, Observer {
-            if (it)
-                startActivity(
-                    VerifyOtpActivity.getStartIntent(
-                        this,
-                        email_edit_text.text.toString()
-                    )
-                )
-        })
     }
 }

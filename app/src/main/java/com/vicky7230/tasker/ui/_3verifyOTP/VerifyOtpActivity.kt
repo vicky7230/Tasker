@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.vicky7230.tasker.R
+import com.vicky7230.tasker.data.network.Resource
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.ui._4home.HomeActivity
 import dagger.android.AndroidInjection
@@ -45,20 +46,18 @@ class VerifyOtpActivity : BaseActivity() {
     @SuppressLint("SetTextI18n")
     private fun init() {
 
-        verifyOtpViewModel.loading.observe(this, Observer {
-            if (it)
-                showLoading()
-            else
-                hideLoading()
-        })
-
-        verifyOtpViewModel.error.observe(this, Observer {
-            showError(it)
-        })
-
-        verifyOtpViewModel.otpVerified.observe(this, Observer {
-            if (it)
-                startActivity(HomeActivity.getStartIntent(this@VerifyOtpActivity))
+        verifyOtpViewModel.resource.observe(this, Observer {
+            when(it){
+                is Resource.Loading -> showLoading()
+                is Resource.Error -> {
+                    hideLoading()
+                    showError(it.message)
+                }
+                is Resource.Success -> {
+                    hideLoading()
+                    startActivity(HomeActivity.getStartIntent(this@VerifyOtpActivity))
+                }
+            }
         })
 
         if (intent != null && intent.getStringExtra(EXTRAS_EMAIL) != null)

@@ -2,8 +2,9 @@ package com.vicky7230.tasker.ui._3verifyOTP
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.gson.JsonElement
 import com.vicky7230.tasker.data.DataManager
-import com.vicky7230.tasker.data.network.RetrofitResult
+import com.vicky7230.tasker.data.network.Resource
 import com.vicky7230.tasker.ui._0base.BaseViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -12,20 +13,18 @@ class VerifyOtpViewModel @Inject constructor(
     private val dataManager: DataManager
 ) : BaseViewModel() {
 
-    var loading = MutableLiveData<Boolean>()
-    var error = MutableLiveData<String>()
-    var otpVerified = MutableLiveData<Boolean>()
+    var resource = MutableLiveData<Resource<JsonElement>>()
 
     fun verifyOtp(email: String, otp: String) {
         viewModelScope.launch {
-            loading.value = true
+            resource.value = Resource.Loading()
 
             val response = safeApiCall { dataManager.verifyOtp(email, otp) }
 
             when (response) {
-                is RetrofitResult.Success -> {
+                is Resource.Success -> {
 
-                    val jsonObject = response.data.asJsonObject
+                    val jsonObject = response.data!!.asJsonObject
 
                     if (jsonObject["success"].asBoolean) {
 
@@ -34,17 +33,15 @@ class VerifyOtpViewModel @Inject constructor(
                         dataManager.setUserId(jsonObject["user_id"].asString)
                         dataManager.setUserEmail(jsonObject["email"].asString)
 
-                        otpVerified.value = true
+                        resource.value = response
                     } else {
-                        error.value = jsonObject.get("message").asString
+                        resource.value = Resource.Error(jsonObject.get("message").asString)
                     }
                 }
-                is RetrofitResult.Error -> {
-                    error.value = response.exception.message
+                is Resource.Error -> {
+                    resource.value = response
                 }
             }
-
-            loading.value = false
         }
     }
 }
