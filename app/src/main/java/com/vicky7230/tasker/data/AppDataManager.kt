@@ -4,6 +4,7 @@ import com.google.gson.JsonElement
 import com.vicky7230.tasker.data.db.AppDbHelper
 import com.vicky7230.tasker.data.db.entities.TaskList
 import com.vicky7230.tasker.data.db.entities.Task
+import com.vicky7230.tasker.data.db.entities.TaskAndTaskList
 import com.vicky7230.tasker.data.db.entities.TaskListAndCount
 import com.vicky7230.tasker.data.network.AppApiHelper
 import com.vicky7230.tasker.data.prefs.AppPreferencesHelper
@@ -86,6 +87,10 @@ constructor(
 
     override suspend fun getTask(taskLongId: Long): Task {
         return appDbHelper.getTask(taskLongId)
+    }
+
+    override fun getTasksForToday(dateTime: Long): Flow<List<TaskAndTaskList>> {
+        return appDbHelper.getTasksForToday(dateTime)
     }
 
     override suspend fun updateTask(task: Task): Int {

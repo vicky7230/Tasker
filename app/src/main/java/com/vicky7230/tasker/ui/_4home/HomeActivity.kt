@@ -21,6 +21,8 @@ import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 
@@ -64,7 +66,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
         task_lists.layoutManager = LinearLayoutManager(this)
         task_lists.adapter = taskListsAdapter
 
-        homeViewModel.resource.observe(this, Observer {
+        homeViewModel.taskListAndCount.observe(this, Observer {
             when (it) {
                 is Resource.Loading -> showLoading()
                 is Resource.Error -> {
@@ -80,6 +82,15 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
         })
 
         homeViewModel.getAllList()
+        homeViewModel.getTodaysTasks(getTodaysDate())
+    }
+
+    private fun getTodaysDate(): Long {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        return calendar.time.time
     }
 
     private fun rotateFab() {
