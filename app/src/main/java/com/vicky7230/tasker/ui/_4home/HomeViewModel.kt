@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.JsonElement
 import com.vicky7230.tasker.data.DataManager
 import com.vicky7230.tasker.data.db.entities.TaskList
+import com.vicky7230.tasker.data.db.entities.TaskListAndCount
 import com.vicky7230.tasker.data.network.Resource
 import com.vicky7230.tasker.ui._0base.BaseViewModel
 import kotlinx.coroutines.flow.collect
@@ -16,11 +17,11 @@ class HomeViewModel @Inject constructor(
     private val dataManager: DataManager
 ) : BaseViewModel() {
 
-    var resource = MutableLiveData<Resource<List<TaskList>>>()
+    var resource = MutableLiveData<Resource<List<TaskListAndCount>>>()
 
     fun getAllList() {
         viewModelScope.launch {
-            dataManager.getAllLists().collect { taskListsFromDb: List<TaskList> ->
+            dataManager.getAllListsWithTaskCount().collect { taskListsFromDb: List<TaskListAndCount> ->
                 if (taskListsFromDb.isNotEmpty())
                     resource.value = Resource.Success(taskListsFromDb)
                 else {
@@ -51,7 +52,7 @@ class HomeViewModel @Inject constructor(
                                     )
                                 }
                                 dataManager.insertTaskLists(taskListsFromNetwork)
-                                resource.value = Resource.Success(taskListsFromNetwork)
+                                //resource.value = Resource.Success(taskListsFromNetwork)
                             } else {
                                 resource.value =
                                     Resource.Error(IOException(jsonObject.get("message").asString))

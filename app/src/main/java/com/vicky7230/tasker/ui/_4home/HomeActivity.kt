@@ -20,6 +20,7 @@ import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -72,6 +73,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
                 }
                 is Resource.Success -> {
                     hideLoading()
+                    Timber.d(it.toString())
                     taskListsAdapter.updateItems(it.data)
                 }
             }

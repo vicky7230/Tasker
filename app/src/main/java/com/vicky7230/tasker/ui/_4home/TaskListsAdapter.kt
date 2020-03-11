@@ -1,5 +1,6 @@
 package com.vicky7230.tasker.ui._4home
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +9,13 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.data.db.entities.TaskList
+import com.vicky7230.tasker.data.db.entities.TaskListAndCount
 import kotlinx.android.synthetic.main.task_lists_item_view.view.*
 
-class TaskListsAdapter(private val taskLists: MutableList<TaskList>) :
+class TaskListsAdapter(private val taskLists: MutableList<TaskListAndCount>) :
     RecyclerView.Adapter<TaskListsAdapter.TaskListViewHolder>() {
 
-    fun updateItems(taskLists: List<TaskList>) {
+    fun updateItems(taskLists: List<TaskListAndCount>) {
         this.taskLists.clear()
         this.taskLists.addAll(taskLists)
         notifyDataSetChanged()
@@ -40,8 +42,10 @@ class TaskListsAdapter(private val taskLists: MutableList<TaskList>) :
     }
 
     class TaskListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun onBind(taskList: TaskList) {
-            itemView.name.text = taskList.name
+        @SuppressLint("SetTextI18n")
+        fun onBind(taskList: TaskListAndCount) {
+            itemView.list_name.text = taskList.name
+            itemView.task_count.text = "${taskList.taskCount} Tasks"
             itemView.task_list_card.setCardBackgroundColor(Color.parseColor(taskList.color))
         }
     }
