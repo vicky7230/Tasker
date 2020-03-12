@@ -40,7 +40,6 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
     @Inject
     lateinit var taskListsAdapter2: TaskListsAdapter2
 
