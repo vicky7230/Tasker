@@ -4,16 +4,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.JsonElement
 import com.vicky7230.tasker.data.DataManager
-import com.vicky7230.tasker.data.db.entities.TaskAndTaskList
+import com.vicky7230.tasker.data.db.joinReturnTypes.TaskAndTaskList
 import com.vicky7230.tasker.data.db.entities.TaskList
-import com.vicky7230.tasker.data.db.entities.TaskListAndCount
+import com.vicky7230.tasker.data.db.joinReturnTypes.TaskListAndCount
 import com.vicky7230.tasker.data.network.Resource
 import com.vicky7230.tasker.ui._0base.BaseViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
-import java.util.*
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
@@ -77,7 +76,9 @@ class HomeViewModel @Inject constructor(
             dataManager.getTasksForToday(todaysDate)
                 .collect { tasksAndList: List<TaskAndTaskList> ->
                     if (tasksAndList.isNotEmpty())
-                        Timber.e(tasksAndList.toString())
+                        taskAndTaskList.value = Resource.Success(tasksAndList)
+                    else
+                        Timber.d("Today's tasks are Empty")
                 }
         }
     }

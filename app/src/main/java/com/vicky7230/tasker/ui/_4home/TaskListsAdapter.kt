@@ -5,11 +5,9 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vicky7230.tasker.R
-import com.vicky7230.tasker.data.db.entities.TaskList
-import com.vicky7230.tasker.data.db.entities.TaskListAndCount
+import com.vicky7230.tasker.data.db.joinReturnTypes.TaskListAndCount
 import kotlinx.android.synthetic.main.task_lists_item_view.view.*
 
 class TaskListsAdapter(private val taskLists: MutableList<TaskListAndCount>) :

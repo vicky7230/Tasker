@@ -21,7 +21,6 @@ import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
 import timber.log.Timber
-import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
@@ -33,6 +32,9 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
 
     @Inject
     lateinit var taskListsAdapter: TaskListsAdapter
+
+    @Inject
+    lateinit var todaysTaskAdapter: TodaysTaskAdapter
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var listPopupWindow: ListPopupWindow
@@ -64,7 +66,12 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
         add_task_button.setOnClickListener { rotateFab() }
 
         task_lists.layoutManager = LinearLayoutManager(this)
+        task_lists.isNestedScrollingEnabled = false
         task_lists.adapter = taskListsAdapter
+
+        tasks.layoutManager = LinearLayoutManager(this)
+        tasks.isNestedScrollingEnabled = false
+        tasks.adapter = todaysTaskAdapter
 
         homeViewModel.taskListAndCount.observe(this, Observer {
             when (it) {
@@ -75,8 +82,22 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
                 }
                 is Resource.Success -> {
                     hideLoading()
-                    Timber.d(it.toString())
+                    //Timber.d(it.toString())
                     taskListsAdapter.updateItems(it.data)
+                }
+            }
+        })
+
+        homeViewModel.taskAndTaskList.observe(this, Observer {
+            when (it) {
+                is Resource.Loading -> showLoading()
+                is Resource.Error -> {
+                    hideLoading()
+                    showError(it.exception.localizedMessage)
+                }
+                is Resource.Success -> {
+                    hideLoading()
+                    todaysTaskAdapter.updateItems(it.data)
                 }
             }
         })
@@ -90,6 +111,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
         calendar.set(Calendar.HOUR_OF_DAY, 0)
         calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.SECOND, 0)
+        Timber.d(calendar.time.time.toString())
         return calendar.time.time
     }
 

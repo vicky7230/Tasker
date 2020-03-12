@@ -1,4 +1,4 @@
-package com.vicky7230.tasker.data.db.entities
+package com.vicky7230.tasker.data.db.joinReturnTypes
 
 import androidx.room.ColumnInfo
 

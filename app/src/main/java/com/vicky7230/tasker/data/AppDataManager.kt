@@ -4,8 +4,8 @@ import com.google.gson.JsonElement
 import com.vicky7230.tasker.data.db.AppDbHelper
 import com.vicky7230.tasker.data.db.entities.TaskList
 import com.vicky7230.tasker.data.db.entities.Task
-import com.vicky7230.tasker.data.db.entities.TaskAndTaskList
-import com.vicky7230.tasker.data.db.entities.TaskListAndCount
+import com.vicky7230.tasker.data.db.joinReturnTypes.TaskAndTaskList
+import com.vicky7230.tasker.data.db.joinReturnTypes.TaskListAndCount
 import com.vicky7230.tasker.data.network.AppApiHelper
 import com.vicky7230.tasker.data.prefs.AppPreferencesHelper
 import com.vicky7230.tasker.worker.TaskSync

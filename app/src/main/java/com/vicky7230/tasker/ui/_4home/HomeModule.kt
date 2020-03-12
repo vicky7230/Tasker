@@ -10,4 +10,8 @@ class HomeModule {
     fun provideTaskListsAdapter(): TaskListsAdapter {
         return TaskListsAdapter(arrayListOf())
     }
+    @Provides
+    fun provideTodaysTaskAdapter(): TodaysTaskAdapter {
+        return TodaysTaskAdapter(arrayListOf())
+    }
 }

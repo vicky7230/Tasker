@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.vicky7230.tasker.data.db.entities.TaskList
-import com.vicky7230.tasker.data.db.entities.TaskListAndCount
+import com.vicky7230.tasker.data.db.joinReturnTypes.TaskListAndCount
 import kotlinx.coroutines.flow.Flow
 
 @Dao

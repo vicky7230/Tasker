@@ -160,7 +160,6 @@
                 android:layout_marginRight="16dp"
                 android:background="@drawable/curved_dot"
                 app:layout_constraintBottom_toBottomOf="parent"
-
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
