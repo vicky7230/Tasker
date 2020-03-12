@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.JsonElement
 import com.vicky7230.tasker.data.DataManager
+import com.vicky7230.tasker.data.db.entities.Task
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskAndTaskList
 import com.vicky7230.tasker.data.db.entities.TaskList
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskListAndCount
@@ -42,7 +43,7 @@ class HomeViewModel @Inject constructor(
                         when (response) {
                             is Resource.Success -> {
                                 val jsonObject = response.data.asJsonObject
-                                if (jsonObject.get("success").asBoolean) {
+                                if (jsonObject["success"].asBoolean) {
                                     val taskListsJsonArray = jsonObject["task_lists"].asJsonArray
                                     val taskListsFromNetwork: MutableList<TaskList> = arrayListOf()
                                     taskListsJsonArray.forEach { taskListJsonElement: JsonElement ->
@@ -74,11 +75,50 @@ class HomeViewModel @Inject constructor(
     fun getTodaysTasks(todaysDate: Long) {
         viewModelScope.launch {
             dataManager.getTasksForToday(todaysDate)
-                .collect { tasksAndList: List<TaskAndTaskList> ->
-                    if (tasksAndList.isNotEmpty())
-                        taskAndTaskList.value = Resource.Success(tasksAndList)
-                    else
-                        Timber.d("Today's tasks are Empty")
+                .collect { tasksAndListFromDb: List<TaskAndTaskList> ->
+                    if (tasksAndListFromDb.isNotEmpty())
+                        taskAndTaskList.value = Resource.Success(tasksAndListFromDb)
+                    else {
+                        taskAndTaskList.value = Resource.Loading
+
+                        val response = safeApiCall {
+                            dataManager.getUserTasks(
+                                dataManager.getUserId(),
+                                dataManager.getAccessToken()
+                            )
+                        }
+
+                        when (response) {
+                            is Resource.Success -> {
+                                val jsonObject = response.data.asJsonObject
+                                if (jsonObject["success"].asBoolean) {
+                                    val tasksJsonArray = jsonObject["tasks"].asJsonArray
+                                    val tasksAndListFromServer = mutableListOf<Task>()
+                                    tasksJsonArray.forEach { taskJsonElement: JsonElement ->
+                                        tasksAndListFromServer.add(
+                                            Task(
+                                                0,
+                                                taskJsonElement.asJsonObject["user_task_id"].asString,
+                                                taskJsonElement.asJsonObject["task_slack"].asString,
+                                                taskJsonElement.asJsonObject["task"].asString,
+                                                taskJsonElement.asJsonObject["date_time"].asLong,
+                                                taskJsonElement.asJsonObject["list_slack"].asString
+                                            )
+                                        )
+                                    }
+
+                                    dataManager.insertTasks(tasksAndListFromServer)
+
+                                } else {
+                                    taskAndTaskList.value =
+                                        Resource.Error(IOException(jsonObject["message"].asString))
+                                }
+                            }
+                            is Resource.Error -> {
+                                taskListAndCount.value = response
+                            }
+                        }
+                    }
                 }
         }
     }

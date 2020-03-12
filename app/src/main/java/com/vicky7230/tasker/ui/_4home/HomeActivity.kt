@@ -29,10 +29,8 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
     @Inject
     lateinit var taskListsAdapter: TaskListsAdapter
-
     @Inject
     lateinit var todaysTaskAdapter: TodaysTaskAdapter
 

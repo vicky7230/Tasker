@@ -36,6 +36,10 @@ constructor(
         return appApiHelper.syncSingleTask(taskSync)
     }
 
+    override suspend fun getUserTasks(userId: String?, token: String?): Response<JsonElement> {
+        return appApiHelper.getUserTasks(userId, token)
+    }
+
     override fun getAccessToken(): String? {
         return appPreferencesHelper.getAccessToken()
     }
@@ -95,6 +99,10 @@ constructor(
 
     override suspend fun updateTask(task: Task): Int {
         return appDbHelper.updateTask(task)
+    }
+
+    override suspend fun insertTasks(tasksAndListFromServer: MutableList<Task>): List<Long> {
+        return appDbHelper.insertTasks(tasksAndListFromServer)
     }
 
 }

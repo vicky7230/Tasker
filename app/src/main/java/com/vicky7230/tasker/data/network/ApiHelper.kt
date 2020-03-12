@@ -15,4 +15,6 @@ interface ApiHelper {
     suspend fun getUserTaskLists(userId: String?, token: String?): Response<JsonElement>
 
     suspend fun syncSingleTask(taskSync: TaskSync): Response<JsonElement>
+
+    suspend fun getUserTasks(userId: String?, token: String?): Response<JsonElement>
 }

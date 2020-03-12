@@ -22,4 +22,6 @@ interface DbHelper {
     fun getTasksForToday(dateTime: Long): Flow<List<TaskAndTaskList>>
 
     suspend fun updateTask(task: Task): Int
+
+    suspend fun insertTasks(tasksAndListFromServer: MutableList<Task>): List<Long>
 }

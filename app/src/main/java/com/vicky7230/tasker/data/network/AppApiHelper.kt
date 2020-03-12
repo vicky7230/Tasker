@@ -25,4 +25,8 @@ class AppApiHelper @Inject constructor(private val apiService: ApiService) : Api
         return apiService.syncSingleTask(taskSync)
     }
 
+    override suspend fun getUserTasks(userId: String?, token: String?): Response<JsonElement> {
+        return apiService.getUserTasks(userId, token)
+    }
+
 }

@@ -28,6 +28,7 @@ import kotlinx.coroutines.launch
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil
+import org.apache.commons.lang3.RandomStringUtils
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
@@ -188,7 +189,7 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
 
         newTaskViewModel.taskList.observe(this, Observer { taskList: List<TaskList> ->
 
-            Timber.d(taskList.toString())
+            //Timber.d(taskList.toString())
 
             val taskList2 = arrayListOf<TaskList2>()
             taskList.forEach {
@@ -251,6 +252,7 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
             newTaskViewModel.saveTaskInDB(
                 Task(
                     0,
+                    RandomStringUtils.randomAlphanumeric(10),
                     (-1).toString(),
                     task_edit_text.text.toString(),
                     calendarInstance.time.time,

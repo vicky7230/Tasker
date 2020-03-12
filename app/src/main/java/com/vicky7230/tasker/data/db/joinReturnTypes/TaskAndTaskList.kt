@@ -6,6 +6,9 @@ data class TaskAndTaskList(
     @ColumnInfo(name = "id")
     var id: Long,
 
+    @ColumnInfo(name = "task_id")//local unique identifier
+    var taskId: String,
+
     @ColumnInfo(name = "task_slack")//this is the server identifier of this task
     var taskSlack: String,
 

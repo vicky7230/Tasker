@@ -34,5 +34,13 @@ interface ApiService {
     @POST("api/TaskApi/syncSingleTask")
     suspend fun syncSingleTask(
         @Body taskSync: TaskSync
-    ) : Response<JsonElement>
+    ): Response<JsonElement>
+
+    @FormUrlEncoded
+    @POST("api/TaskApi/getUserTasks")
+    suspend fun getUserTasks(
+        @Field("userID") userId: String?,
+        @Field("token") token: String?
+    ): Response<JsonElement>
+
 }

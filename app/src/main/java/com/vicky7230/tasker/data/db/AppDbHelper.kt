@@ -22,20 +22,24 @@ class AppDbHelper @Inject constructor(private val appDatabase: AppDatabase) : Db
         return appDatabase.tasklistDao().insertTaskLists(taskLists)
     }
 
-    override suspend fun insertTask(task: Task) : Long {
-        return  appDatabase.taskDao().insertTask(task)
+    override suspend fun insertTask(task: Task): Long {
+        return appDatabase.taskDao().insertTask(task)
     }
 
     override suspend fun getTask(taskLongId: Long): Task {
-        return  appDatabase.taskDao().getTask(taskLongId)
+        return appDatabase.taskDao().getTask(taskLongId)
     }
 
     override fun getTasksForToday(dateTime: Long): Flow<List<TaskAndTaskList>> {
         return appDatabase.taskDao().getTasksForToday(dateTime)
     }
 
-    override suspend fun updateTask(task: Task): Int{
+    override suspend fun updateTask(task: Task): Int {
         return appDatabase.taskDao().updateTask(task)
+    }
+
+    override suspend fun insertTasks(tasksAndListFromServer: MutableList<Task>): List<Long> {
+        return appDatabase.taskDao().insertTasks(tasksAndListFromServer)
     }
 
 }
