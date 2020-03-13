@@ -93,8 +93,11 @@ constructor(
         return appDbHelper.getTask(taskLongId)
     }
 
-    override fun getTasksForToday(dateTime: Long): Flow<List<TaskAndTaskList>> {
-        return appDbHelper.getTasksForToday(dateTime)
+    override fun getTasksForToday(
+        todaysDateStart: Long,
+        todaysDateEnd: Long
+    ): Flow<List<TaskAndTaskList>> {
+        return appDbHelper.getTasksForToday(todaysDateStart, todaysDateEnd)
     }
 
     override suspend fun updateTask(task: Task): Int {

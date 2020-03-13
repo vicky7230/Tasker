@@ -3,6 +3,7 @@ package com.vicky7230.tasker.ui._4home
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.JsonElement
+import com.google.gson.JsonObject
 import com.vicky7230.tasker.data.DataManager
 import com.vicky7230.tasker.data.db.entities.Task
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskAndTaskList
@@ -44,20 +45,7 @@ class HomeViewModel @Inject constructor(
                             is Resource.Success -> {
                                 val jsonObject = response.data.asJsonObject
                                 if (jsonObject["success"].asBoolean) {
-                                    val taskListsJsonArray = jsonObject["task_lists"].asJsonArray
-                                    val taskListsFromNetwork: MutableList<TaskList> = arrayListOf()
-                                    taskListsJsonArray.forEach { taskListJsonElement: JsonElement ->
-                                        taskListsFromNetwork.add(
-                                            TaskList(
-                                                0,
-                                                taskListJsonElement.asJsonObject["list_slack"].asString,
-                                                taskListJsonElement.asJsonObject["name"].asString,
-                                                taskListJsonElement.asJsonObject["color"].asString
-                                            )
-                                        )
-                                    }
-                                    dataManager.insertTaskLists(taskListsFromNetwork)
-                                    //taskListAndCount.value = Resource.Success(taskListsFromNetwork)
+                                    insertTaskListsInDb(jsonObject)
                                 } else {
                                     taskListAndCount.value =
                                         Resource.Error(IOException(jsonObject.get("message").asString))
@@ -72,9 +60,25 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getTodaysTasks(todaysDate: Long) {
+    private suspend fun insertTaskListsInDb(jsonObject: JsonObject) {
+        val taskListsJsonArray = jsonObject["task_lists"].asJsonArray
+        val taskListsFromNetwork: MutableList<TaskList> = arrayListOf()
+        taskListsJsonArray.forEach { taskListJsonElement: JsonElement ->
+            taskListsFromNetwork.add(
+                TaskList(
+                    0,
+                    taskListJsonElement.asJsonObject["list_slack"].asString,
+                    taskListJsonElement.asJsonObject["name"].asString,
+                    taskListJsonElement.asJsonObject["color"].asString
+                )
+            )
+        }
+        dataManager.insertTaskLists(taskListsFromNetwork)
+    }
+
+    fun getTodaysTasks(todaysDateStart: Long, todaysDateEnd: Long) {
         viewModelScope.launch {
-            dataManager.getTasksForToday(todaysDate)
+            dataManager.getTasksForToday(todaysDateStart, todaysDateEnd)
                 .collect { tasksAndListFromDb: List<TaskAndTaskList> ->
                     if (tasksAndListFromDb.isNotEmpty())
                         taskAndTaskList.value = Resource.Success(tasksAndListFromDb)
@@ -92,23 +96,7 @@ class HomeViewModel @Inject constructor(
                             is Resource.Success -> {
                                 val jsonObject = response.data.asJsonObject
                                 if (jsonObject["success"].asBoolean) {
-                                    val tasksJsonArray = jsonObject["tasks"].asJsonArray
-                                    val tasksAndListFromServer = mutableListOf<Task>()
-                                    tasksJsonArray.forEach { taskJsonElement: JsonElement ->
-                                        tasksAndListFromServer.add(
-                                            Task(
-                                                0,
-                                                taskJsonElement.asJsonObject["user_task_id"].asString,
-                                                taskJsonElement.asJsonObject["task_slack"].asString,
-                                                taskJsonElement.asJsonObject["task"].asString,
-                                                taskJsonElement.asJsonObject["date_time"].asLong,
-                                                taskJsonElement.asJsonObject["list_slack"].asString
-                                            )
-                                        )
-                                    }
-
-                                    dataManager.insertTasks(tasksAndListFromServer)
-
+                                    insertTasksInDb(jsonObject)
                                 } else {
                                     taskAndTaskList.value =
                                         Resource.Error(IOException(jsonObject["message"].asString))
@@ -121,6 +109,25 @@ class HomeViewModel @Inject constructor(
                     }
                 }
         }
+    }
+
+    private suspend fun insertTasksInDb(jsonObject: JsonObject) {
+        val tasksJsonArray = jsonObject["tasks"].asJsonArray
+        val tasksAndListFromServer = mutableListOf<Task>()
+        tasksJsonArray.forEach { taskJsonElement: JsonElement ->
+            tasksAndListFromServer.add(
+                Task(
+                    0,
+                    taskJsonElement.asJsonObject["user_task_id"].asString,
+                    taskJsonElement.asJsonObject["task_slack"].asString,
+                    taskJsonElement.asJsonObject["task"].asString,
+                    taskJsonElement.asJsonObject["date_time"].asLong,
+                    taskJsonElement.asJsonObject["list_slack"].asString
+                )
+            )
+        }
+
+        dataManager.insertTasks(tasksAndListFromServer)
     }
 
 

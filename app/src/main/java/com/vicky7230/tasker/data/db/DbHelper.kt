@@ -19,7 +19,7 @@ interface DbHelper {
 
     suspend fun getTask(taskLongId: Long): Task
 
-    fun getTasksForToday(dateTime: Long): Flow<List<TaskAndTaskList>>
+    fun getTasksForToday(todaysDateStart: Long, todaysDateEnd: Long): Flow<List<TaskAndTaskList>>
 
     suspend fun updateTask(task: Task): Int
 

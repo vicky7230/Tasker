@@ -29,8 +29,10 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
     @Inject
     lateinit var taskListsAdapter: TaskListsAdapter
+
     @Inject
     lateinit var todaysTaskAdapter: TodaysTaskAdapter
 
@@ -101,14 +103,25 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
         })
 
         homeViewModel.getAllList()
-        homeViewModel.getTodaysTasks(getTodaysDate())
+        homeViewModel.getTodaysTasks(getTodaysDateStart(), getTodaysDateEnd())
     }
 
-    private fun getTodaysDate(): Long {
+    private fun getTodaysDateStart(): Long {
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, 0)
         calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        Timber.d(calendar.time.time.toString())
+        return calendar.time.time
+    }
+
+    private fun getTodaysDateEnd(): Long {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, 23)
+        calendar.set(Calendar.MINUTE, 59)
+        calendar.set(Calendar.SECOND, 59)
+        calendar.set(Calendar.MILLISECOND, 999)
         Timber.d(calendar.time.time.toString())
         return calendar.time.time
     }

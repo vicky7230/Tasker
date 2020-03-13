@@ -30,8 +30,11 @@ class AppDbHelper @Inject constructor(private val appDatabase: AppDatabase) : Db
         return appDatabase.taskDao().getTask(taskLongId)
     }
 
-    override fun getTasksForToday(dateTime: Long): Flow<List<TaskAndTaskList>> {
-        return appDatabase.taskDao().getTasksForToday(dateTime)
+    override fun getTasksForToday(
+        todaysDateStart: Long,
+        todaysDateEnd: Long
+    ): Flow<List<TaskAndTaskList>> {
+        return appDatabase.taskDao().getTasksForToday(todaysDateStart, todaysDateEnd)
     }
 
     override suspend fun updateTask(task: Task): Int {
