@@ -42,11 +42,12 @@ class HomeViewModel @Inject constructor(
                 }
         }
 
-        taskListAndCount.value = Resource.Loading
 
         viewModelScope.launch {
 
             if (!dataManager.areListsFetched()) {
+
+                taskListAndCount.value = Resource.Loading
 
                 val response1 = safeApiCall {
                     dataManager.getUserTaskLists(
