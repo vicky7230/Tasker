@@ -102,8 +102,8 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
             }
         })
 
-        homeViewModel.getAllList()
         homeViewModel.getTodaysTasks(getTodaysDateStart(), getTodaysDateEnd())
+        homeViewModel.getAllList()
     }
 
     private fun getTodaysDateStart(): Long {
@@ -158,12 +158,12 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
             .start()
     }
 
-    private fun createPopup(): ListPopupWindow {
+    private fun createPopup() {
 
         listPopupWindow = ListPopupWindow(this)
         listPopupWindow.setAdapter(PopupAdapter(products))
         listPopupWindow.anchorView = add_task_button
-        listPopupWindow.setDropDownGravity(Gravity.RIGHT)
+        listPopupWindow.setDropDownGravity(Gravity.END)
         listPopupWindow.width = resources.getDimension(R.dimen.popup_width).toInt()
         listPopupWindow.height = ListPopupWindow.WRAP_CONTENT
         listPopupWindow.verticalOffset =
@@ -172,7 +172,6 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
         listPopupWindow.isModal = true
         listPopupWindow.setOnItemClickListener(this)
         listPopupWindow.setOnDismissListener { rotateBack() }
-        return listPopupWindow
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
