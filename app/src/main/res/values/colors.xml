@@ -2,7 +2,8 @@
 <resources>
     <color name="colorPrimary">#006CFF</color>
     <color name="colorPrimaryDark">#006CFF</color>
-    <color name="colorAccent">#006CFF</color>
+    <color name="colorSecondary">#006CFF</color>
+    <color name="colorSecondaryDark">#006CFF</color>
     <color name="colorBlue">#006CFF</color>
     <color name="colorBlack">#252A31</color>
     <color name="colorPurple">#B678FF</color>
