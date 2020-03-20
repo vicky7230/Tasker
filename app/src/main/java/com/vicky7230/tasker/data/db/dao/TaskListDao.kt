@@ -15,7 +15,11 @@ interface TaskListDao {
     fun getAllLists(): Flow<List<TaskList>>
 
     @Query(
-        "SELECT COUNT(tasks.task_slack) as task_count, lists.id, lists.list_slack, lists.name, lists.color FROM lists LEFT JOIN tasks ON lists.list_slack = tasks.list_slack GROUP BY lists.list_slack"
+        """SELECT 
+            COUNT(tasks.task_slack) as task_count, lists.id, lists.list_slack, lists.name, lists.color 
+            FROM lists LEFT JOIN tasks 
+            ON lists.list_slack = tasks.list_slack 
+            GROUP BY lists.list_slack"""
     )
     fun getAllListsWithTaskCount(): Flow<List<TaskListAndCount>>
 

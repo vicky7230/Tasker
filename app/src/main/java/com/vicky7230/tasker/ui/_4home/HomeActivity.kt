@@ -102,8 +102,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
             }
         })
 
-        homeViewModel.getTodaysTasks(getTodaysDateStart(), getTodaysDateEnd())
-        homeViewModel.getAllList()
+        homeViewModel.getData(getTodaysDateStart(), getTodaysDateEnd())
     }
 
     private fun getTodaysDateStart(): Long {

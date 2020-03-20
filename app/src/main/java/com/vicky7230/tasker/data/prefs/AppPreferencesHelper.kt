@@ -14,16 +14,31 @@ import javax.inject.Inject
 class AppPreferencesHelper @Inject constructor(@ApplicationContext context: Context) :
     PreferencesHelper {
 
+    private val PREF_KEY_ARE_LISTS_FETCHED = "PREF_KEY_ARE_LISTS_FETCHED"
+    private val PREF_KEY_ARE_TASKS_FETCHED = "PREF_KEY_ARE_TASKS_FETCHED"
     private val PREF_KEY_ACCESS_TOKEN = "PREF_KEY_ACCESS_TOKEN"
-
     private val PREF_KEY_USER_EMAIL = "PREF_KEY_USER_EMAIL"
-
     private val PREF_KEY_USER_ID = "PREF_KEY_USER_ID"
-
     private val PREF_KEY_USER_LOGGED_IN = "PREF_KEY_USER_LOGGED_IN"
 
     private val sharedPreferences: SharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(context)
+
+    override fun areListsFetched(): Boolean {
+        return sharedPreferences.getBoolean(PREF_KEY_ARE_LISTS_FETCHED, false)
+    }
+
+    override fun setListsFetched() {
+        sharedPreferences.edit().putBoolean(PREF_KEY_ARE_LISTS_FETCHED, true).apply()
+    }
+
+    override fun areTasksFetched(): Boolean {
+        return sharedPreferences.getBoolean(PREF_KEY_ARE_TASKS_FETCHED, false)
+    }
+
+    override fun setTasksFetched() {
+        sharedPreferences.edit().putBoolean(PREF_KEY_ARE_TASKS_FETCHED, true).apply()
+    }
 
     override fun getAccessToken(): String? {
         return sharedPreferences.getString(PREF_KEY_ACCESS_TOKEN, null)

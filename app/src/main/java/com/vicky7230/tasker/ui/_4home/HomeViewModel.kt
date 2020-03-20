@@ -24,39 +24,81 @@ class HomeViewModel @Inject constructor(
     var taskListAndCount = MutableLiveData<Resource<List<TaskListAndCount>>>()
     var taskAndTaskList = MutableLiveData<Resource<List<TaskAndTaskList>>>()
 
-    fun getAllList() {
+    fun getData(todaysDateStart: Long, todaysDateEnd: Long) {
+
+        viewModelScope.launch {
+            dataManager.getTasksForToday(todaysDateStart, todaysDateEnd)
+                .collect { tasksAndListFromDb: List<TaskAndTaskList> ->
+                    if (tasksAndListFromDb.isNotEmpty())
+                        taskAndTaskList.value = Resource.Success(tasksAndListFromDb)
+                }
+        }
+
         viewModelScope.launch {
             dataManager.getAllListsWithTaskCount()
                 .collect { taskListsFromDb: List<TaskListAndCount> ->
                     if (taskListsFromDb.isNotEmpty())
                         taskListAndCount.value = Resource.Success(taskListsFromDb)
-                    else {
+                }
+        }
 
-                        taskListAndCount.value = Resource.Loading
+        taskListAndCount.value = Resource.Loading
 
-                        val response = safeApiCall {
-                            dataManager.getUserTaskLists(
-                                dataManager.getUserId(),
-                                dataManager.getAccessToken()
-                            )
-                        }
+        viewModelScope.launch {
 
-                        when (response) {
-                            is Resource.Success -> {
-                                val jsonObject = response.data.asJsonObject
-                                if (jsonObject["success"].asBoolean) {
-                                    insertTaskListsInDb(jsonObject)
-                                } else {
-                                    taskListAndCount.value =
-                                        Resource.Error(IOException(jsonObject.get("message").asString))
-                                }
-                            }
-                            is Resource.Error -> {
-                                taskListAndCount.value = response
-                            }
+            if (!dataManager.areListsFetched()) {
+
+                val response1 = safeApiCall {
+                    dataManager.getUserTaskLists(
+                        dataManager.getUserId(),
+                        dataManager.getAccessToken()
+                    )
+                }
+
+                when (response1) {
+                    is Resource.Success -> {
+                        val jsonObject = response1.data.asJsonObject
+                        if (jsonObject["success"].asBoolean) {
+                            insertTaskListsInDb(jsonObject)
+                            dataManager.setListsFetched()
+                        } else {
+                            taskListAndCount.value =
+                                Resource.Error(IOException(jsonObject.get("message").asString))
                         }
                     }
+                    is Resource.Error -> {
+                        taskListAndCount.value = response1
+                    }
                 }
+            }
+
+            if (!dataManager.areTasksFetched()) {
+
+                taskAndTaskList.value = Resource.Loading
+
+                val response2 = safeApiCall {
+                    dataManager.getUserTasks(
+                        dataManager.getUserId(),
+                        dataManager.getAccessToken()
+                    )
+                }
+
+                when (response2) {
+                    is Resource.Success -> {
+                        val jsonObject = response2.data.asJsonObject
+                        if (jsonObject["success"].asBoolean) {
+                            insertTasksInDb(jsonObject)
+                            dataManager.setTasksFetched()
+                        } else {
+                            taskAndTaskList.value =
+                                Resource.Error(IOException(jsonObject["message"].asString))
+                        }
+                    }
+                    is Resource.Error -> {
+                        taskListAndCount.value = response2
+                    }
+                }
+            }
         }
     }
 
@@ -74,41 +116,6 @@ class HomeViewModel @Inject constructor(
             )
         }
         dataManager.insertTaskLists(taskListsFromNetwork)
-    }
-
-    fun getTodaysTasks(todaysDateStart: Long, todaysDateEnd: Long) {
-        viewModelScope.launch {
-            dataManager.getTasksForToday(todaysDateStart, todaysDateEnd)
-                .collect { tasksAndListFromDb: List<TaskAndTaskList> ->
-                    if (tasksAndListFromDb.isNotEmpty())
-                        taskAndTaskList.value = Resource.Success(tasksAndListFromDb)
-                    else {
-                        taskAndTaskList.value = Resource.Loading
-
-                        val response = safeApiCall {
-                            dataManager.getUserTasks(
-                                dataManager.getUserId(),
-                                dataManager.getAccessToken()
-                            )
-                        }
-
-                        when (response) {
-                            is Resource.Success -> {
-                                val jsonObject = response.data.asJsonObject
-                                if (jsonObject["success"].asBoolean) {
-                                    insertTasksInDb(jsonObject)
-                                } else {
-                                    taskAndTaskList.value =
-                                        Resource.Error(IOException(jsonObject["message"].asString))
-                                }
-                            }
-                            is Resource.Error -> {
-                                taskListAndCount.value = response
-                            }
-                        }
-                    }
-                }
-        }
     }
 
     private suspend fun insertTasksInDb(jsonObject: JsonObject) {
@@ -129,6 +136,4 @@ class HomeViewModel @Inject constructor(
 
         dataManager.insertTasks(tasksAndListFromServer)
     }
-
-
 }

@@ -108,4 +108,20 @@ constructor(
         return appDbHelper.insertTasks(tasksAndListFromServer)
     }
 
+    override fun areListsFetched(): Boolean {
+        return appPreferencesHelper.areListsFetched()
+    }
+
+    override fun setListsFetched() {
+        appPreferencesHelper.setListsFetched()
+    }
+
+    override fun areTasksFetched(): Boolean {
+        return appPreferencesHelper.areTasksFetched()
+    }
+
+    override fun setTasksFetched() {
+        appPreferencesHelper.setTasksFetched()
+    }
+
 }

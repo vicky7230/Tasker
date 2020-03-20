@@ -17,12 +17,12 @@ interface TaskDao {
     suspend fun getTask(taskLongId: Long): Task
 
     @Query(
-        """
-        SELECT tasks.id, tasks.task_id, tasks.task_slack, tasks.list_slack, tasks.task, tasks.date_time, lists.name, lists.color 
+        """SELECT 
+        tasks.id, tasks.task_id, tasks.task_slack, tasks.list_slack, tasks.task, tasks.date_time, 
+        lists.name, lists.color 
         FROM tasks LEFT JOIN lists 
         ON tasks.list_slack = lists.list_slack 
-        WHERE tasks.date_time >= :todaysDateStart AND tasks.date_time <= :todaysDateEnd
-        """
+        WHERE tasks.date_time >= :todaysDateStart AND tasks.date_time <= :todaysDateEnd"""
     )
     fun getTasksForToday(todaysDateStart: Long, todaysDateEnd: Long): Flow<List<TaskAndTaskList>>
 
