@@ -12,6 +12,7 @@
     <color name="colorGreen">#61DEA4</color>
     <color name="colorGray">#EBEFF5</color>
     <color name="colorDarkGray">#BEC0C2</color>
+    <color name="colorDarkGrayTransparent">#CCBEC0C2</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorWindowBackground">#FFFFFF</color>
     <color name="colorNavigationBarColor">#006CFF</color>

@@ -13,6 +13,13 @@
         <item name="android:fontFamily">@font/sf_pro_medium</item>
         <item name="android:textColorHint">@color/colorHints</item>
         <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowSharedElementEnterTransition">
+            @transition/change_item_transform
+        </item>
+        <item name="android:windowSharedElementExitTransition">
+            @transition/change_item_transform
+        </item>
     </style>
 
     <style name="OtpWidget.OtpView" parent="Widget.AppCompat.EditText">

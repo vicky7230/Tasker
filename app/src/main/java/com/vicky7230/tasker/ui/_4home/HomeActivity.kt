@@ -5,19 +5,25 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.Gravity
+import androidx.core.util.Pair
 import android.view.View
 import android.view.animation.LinearInterpolator
 import android.widget.AdapterView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.ListPopupWindow
+import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vicky7230.tasker.R
+import com.vicky7230.tasker.data.db.joinReturnTypes.TaskListAndCount
 import com.vicky7230.tasker.data.network.Resource
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
+import com.vicky7230.tasker.ui._6taskList.TaskListActivity
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
 import timber.log.Timber
@@ -25,7 +31,7 @@ import java.util.*
 import javax.inject.Inject
 
 
-class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
+class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsAdapter.Callback {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -53,7 +59,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
+        taskListsAdapter.setCallback(this)
         homeViewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
 
         init()
@@ -179,5 +185,26 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener {
         }
 
         listPopupWindow.dismiss()
+    }
+
+    override fun onListClick(
+        taskListAndCount: TaskListAndCount,
+        taskListCard: CardView,
+        listName: AppCompatTextView
+    ) {
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            this,
+            Pair<View, String>(taskListCard, "cardAnimation"),
+            Pair<View, String>(listName, "listNameAnimation")
+        )
+        startActivity(
+            TaskListActivity.getStartIntent(
+                this@HomeActivity,
+                taskListAndCount.listSlack,
+                taskListAndCount.color,
+                taskListAndCount.name
+            ),
+            options.toBundle()
+        )
     }
 }

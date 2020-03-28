@@ -5,6 +5,8 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskListAndCount
@@ -12,6 +14,20 @@ import kotlinx.android.synthetic.main.task_lists_item_view.view.*
 
 class TaskListsAdapter(private val taskLists: MutableList<TaskListAndCount>) :
     RecyclerView.Adapter<TaskListsAdapter.TaskListViewHolder>() {
+
+    interface Callback {
+        fun onListClick(
+            taskListAndCount: TaskListAndCount,
+            taskListCard: CardView,
+            listName: AppCompatTextView
+        )
+    }
+
+    private lateinit var callback: Callback;
+
+    fun setCallback(callback: Callback) {
+        this.callback = callback;
+    }
 
     fun updateItems(taskLists: List<TaskListAndCount>) {
         this.taskLists.clear()
@@ -27,6 +43,15 @@ class TaskListsAdapter(private val taskLists: MutableList<TaskListAndCount>) :
                 false
             )
         )
+
+        taskListViewHolder.itemView.setOnClickListener {
+            val position = taskListViewHolder.adapterPosition
+            callback.onListClick(
+                taskLists[position],
+                taskListViewHolder.itemView.task_list_card,
+                taskListViewHolder.itemView.list_name
+            )
+        }
 
         return taskListViewHolder
     }
