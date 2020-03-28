@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.Gravity
-import androidx.core.util.Pair
 import android.view.View
 import android.view.animation.LinearInterpolator
 import android.widget.AdapterView
@@ -192,11 +191,6 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
         taskListCard: CardView,
         listName: AppCompatTextView
     ) {
-        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-            this,
-            Pair<View, String>(taskListCard, "cardAnimation"),
-            Pair<View, String>(listName, "listNameAnimation")
-        )
         startActivity(
             TaskListActivity.getStartIntent(
                 this@HomeActivity,
@@ -204,7 +198,11 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
                 taskListAndCount.color,
                 taskListAndCount.name
             ),
-            options.toBundle()
+            ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this,
+                taskListCard,
+                "cardAnimation"
+            ).toBundle()
         )
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.ui._0base.BaseActivity
@@ -40,16 +41,22 @@ class TaskListActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
-        //window.enterTransition = Explode()
-        //window.exitTransition = Explode()
         setContentView(R.layout.activity_task_list)
-        if (intent != null && intent.getStringExtra(EXTRAS_LIST_COLOR) != null) {
+        if (intent != null
+            && intent.getStringExtra(EXTRAS_LIST_COLOR) != null
+            && intent.getStringExtra(EXTRAS_LIST_NAME) != null
+        ) {
             val listColor = intent.getStringExtra(EXTRAS_LIST_COLOR)
             task_list_card.backgroundTintList =
                 ColorStateList.valueOf(Color.parseColor(listColor))
             val listName = intent.getStringExtra(EXTRAS_LIST_NAME)
             list_name.text = listName
         }
+    }
+
+    override fun onBackPressed() {
+        list_name.visibility = View.GONE
+        edit_list_name.visibility = View.GONE
+        super.onBackPressed()
     }
 }

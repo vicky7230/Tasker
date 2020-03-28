@@ -29,7 +29,6 @@
                 android:text="Work"
                 android:textColor="@color/colorWhite"
                 android:textSize="19sp"
-                android:transitionName="listNameAnimation"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
