@@ -22,7 +22,7 @@ import com.vicky7230.tasker.data.db.joinReturnTypes.TaskListAndCount
 import com.vicky7230.tasker.data.network.Resource
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
-import com.vicky7230.tasker.ui._6taskList.TaskListActivity
+import com.vicky7230.tasker.ui._6taskList.TasksActivity
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
 import timber.log.Timber
@@ -192,7 +192,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
         listName: AppCompatTextView
     ) {
         startActivity(
-            TaskListActivity.getStartIntent(
+            TasksActivity.getStartIntent(
                 this@HomeActivity,
                 taskListAndCount.listSlack,
                 taskListAndCount.color,

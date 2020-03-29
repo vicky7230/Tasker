@@ -9,6 +9,7 @@ import com.vicky7230.tasker.ui._2login.LoginViewModel
 import com.vicky7230.tasker.ui._3verifyOTP.VerifyOtpViewModel
 import com.vicky7230.tasker.ui._4home.HomeViewModel
 import com.vicky7230.tasker.ui._5newTask.NewTaskViewModel
+import com.vicky7230.tasker.ui._6taskList.TasksViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -28,6 +29,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(NewTaskViewModel::class)
     internal abstract fun postNewTaskViewModel(newTaskViewModel: NewTaskViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TasksViewModel::class)
+    internal abstract fun postTasksViewModel(tasksViewModel: TasksViewModel): ViewModel
 
     @Binds
     @IntoMap

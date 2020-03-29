@@ -10,6 +10,8 @@ import com.vicky7230.tasker.ui._4home.HomeActivity
 import com.vicky7230.tasker.ui._4home.HomeModule
 import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
 import com.vicky7230.tasker.ui._5newTask.NewTaskModule
+import com.vicky7230.tasker.ui._6taskList.TasksActivity
+import com.vicky7230.tasker.ui._6taskList.TasksModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -24,6 +26,9 @@ abstract class ActivityBindingModule {
 
     @ContributesAndroidInjector(modules = [(NewTaskModule::class)])
     abstract fun bindNewTaskActivity(): NewTaskActivity
+
+    @ContributesAndroidInjector(modules = [(TasksModule::class)])
+    abstract fun bindTasksActivity(): TasksActivity
 
     @ContributesAndroidInjector(modules = [(LoginModule::class)])
     abstract fun bindLoginActivity(): LoginActivity

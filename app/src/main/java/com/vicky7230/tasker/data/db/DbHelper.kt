@@ -24,4 +24,6 @@ interface DbHelper {
     suspend fun updateTask(task: Task): Int
 
     suspend fun insertTasks(tasksAndListFromServer: MutableList<Task>): List<Long>
+
+    suspend fun getTasksForList(listSlack: String): List<Task>
 }

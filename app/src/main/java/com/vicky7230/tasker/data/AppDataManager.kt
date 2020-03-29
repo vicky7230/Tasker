@@ -108,6 +108,10 @@ constructor(
         return appDbHelper.insertTasks(tasksAndListFromServer)
     }
 
+    override suspend fun getTasksForList(listSlack: String): List<Task> {
+        return appDbHelper.getTasksForList(listSlack)
+    }
+
     override fun areListsFetched(): Boolean {
         return appPreferencesHelper.areListsFetched()
     }
