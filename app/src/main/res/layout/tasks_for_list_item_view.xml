@@ -23,17 +23,16 @@
         tools:text="Start Making Presentation"
         android:layout_marginRight="16dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorBlack"
+        android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/task_ring"
-        app:layout_constraintRight_toLeftOf="@id/task_curved_dot"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/horizontal_line"
         android:layout_height="1dp"
         android:layout_width="0dp"
-        android:background="@color/colorGray"
+        android:background="@color/colorWhite"
         app:layout_constraintLeft_toLeftOf="@id/task_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
