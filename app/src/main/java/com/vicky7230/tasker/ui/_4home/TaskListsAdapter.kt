@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskListAndCount
+import com.vicky7230.tasker.utils.AppConstants
 import kotlinx.android.synthetic.main.task_lists_item_view.view.*
 
 class TaskListsAdapter(private val taskLists: MutableList<TaskListAndCount>) :
@@ -67,6 +69,21 @@ class TaskListsAdapter(private val taskLists: MutableList<TaskListAndCount>) :
     class TaskListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
         fun onBind(taskList: TaskListAndCount) {
+            if (taskList.name == AppConstants.LIST_FAMILY) {
+                val colorBlack = ContextCompat.getColor(
+                    itemView.context,
+                    R.color.colorBlack
+                )
+                itemView.task_count.setTextColor(colorBlack)
+                itemView.list_name.setTextColor(colorBlack)
+            } else {
+                val colorWhite = ContextCompat.getColor(
+                    itemView.context,
+                    R.color.colorWhite
+                )
+                itemView.task_count.setTextColor(colorWhite)
+                itemView.list_name.setTextColor(colorWhite)
+            }
             itemView.list_name.text = taskList.name
             itemView.task_count.text = "${taskList.taskCount} Tasks"
             itemView.task_list_card.setCardBackgroundColor(Color.parseColor(taskList.color))

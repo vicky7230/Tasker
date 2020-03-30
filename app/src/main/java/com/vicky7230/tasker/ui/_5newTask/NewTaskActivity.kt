@@ -20,6 +20,7 @@ import com.vicky7230.tasker.data.db.entities.Task
 import com.vicky7230.tasker.data.db.entities.TaskList
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.utils.AnimUtils
+import com.vicky7230.tasker.utils.AppConstants
 import com.vicky7230.tasker.worker.TaskSyncWorker
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_new_task.*
@@ -40,6 +41,7 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
     @Inject
     lateinit var taskListsAdapter2: TaskListsAdapter2
 
@@ -192,7 +194,7 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
 
             val taskList2 = arrayListOf<TaskList2>()
             taskList.forEach {
-                if (it.name == "Work") {
+                if (it.name == AppConstants.LIST_WORK) {
                     val taskList2Item = TaskList2(it.listSlack, it.name, it.color, true)
                     selectedTaskList2 = taskList2Item
                     taskList2.add(taskList2Item)

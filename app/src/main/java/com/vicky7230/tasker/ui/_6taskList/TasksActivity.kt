@@ -7,11 +7,13 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.ui._0base.BaseActivity
+import com.vicky7230.tasker.utils.AppConstants
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_tasks.*
 import timber.log.Timber
@@ -25,7 +27,8 @@ class TasksActivity : BaseActivity() {
     @Inject
     lateinit var tasksForListAdapter: TasksForListAdapter
 
-    lateinit var tasksViewModel: TasksViewModel
+    private lateinit var tasksViewModel: TasksViewModel
+    private lateinit var listName: String
 
     companion object {
 
@@ -66,7 +69,7 @@ class TasksActivity : BaseActivity() {
 
             task_count.text = "${it.size} task"
             Timber.e(it.toString())
-            tasksForListAdapter.updateItems(it)
+            tasksForListAdapter.updateItems(it, listName)
         })
 
         if (intent != null
@@ -78,8 +81,22 @@ class TasksActivity : BaseActivity() {
             task_list_card.backgroundTintList =
                 ColorStateList.valueOf(Color.parseColor(listColor))
 
-            val listName = intent.getStringExtra(EXTRAS_LIST_NAME)
+            listName = intent.getStringExtra(EXTRAS_LIST_NAME)!!
             list_name.text = listName
+
+            if (listName == AppConstants.LIST_FAMILY) {
+                val colorBlack = ContextCompat.getColor(
+                    this,
+                    R.color.colorBlack
+                )
+                val colorDarkGray = ContextCompat.getColor(
+                    this,
+                    R.color.colorDarkGray
+                )
+                list_name.setTextColor(colorBlack)
+                task_count.setTextColor(colorDarkGray)
+                edit_list_name.setColorFilter(colorBlack)
+            }
 
             val listSlack = intent.getStringExtra(EXTRAS_LIST_SLACK)
             if (listSlack != null)

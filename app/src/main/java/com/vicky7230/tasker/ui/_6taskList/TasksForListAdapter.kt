@@ -4,18 +4,24 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.data.db.entities.Task
+import com.vicky7230.tasker.utils.AppConstants
 import kotlinx.android.synthetic.main.tasks_for_list_item_view.view.*
 
 
-class TasksForListAdapter(private val tasks: MutableList<Task>) :
-    RecyclerView.Adapter<TasksForListAdapter.TaskViewHolder>() {
+class TasksForListAdapter(
+    private val tasks: MutableList<Task>
+) : RecyclerView.Adapter<TasksForListAdapter.TaskViewHolder>() {
 
-    fun updateItems(tasks: List<Task>) {
+    lateinit var listName: String
+
+    fun updateItems(tasks: List<Task>, listName: String) {
         this.tasks.clear()
         this.tasks.addAll(tasks)
+        this.listName = listName
         notifyDataSetChanged()
     }
 
@@ -39,9 +45,33 @@ class TasksForListAdapter(private val tasks: MutableList<Task>) :
         holder.onBind(tasks[position])
     }
 
-    class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
         fun onBind(task: Task) {
+            if (listName == AppConstants.LIST_FAMILY) {
+                val colorBlack = ContextCompat.getColor(
+                    itemView.context,
+                    R.color.colorBlack
+                )
+                itemView.task_text.setTextColor(colorBlack)
+                val colorDarkGray = ContextCompat.getColor(
+                    itemView.context,
+                    R.color.colorDarkGray
+                )
+                itemView.task_ring.setColorFilter(colorDarkGray)
+                itemView.horizontal_line.setBackgroundColor(colorDarkGray)
+            } else {
+                val colorWhite = ContextCompat.getColor(
+                    itemView.context,
+                    R.color.colorWhite
+                )
+                val colorGray = ContextCompat.getColor(
+                    itemView.context,
+                    R.color.colorGray
+                )
+                itemView.task_text.setTextColor(colorWhite)
+                itemView.task_ring.setColorFilter(colorGray)
+            }
             itemView.task_text.text = task.task
         }
     }

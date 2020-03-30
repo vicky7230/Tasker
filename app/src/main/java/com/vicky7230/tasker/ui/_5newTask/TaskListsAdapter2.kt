@@ -4,8 +4,10 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vicky7230.tasker.R
+import com.vicky7230.tasker.utils.AppConstants
 import kotlinx.android.synthetic.main.task_lists_item_view_2.view.*
 
 class TaskListsAdapter2(private val taskLists2: MutableList<TaskList2>) :
@@ -59,6 +61,19 @@ class TaskListsAdapter2(private val taskLists2: MutableList<TaskList2>) :
 
     class TaskListViewHolder2(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun onBind(taskList2: TaskList2) {
+            if (taskList2.name == AppConstants.LIST_FAMILY) {
+                    val colorBlack = ContextCompat.getColor(
+                        itemView.context,
+                        R.color.colorBlack
+                    )
+                    itemView.name.setTextColor(colorBlack)
+                } else {
+                val colorWhite = ContextCompat.getColor(
+                    itemView.context,
+                    R.color.colorWhite
+                )
+                itemView.name.setTextColor(colorWhite)
+            }
             itemView.name.text = taskList2.name
             itemView.task_list_card.setCardBackgroundColor(Color.parseColor(taskList2.color))
             if (taskList2.selected)
