@@ -113,7 +113,7 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
 
         val calendarInstance = Calendar.getInstance()
 
-        val dateFormatter = SimpleDateFormat("d LLL YYYY", Locale.ENGLISH)
+        val dateFormatter = SimpleDateFormat("d LLL yyyy", Locale.ENGLISH)
         val formattedDate = dateFormatter.format(calendarInstance.time)
         task_date.text = formattedDate
 
