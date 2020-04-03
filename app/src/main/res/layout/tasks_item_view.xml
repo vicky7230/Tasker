@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="80dp">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/task_ring"
@@ -18,16 +18,42 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/task_text"
         android:layout_width="0dp"
-        android:textSize="18dp"
-        android:layout_marginLeft="18dp"
-        tools:text="Start Making Presentation"
-        android:layout_marginRight="16dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="16dp"
         android:textColor="@color/colorBlack"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@id/task_time"
         app:layout_constraintLeft_toRightOf="@id/task_ring"
         app:layout_constraintRight_toLeftOf="@id/task_curved_dot"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Start Making Presentation" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/clock_icon"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginLeft="18dp"
+        app:layout_constraintBottom_toBottomOf="@id/task_time"
+        app:layout_constraintLeft_toRightOf="@id/task_ring"
+        app:layout_constraintTop_toTopOf="@id/task_time"
+        app:srcCompat="@drawable/ic_alarm" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/task_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="16dp"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="14dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/clock_icon"
+        app:layout_constraintRight_toLeftOf="@id/task_curved_dot"
+        app:layout_constraintTop_toBottomOf="@id/task_text"
+        tools:text="7:00 pm" />
 
     <View
         android:id="@+id/task_curved_dot"
@@ -41,11 +67,11 @@
 
     <View
         android:id="@+id/horizontal_line"
-        android:layout_height="0.5dp"
         android:layout_width="0dp"
+        android:layout_height="0.5dp"
         android:background="@color/colorGray"
-        app:layout_constraintLeft_toLeftOf="@id/task_text"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="@id/task_text"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

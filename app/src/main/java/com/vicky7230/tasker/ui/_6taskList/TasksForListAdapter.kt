@@ -10,6 +10,8 @@ import com.vicky7230.tasker.R
 import com.vicky7230.tasker.data.db.entities.Task
 import com.vicky7230.tasker.utils.AppConstants
 import kotlinx.android.synthetic.main.tasks_for_list_item_view.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class TasksForListAdapter(
@@ -17,6 +19,7 @@ class TasksForListAdapter(
 ) : RecyclerView.Adapter<TasksForListAdapter.TaskViewHolder>() {
 
     lateinit var listName: String
+    val outputDateFormat = SimpleDateFormat("d LLL yyyy h:m a", Locale.ENGLISH)
 
     fun updateItems(tasks: List<Task>, listName: String) {
         this.tasks.clear()
@@ -54,6 +57,8 @@ class TasksForListAdapter(
                     R.color.colorBlack
                 )
                 itemView.task_text.setTextColor(colorBlack)
+                itemView.task_time.setTextColor(colorBlack)
+                itemView.clock_icon.setColorFilter(colorBlack)
                 val colorDarkGray = ContextCompat.getColor(
                     itemView.context,
                     R.color.colorDarkGray
@@ -73,6 +78,7 @@ class TasksForListAdapter(
                 itemView.task_ring.setColorFilter(colorGray)
             }
             itemView.task_text.text = task.task
+            itemView.task_time.text = outputDateFormat.format(Date(task.dateTime))
         }
     }
 }

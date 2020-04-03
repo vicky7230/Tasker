@@ -66,9 +66,7 @@ class TasksActivity : BaseActivity() {
     @SuppressLint("SetTextI18n")
     private fun init() {
         tasksViewModel.tasks.observe(this, Observer {
-
             task_count.text = "${it.size} task"
-            Timber.e(it.toString())
             tasksForListAdapter.updateItems(it, listName)
         })
 

@@ -22,11 +22,12 @@ interface TaskDao {
         lists.name, lists.color 
         FROM tasks LEFT JOIN lists 
         ON tasks.list_slack = lists.list_slack 
-        WHERE tasks.date_time >= :todaysDateStart AND tasks.date_time <= :todaysDateEnd"""
+        WHERE tasks.date_time >= :todaysDateStart AND tasks.date_time <= :todaysDateEnd 
+        ORDER BY tasks.id DESC"""
     )
     fun getTasksForToday(todaysDateStart: Long, todaysDateEnd: Long): Flow<List<TaskAndTaskList>>
 
-    @Query("SELECT * FROM tasks WHERE list_slack =:listSlack")
+    @Query("SELECT * FROM tasks WHERE list_slack =:listSlack  ORDER BY id DESC")
     suspend fun getTasksForList(listSlack: String): List<Task>
 
     @Update

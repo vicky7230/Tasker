@@ -10,9 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskAndTaskList
 import kotlinx.android.synthetic.main.tasks_item_view.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TodaysTaskAdapter(private val tasks: MutableList<TaskAndTaskList>) :
     RecyclerView.Adapter<TodaysTaskAdapter.TaskViewHolder>() {
+
+    val outputDateFormat = SimpleDateFormat("h:m a", Locale.ENGLISH)
 
     fun updateItems(tasks: List<TaskAndTaskList>) {
         this.tasks.clear()
@@ -36,10 +40,11 @@ class TodaysTaskAdapter(private val tasks: MutableList<TaskAndTaskList>) :
         holder.onBind(tasks[position])
     }
 
-    class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
         fun onBind(task: TaskAndTaskList) {
             itemView.task_text.text = task.task
+            itemView.task_time.text = outputDateFormat.format(Date(task.dateTime))
             itemView.task_curved_dot.backgroundTintList =
                 ColorStateList.valueOf(Color.parseColor(task.color))
         }

@@ -24,10 +24,36 @@
         android:layout_marginRight="16dp"
         android:textColor="@color/colorWhite"
         android:textSize="18dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/task_time"
         app:layout_constraintLeft_toRightOf="@id/task_ring"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
         tools:text="Start Making Presentation" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/clock_icon"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginLeft="18dp"
+        app:layout_constraintBottom_toBottomOf="@id/task_time"
+        app:layout_constraintLeft_toRightOf="@id/task_ring"
+        app:layout_constraintTop_toTopOf="@id/task_time"
+        app:srcCompat="@drawable/ic_alarm"
+        app:tint="@color/colorGray" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/task_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="16dp"
+        android:textColor="@color/colorGray"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/clock_icon"
+        app:layout_constraintTop_toBottomOf="@id/task_text"
+        tools:text="7:00 pm" />
 
     <View
         android:id="@+id/horizontal_line"

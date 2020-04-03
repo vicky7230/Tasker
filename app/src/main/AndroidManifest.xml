@@ -16,7 +16,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui._6taskList.TasksActivity"></activity>
+        <activity
+            android:name=".ui._6taskList.TasksActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui._5newTask.NewTaskActivity"
             android:screenOrientation="portrait"

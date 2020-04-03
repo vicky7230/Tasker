@@ -6,16 +6,15 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.vicky7230.tasker.R
+import android.widget.NumberPicker
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.work.*
+import com.vicky7230.tasker.R
 import com.vicky7230.tasker.data.db.entities.Task
 import com.vicky7230.tasker.data.db.entities.TaskList
 import com.vicky7230.tasker.ui._0base.BaseActivity
@@ -30,7 +29,6 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil
 import org.apache.commons.lang3.RandomStringUtils
-import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -47,6 +45,8 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
 
     private lateinit var newTaskViewModel: NewTaskViewModel
     private lateinit var selectedTaskList2: TaskList2
+    private val TIME_PICKER_INTERVAL = 15
+    private lateinit var minutePicker: NumberPicker
 
     companion object {
         fun getStartIntent(context: Context): Intent {
@@ -297,5 +297,4 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
         which_task_list.text = selectedTaskList2.name
         curved_dot.backgroundTintList = ColorStateList.valueOf(Color.parseColor(taskList2.color))
     }
-
 }
