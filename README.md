@@ -7,7 +7,7 @@
 ![KOTLIN LOGO](https://github.com/vicky7230/Tasker/blob/master/graphics/kotLogo.png "Tasker is written in kotlin")
 
 
-### This repository implements MVVM architecture using Kotlin, Dagger2, RxJava2, Room and Retrofit2. 
+### This repository implements MVVM architecture using Kotlin, Dagger2, Kotlin-Coroutines, Room and Retrofit2. 
 
 
 <p align="center">
@@ -26,6 +26,7 @@
 #### Classes have been designed in such a way that it could be inherited and maximize the code reuse.
 
 ### Libraries used:
+1. kotlinx.coroutines : https://github.com/Kotlin/kotlinx.coroutines
 2. Dagger2: https://github.com/google/dagger
 3. Retrofit2: https://github.com/square/retrofit
 4. Timber: https://github.com/JakeWharton/timber
