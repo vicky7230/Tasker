@@ -115,9 +115,9 @@ class TasksActivity : BaseActivity() {
         }
     }
 
-    override fun onBackPressed() {
+    /*override fun onBackPressed() {
         list_name.visibility = View.GONE
         edit_list_name.visibility = View.GONE
         super.onBackPressed()
-    }
+    }*/
 }
