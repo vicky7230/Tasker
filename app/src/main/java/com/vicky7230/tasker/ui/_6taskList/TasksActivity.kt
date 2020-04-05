@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -71,6 +72,8 @@ class TasksActivity : BaseActivity() {
         chromeFader = object : ElasticDragDismissLinearLayout.SystemChromeFader(this) {
             override fun onDragDismissed() {
                 Timber.d("onDragDismissed")
+                list_name.visibility = View.GONE
+                edit_list_name.visibility = View.GONE
                 supportFinishAfterTransition()
             }
         }
@@ -114,9 +117,9 @@ class TasksActivity : BaseActivity() {
         }
     }
 
-    /*override fun onBackPressed() {
+    override fun onBackPressed() {
         list_name.visibility = View.GONE
         edit_list_name.visibility = View.GONE
         super.onBackPressed()
-    }*/
+    }
 }
