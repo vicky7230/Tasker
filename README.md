@@ -11,9 +11,9 @@
 
 
 <p align="center">
-  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/Home.png" width="280">
-  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/NewTask.png" width="280">
-  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/Shopping.png" width="280">
+  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/1.png" width="280">
+  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/2.png" width="280">
+  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/3.png" width="280">
 </p>
 
 #### The app has following packages:
