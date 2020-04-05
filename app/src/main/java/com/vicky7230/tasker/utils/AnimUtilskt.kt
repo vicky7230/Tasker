@@ -5,7 +5,7 @@ import android.animation.ValueAnimator
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 
-object AnimUtils {
+object AnimUtilskt {
 
     fun slideView(view: View, currentHeight: Int, newHeight: Int) {
         val slideAnimator = ValueAnimator

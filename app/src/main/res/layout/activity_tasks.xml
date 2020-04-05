@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.vicky7230.tasker.widget.ElasticDragDismissLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/draggable_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
+    android:orientation="vertical"
+    app:dragDismissDistance="170dp"
+    app:dragDismissScale="0.95"
     tools:context=".ui._6taskList.TasksActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -74,4 +78,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+</com.vicky7230.tasker.widget.ElasticDragDismissLinearLayout>

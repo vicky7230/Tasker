@@ -14,10 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.utils.AppConstants
+import com.vicky7230.tasker.widget.ElasticDragDismissLinearLayout
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_tasks.*
 import timber.log.Timber
 import javax.inject.Inject
+
 
 class TasksActivity : BaseActivity() {
 
@@ -29,6 +31,7 @@ class TasksActivity : BaseActivity() {
 
     private lateinit var tasksViewModel: TasksViewModel
     private lateinit var listName: String
+    private lateinit var chromeFader: ElasticDragDismissLinearLayout.SystemChromeFader
 
     companion object {
 
@@ -65,6 +68,16 @@ class TasksActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun init() {
+
+        chromeFader = object : ElasticDragDismissLinearLayout.SystemChromeFader(this) {
+            override fun onDragDismissed() {
+                Timber.d("onDragDismissed")
+                supportFinishAfterTransition()
+            }
+        }
+
+        draggable_layout.addListener(chromeFader)
+
         tasksViewModel.tasks.observe(this, Observer {
             task_count.text = "${it.size} task"
             tasksForListAdapter.updateItems(it, listName)
@@ -76,8 +89,8 @@ class TasksActivity : BaseActivity() {
             && intent.getStringExtra(EXTRAS_LIST_SLACK) != null
         ) {
             val listColor = intent.getStringExtra(EXTRAS_LIST_COLOR)
-            task_list_card.backgroundTintList =
-                ColorStateList.valueOf(Color.parseColor(listColor))
+            tasks.setBackgroundColor(Color.parseColor(listColor))
+            task_list_card.backgroundTintList = ColorStateList.valueOf(Color.parseColor(listColor))
 
             listName = intent.getStringExtra(EXTRAS_LIST_NAME)!!
             list_name.text = listName

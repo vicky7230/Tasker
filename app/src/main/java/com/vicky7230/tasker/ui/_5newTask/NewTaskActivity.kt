@@ -18,7 +18,7 @@ import com.vicky7230.tasker.R
 import com.vicky7230.tasker.data.db.entities.Task
 import com.vicky7230.tasker.data.db.entities.TaskList
 import com.vicky7230.tasker.ui._0base.BaseActivity
-import com.vicky7230.tasker.utils.AnimUtils
+import com.vicky7230.tasker.utils.AnimUtilskt
 import com.vicky7230.tasker.utils.AppConstants
 import com.vicky7230.tasker.worker.TaskSyncWorker
 import dagger.android.AndroidInjection
@@ -138,18 +138,18 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
                 task_list_view_container.visibility = View.GONE
                 time_button.isSelected = false
                 which_task_list.isSelected = false
-                AnimUtils.slideView(calendar_view_container, 0, calendarViewContainerHeight)
+                AnimUtilskt.slideView(calendar_view_container, 0, calendarViewContainerHeight)
             }
         }
 
         date_cancel_button.setOnClickListener {
             calendar_button.isSelected = false
-            AnimUtils.slideView(calendar_view_container, calendarViewContainerHeight, 0)
+            AnimUtilskt.slideView(calendar_view_container, calendarViewContainerHeight, 0)
         }
 
         date_done_button.setOnClickListener {
             calendar_button.isSelected = false
-            AnimUtils.slideView(calendar_view_container, calendarViewContainerHeight, 0)
+            AnimUtilskt.slideView(calendar_view_container, calendarViewContainerHeight, 0)
         }
 
         time_view.setOnTimeChangedListener { view, hourOfDay, minute ->
@@ -168,18 +168,18 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
                 task_list_view_container.visibility = View.GONE
                 calendar_button.isSelected = false
                 which_task_list.isSelected = false
-                AnimUtils.slideView(time_view_container, 0, timeViewContainerHeight)
+                AnimUtilskt.slideView(time_view_container, 0, timeViewContainerHeight)
             }
         }
 
         time_cancel_button.setOnClickListener {
             time_button.isSelected = false
-            AnimUtils.slideView(time_view_container, timeViewContainerHeight, 0)
+            AnimUtilskt.slideView(time_view_container, timeViewContainerHeight, 0)
         }
 
         time_done_button.setOnClickListener {
             time_button.isSelected = false
-            AnimUtils.slideView(time_view_container, timeViewContainerHeight, 0)
+            AnimUtilskt.slideView(time_view_container, timeViewContainerHeight, 0)
         }
 
         task_lists_2.layoutManager = LinearLayoutManager(this)
@@ -225,18 +225,18 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
                 task_list_view_container.visibility = View.VISIBLE
                 time_button.isSelected = false
                 calendar_button.isSelected = false
-                AnimUtils.slideView(task_list_view_container, 0, taskListViewContainerHeight)
+                AnimUtilskt.slideView(task_list_view_container, 0, taskListViewContainerHeight)
             }
         }
 
         task_list_cancel_button.setOnClickListener {
             which_task_list.isSelected = false
-            AnimUtils.slideView(task_list_view_container, taskListViewContainerHeight, 0)
+            AnimUtilskt.slideView(task_list_view_container, taskListViewContainerHeight, 0)
         }
 
         task_list_done_button.setOnClickListener {
             which_task_list.isSelected = false
-            AnimUtils.slideView(task_list_view_container, taskListViewContainerHeight, 0)
+            AnimUtilskt.slideView(task_list_view_container, taskListViewContainerHeight, 0)
         }
 
         cancel_button.setOnClickListener {
