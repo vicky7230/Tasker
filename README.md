@@ -9,16 +9,17 @@
 
 ### This repository implements MVVM architecture using Kotlin, Dagger2, RxJava2, Room and Retrofit2. 
 
+
 <p align="center">
-  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/Home.jpg" width="280">
-  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/Lists.jpg" width="280">
-  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/Shopping.jpg" width="280">
+  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/Home.png" width="280">
+  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/NewTask.png" width="280">
+  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/Shopping.png" width="280">
 </p>
 
 #### The app has following packages:
 1. **data**: It contains all the data accessing and manipulating components.
 2. **di**: Dependency providing classes using Dagger2.
-3. **ui**: View classes along with their corresponding Presenters.
+3. **ui**: View classes along with their corresponding ViewModels.
 4. **worker**: Workers for the syncing data in background.
 5. **utils**: Utility classes.
 
