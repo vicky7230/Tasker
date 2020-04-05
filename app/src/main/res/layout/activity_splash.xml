@@ -7,6 +7,7 @@
     tools:context=".ui._1splash.SplashActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/splash_image"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_gravity="center"
