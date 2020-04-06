@@ -3,6 +3,7 @@ package com.vicky7230.tasker.ui._4home
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -17,7 +18,10 @@ import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.vicky7230.tasker.R
+import com.vicky7230.tasker.data.db.joinReturnTypes.TaskAndTaskList
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskListAndCount
 import com.vicky7230.tasker.data.network.Resource
 import com.vicky7230.tasker.ui._0base.BaseActivity
@@ -74,9 +78,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
         task_lists.isNestedScrollingEnabled = false
         task_lists.adapter = taskListsAdapter
 
-        todays_tasks.layoutManager = LinearLayoutManager(this)
-        todays_tasks.isNestedScrollingEnabled = false
-        todays_tasks.adapter = todaysTaskAdapter
+        setUpTodaysTasksRecyclerView()
 
         homeViewModel.taskListAndCount.observe(this, Observer {
             when (it) {
@@ -108,6 +110,52 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
         })
 
         homeViewModel.getData(getTodaysDateStart(), getTodaysDateEnd())
+    }
+
+    private fun setUpTodaysTasksRecyclerView() {
+        todays_tasks.layoutManager = LinearLayoutManager(this)
+        todays_tasks.isNestedScrollingEnabled = false
+        todays_tasks.adapter = todaysTaskAdapter
+
+        val swipeHelper = object : SwipeHelper(this, todays_tasks, 200) {
+            override fun instantiateMyButton(
+                viewHolder: RecyclerView.ViewHolder,
+                buffer: MutableList<UnderlayButton>
+            ) {
+                buffer.add(
+                    UnderlayButton(
+                        this@HomeActivity,
+                        "Delete",
+                        30,
+                        R.drawable.ic_trash,
+                        ContextCompat.getColor(this@HomeActivity, R.color.colorRed),
+                        object : UnderlayButtonClickListener {
+                            override fun onClick(position: Int) {
+                                val item: TaskAndTaskList =
+                                    todaysTaskAdapter.getData()[position]
+                                todaysTaskAdapter.removeItem(position)
+
+                                val snackbar: Snackbar = Snackbar.make(
+                                    todays_tasks,
+                                    "Item was removed from the list.",
+                                    Snackbar.LENGTH_LONG
+                                )
+                                snackbar.setAction(
+                                    "UNDO",
+                                    View.OnClickListener {
+                                        todaysTaskAdapter.restoreItem(item, position)
+                                        todays_tasks.scrollToPosition(position)
+                                    })
+
+                                snackbar.setActionTextColor(Color.YELLOW)
+                                snackbar.show()
+                            }
+                        }
+                    )
+                )
+            }
+
+        }
     }
 
     private fun getTodaysDateStart(): Long {

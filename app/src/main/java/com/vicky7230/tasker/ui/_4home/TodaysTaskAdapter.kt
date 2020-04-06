@@ -1,5 +1,6 @@
 package com.vicky7230.tasker.ui._4home
 
+import android.R.attr.data
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -12,6 +13,7 @@ import com.vicky7230.tasker.data.db.joinReturnTypes.TaskAndTaskList
 import kotlinx.android.synthetic.main.tasks_item_view.view.*
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class TodaysTaskAdapter(private val todaysTasks: MutableList<TaskAndTaskList>) :
     RecyclerView.Adapter<TodaysTaskAdapter.TaskViewHolder>() {
@@ -34,6 +36,20 @@ class TodaysTaskAdapter(private val todaysTasks: MutableList<TaskAndTaskList>) :
 
     override fun getItemCount(): Int {
         return todaysTasks.size
+    }
+
+    fun removeItem(position: Int) {
+        todaysTasks.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    fun restoreItem(item: TaskAndTaskList, position: Int) {
+        todaysTasks.add(position, item)
+        notifyItemInserted(position)
+    }
+
+    fun getData(): MutableList<TaskAndTaskList> {
+        return todaysTasks
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
