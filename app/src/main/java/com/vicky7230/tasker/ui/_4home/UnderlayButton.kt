@@ -51,7 +51,13 @@ class UnderlayButton(
         } else {
             val d = ContextCompat.getDrawable(context, imageResId)!!
             val bitmap = drawableToBitmap(d)
-            c.drawBitmap(bitmap, (rectF.left + rectF.right) / 2, (rectF.top + rectF.bottom) / 2, p)
+            //c.drawBitmap(bitmap, (rectF.left + rectF.right) / 2, (rectF.top + rectF.bottom) / 2, p)
+            c.drawBitmap(
+                bitmap,
+                rectF.left + (rectF.width() / 2) - (bitmap.width / 2),
+                rectF.top + (rectF.height() / 2) - (bitmap.height / 2),
+                p
+            )
         }
 
         clickRegion = rectF

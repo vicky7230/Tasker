@@ -24,7 +24,7 @@ abstract class SwipeHelper(
     private lateinit var gestureDetector: GestureDetector
     var swipePosition = -1
     var swipeThreshold = 0.5f
-    val buttonBuffer: MutableMap<Int, MutableList<UnderlayButton>>
+    private val buttonBuffer: MutableMap<Int, MutableList<UnderlayButton>>
     lateinit var removerQueue: LinkedList<Int>
 
     abstract fun instantiateMyButton(
