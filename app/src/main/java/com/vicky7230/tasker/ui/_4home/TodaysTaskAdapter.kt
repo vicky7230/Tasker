@@ -13,14 +13,14 @@ import kotlinx.android.synthetic.main.tasks_item_view.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TodaysTaskAdapter(private val tasks: MutableList<TaskAndTaskList>) :
+class TodaysTaskAdapter(private val todaysTasks: MutableList<TaskAndTaskList>) :
     RecyclerView.Adapter<TodaysTaskAdapter.TaskViewHolder>() {
 
     val outputDateFormat = SimpleDateFormat("h:m a", Locale.ENGLISH)
 
     fun updateItems(tasks: List<TaskAndTaskList>) {
-        this.tasks.clear()
-        this.tasks.addAll(tasks)
+        this.todaysTasks.clear()
+        this.todaysTasks.addAll(tasks)
         notifyDataSetChanged()
     }
 
@@ -33,11 +33,11 @@ class TodaysTaskAdapter(private val tasks: MutableList<TaskAndTaskList>) :
     }
 
     override fun getItemCount(): Int {
-        return tasks.size
+        return todaysTasks.size
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        holder.onBind(tasks[position])
+        holder.onBind(todaysTasks[position])
     }
 
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -74,9 +74,9 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
         task_lists.isNestedScrollingEnabled = false
         task_lists.adapter = taskListsAdapter
 
-        tasks.layoutManager = LinearLayoutManager(this)
-        tasks.isNestedScrollingEnabled = false
-        tasks.adapter = todaysTaskAdapter
+        todays_tasks.layoutManager = LinearLayoutManager(this)
+        todays_tasks.isNestedScrollingEnabled = false
+        todays_tasks.adapter = todaysTaskAdapter
 
         homeViewModel.taskListAndCount.observe(this, Observer {
             when (it) {
