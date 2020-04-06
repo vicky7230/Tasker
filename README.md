@@ -9,7 +9,7 @@
 
 ### This repository implements MVVM architecture using Kotlin, Dagger2, Kotlin-Coroutines, Room and Retrofit2. 
 
-<img src="https://github.com/vicky7230/Tasker/blob/master/graphics/ui.jpg" width="1300">
+<img src="https://github.com/vicky7230/Tasker/blob/master/graphics/ui.jpg" width="1000">
 
 <p align="center">
   <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/1.png" width="280">
