@@ -38,7 +38,7 @@ class CreateTaskWorker @AssistedInject constructor(
 
                 val task = getTaskFromDbJob.await()
 
-                val taskNetworkSyncJob = async {
+                val createTaskJob = async {
                     dataManager.createTask(
                         TaskData(
                             dataManager.getUserId(),
@@ -49,7 +49,7 @@ class CreateTaskWorker @AssistedInject constructor(
                 }
 
                 try {
-                    val response = taskNetworkSyncJob.await()
+                    val response = createTaskJob.await()
                     if (response.isSuccessful) {
                         val jsonObject = response.body()!!.asJsonObject
                         if (jsonObject["success"].asBoolean && jsonObject["created"].asBoolean) {

@@ -35,31 +35,36 @@ class UpdateTaskWorker @AssistedInject constructor(
 
                 val task = getTaskFromDbJob.await()
 
-                val taskNetworkSyncJob = async {
-                    dataManager.updateTask(
-                        TaskData(
-                            dataManager.getUserId(),
-                            dataManager.getAccessToken(),
-                            task
-                        )
-                    )
-                }
+                if (task.taskSlack != (-1).toString()) {
 
-                try {
-                    val response = taskNetworkSyncJob.await()
-                    if (response.isSuccessful) {
-                        val jsonObject = response.body()!!.asJsonObject
-                        if (jsonObject["success"].asBoolean && jsonObject["updated"].asBoolean) {
-                            success = true
+                    val updateTaskJob = async {
+                        dataManager.updateTask(
+                            TaskData(
+                                dataManager.getUserId(),
+                                dataManager.getAccessToken(),
+                                task
+                            )
+                        )
+                    }
+
+                    try {
+                        val response = updateTaskJob.await()
+                        if (response.isSuccessful) {
+                            val jsonObject = response.body()!!.asJsonObject
+                            if (jsonObject["success"].asBoolean && jsonObject["updated"].asBoolean) {
+                                success = true
+                            }
                         }
+                    } catch (e: Exception) {
+                        if (e is CancellationException) {
+                            Timber.d("Job was Cancelled....")
+                        }
+                        //Log exception
+                        Timber.e("Handling Exception......")
+                        Timber.e(e)
                     }
-                } catch (e: Exception) {
-                    if (e is CancellationException) {
-                        Timber.d("Job was Cancelled....")
-                    }
-                    //Log exception
-                    Timber.e("Handling Exception......")
-                    Timber.e(e)
+                } else {
+                    success = false
                 }
             }
         } else {

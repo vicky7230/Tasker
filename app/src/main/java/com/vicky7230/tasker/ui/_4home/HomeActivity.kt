@@ -286,7 +286,6 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
             .build()
         val taskToUpdate = workDataOf(UpdateTaskWorker.TASK_LONG_ID to taskLongId)
         val updateTaskWorkerRequest = OneTimeWorkRequestBuilder<UpdateTaskWorker>()
-            .setInitialDelay(20, TimeUnit.SECONDS)
             .setBackoffCriteria(
                 BackoffPolicy.LINEAR,
                 OneTimeWorkRequest.MIN_BACKOFF_MILLIS,
