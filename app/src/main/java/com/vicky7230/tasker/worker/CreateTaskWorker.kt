@@ -12,7 +12,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.supervisorScope
 import timber.log.Timber
 
-class TaskSyncWorker @AssistedInject constructor(
+class CreateTaskWorker @AssistedInject constructor(
     @Assisted private val appContext: Context,
     @Assisted private val params: WorkerParameters,
     private val dataManager: DataManager
@@ -39,8 +39,8 @@ class TaskSyncWorker @AssistedInject constructor(
                 val task = getTaskFromDbJob.await()
 
                 val taskNetworkSyncJob = async {
-                    dataManager.syncSingleTask(
-                        TaskSync(
+                    dataManager.createTask(
+                        TaskData(
                             dataManager.getUserId(),
                             dataManager.getAccessToken(),
                             task
@@ -52,7 +52,7 @@ class TaskSyncWorker @AssistedInject constructor(
                     val response = taskNetworkSyncJob.await()
                     if (response.isSuccessful) {
                         val jsonObject = response.body()!!.asJsonObject
-                        if (jsonObject["success"].asBoolean && jsonObject["synced"].asBoolean) {
+                        if (jsonObject["success"].asBoolean && jsonObject["created"].asBoolean) {
                             task.taskSlack = jsonObject["task_slack"].asString
                             val updateTaskSlackJob = async {
                                 dataManager.updateTask(task)

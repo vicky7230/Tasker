@@ -28,10 +28,9 @@ import com.vicky7230.tasker.data.network.Resource
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
 import com.vicky7230.tasker.ui._6taskList.TasksActivity
-import com.vicky7230.tasker.worker.TaskSyncWorker
+import com.vicky7230.tasker.worker.UpdateTaskWorker
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.tasks_item_view.view.*
 import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -82,8 +81,8 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
 
         setUpTodaysTasksRecyclerView()
 
-        homeViewModel.taskFinished.observe(this, Observer {taskLongId: Long ->
-            syncTask(taskLongId)
+        homeViewModel.taskFinished.observe(this, Observer { taskLongId: Long ->
+            updateTask(taskLongId)
         })
 
         homeViewModel.taskListAndCount.observe(this, Observer {
@@ -281,20 +280,21 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
         )
     }
 
-    private fun syncTask(taskLongId: Long) {
+    private fun updateTask(taskLongId: Long) {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
-        val taskToSync = workDataOf(TaskSyncWorker.TASK_LONG_ID to taskLongId)
-        val taskSyncWorkerRequest = OneTimeWorkRequestBuilder<TaskSyncWorker>()
+        val taskToUpdate = workDataOf(UpdateTaskWorker.TASK_LONG_ID to taskLongId)
+        val updateTaskWorkerRequest = OneTimeWorkRequestBuilder<UpdateTaskWorker>()
+            .setInitialDelay(20, TimeUnit.SECONDS)
             .setBackoffCriteria(
                 BackoffPolicy.LINEAR,
                 OneTimeWorkRequest.MIN_BACKOFF_MILLIS,
                 TimeUnit.MILLISECONDS
             )
-            .setInputData(taskToSync)
+            .setInputData(taskToUpdate)
             .setConstraints(constraints)
             .build()
-        WorkManager.getInstance(this).enqueue(taskSyncWorkerRequest)
+        WorkManager.getInstance(this).enqueue(updateTaskWorkerRequest)
     }
 }

@@ -1,7 +1,7 @@
 package com.vicky7230.tasker.data.network
 
 import com.google.gson.JsonElement
-import com.vicky7230.tasker.worker.TaskSync
+import com.vicky7230.tasker.worker.TaskData
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -31,9 +31,14 @@ interface ApiService {
         @Field("token") token: String?
     ): Response<JsonElement>
 
-    @POST("api/TaskApi/syncSingleTask")
-    suspend fun syncSingleTask(
-        @Body taskSync: TaskSync
+    @POST("api/TaskApi/insertTask")
+    suspend fun createTask(
+        @Body taskData: TaskData
+    ): Response<JsonElement>
+
+    @POST("api/TaskApi/updateTask")
+    suspend fun updateTask(
+        @Body taskData: TaskData
     ): Response<JsonElement>
 
     @FormUrlEncoded

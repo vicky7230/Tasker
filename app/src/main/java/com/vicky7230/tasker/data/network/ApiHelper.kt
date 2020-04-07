@@ -1,8 +1,7 @@
 package com.vicky7230.tasker.data.network
 
 import com.google.gson.JsonElement
-import com.vicky7230.tasker.data.db.entities.Task
-import com.vicky7230.tasker.worker.TaskSync
+import com.vicky7230.tasker.worker.TaskData
 import retrofit2.Response
 
 
@@ -14,7 +13,9 @@ interface ApiHelper {
 
     suspend fun getUserTaskLists(userId: String?, token: String?): Response<JsonElement>
 
-    suspend fun syncSingleTask(taskSync: TaskSync): Response<JsonElement>
+    suspend fun createTask(taskData: TaskData): Response<JsonElement>
+
+    suspend fun updateTask(taskData: TaskData): Response<JsonElement>
 
     suspend fun getUserTasks(userId: String?, token: String?): Response<JsonElement>
 }

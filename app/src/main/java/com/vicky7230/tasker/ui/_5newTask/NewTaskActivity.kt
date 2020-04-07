@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import android.widget.NumberPicker
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -20,7 +19,7 @@ import com.vicky7230.tasker.data.db.entities.TaskList
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.utils.AnimUtilskt
 import com.vicky7230.tasker.utils.AppConstants
-import com.vicky7230.tasker.worker.TaskSyncWorker
+import com.vicky7230.tasker.worker.CreateTaskWorker
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_new_task.*
 import kotlinx.coroutines.delay
@@ -45,8 +44,6 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
 
     private lateinit var newTaskViewModel: NewTaskViewModel
     private lateinit var selectedTaskList2: TaskList2
-    private val TIME_PICKER_INTERVAL = 15
-    private lateinit var minutePicker: NumberPicker
 
     companion object {
         fun getStartIntent(context: Context): Intent {
@@ -265,7 +262,7 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
 
         newTaskViewModel.taskInserted.observe(this, Observer { taskLongId: Long ->
 
-            syncTask(taskLongId)
+            createTask(taskLongId)
 
             finish()
 
@@ -274,21 +271,21 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
         newTaskViewModel.getAllList()
     }
 
-    private fun syncTask(taskLongId: Long) {
+    private fun createTask(taskLongId: Long) {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
-        val taskToSync = workDataOf(TaskSyncWorker.TASK_LONG_ID to taskLongId)
-        val taskSyncWorkerRequest = OneTimeWorkRequestBuilder<TaskSyncWorker>()
+        val taskToCreate = workDataOf(CreateTaskWorker.TASK_LONG_ID to taskLongId)
+        val createTaskWorkerRequest = OneTimeWorkRequestBuilder<CreateTaskWorker>()
             .setBackoffCriteria(
                 BackoffPolicy.LINEAR,
                 OneTimeWorkRequest.MIN_BACKOFF_MILLIS,
                 TimeUnit.MILLISECONDS
             )
-            .setInputData(taskToSync)
+            .setInputData(taskToCreate)
             .setConstraints(constraints)
             .build()
-        WorkManager.getInstance(this).enqueue(taskSyncWorkerRequest)
+        WorkManager.getInstance(this).enqueue(createTaskWorkerRequest)
     }
 
     override fun onTaskListClick(taskList2: TaskList2) {
