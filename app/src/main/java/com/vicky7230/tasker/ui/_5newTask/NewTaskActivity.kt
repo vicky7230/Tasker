@@ -280,7 +280,6 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
             .build()
         val taskToSync = workDataOf(TaskSyncWorker.TASK_LONG_ID to taskLongId)
         val taskSyncWorkerRequest = OneTimeWorkRequestBuilder<TaskSyncWorker>()
-            .setInitialDelay(20, TimeUnit.SECONDS)
             .setBackoffCriteria(
                 BackoffPolicy.LINEAR,
                 OneTimeWorkRequest.MIN_BACKOFF_MILLIS,

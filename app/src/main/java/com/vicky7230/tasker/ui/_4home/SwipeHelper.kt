@@ -10,15 +10,17 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.vicky7230.tasker.R
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 abstract class SwipeHelper(
-    context: Context,
+    private val context: Context,
     private val recyclerView: RecyclerView,
-    private var buttonWidth: Int
-) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+    private var buttonWidth: Int,
+    private val rightSwipeListener: RightSwipeListener
+) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
 
     private var buttonList: MutableList<UnderlayButton>? = null
     private lateinit var gestureDetector: GestureDetector
@@ -124,18 +126,23 @@ abstract class SwipeHelper(
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        val pos = viewHolder.adapterPosition
-        if (swipePosition != pos) {
-            removerQueue.add(swipePosition)
+        if (direction == ItemTouchHelper.LEFT) {
+            val pos = viewHolder.adapterPosition
+            if (swipePosition != pos) {
+                removerQueue.add(swipePosition)
+            }
+            swipePosition = pos
+            if (buttonBuffer.containsKey(swipePosition))
+                buttonList = buttonBuffer[swipePosition]
+            else
+                buttonList?.clear()
+            buttonBuffer.clear()
+            swipeThreshold = 0.5f * buttonList!!.size.toFloat() * buttonWidth.toFloat()
+            recoverSwipeItem()
+        } else {
+            rightSwipeListener.onRightSwiped(viewHolder)
+            //recyclerView.adapter?.notifyItemChanged(viewHolder.adapterPosition)
         }
-        swipePosition = pos
-        if (buttonBuffer.containsKey(swipePosition))
-            buttonList = buttonBuffer[swipePosition]
-        else
-            buttonList?.clear()
-        buttonBuffer.clear()
-        swipeThreshold = 0.5f * buttonList!!.size.toFloat() * buttonWidth.toFloat()
-        recoverSwipeItem()
     }
 
     override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder): Float {
@@ -179,6 +186,10 @@ abstract class SwipeHelper(
                 }
                 translationX = dX * buffer.size.toFloat() * buttonWidth.toFloat() / itemView.width
                 drawButton(c, itemView, buffer, pos, translationX)
+            } else {
+                if (dX >= context.resources.getDimension(R.dimen.underlay_button_width)) {
+                    translationX = context.resources.getDimension(R.dimen.underlay_button_width)
+                }
             }
         }
         super.onChildDraw(

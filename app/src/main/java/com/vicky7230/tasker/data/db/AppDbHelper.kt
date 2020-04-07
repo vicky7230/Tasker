@@ -1,8 +1,8 @@
 package com.vicky7230.tasker.data.db
 
 
-import com.vicky7230.tasker.data.db.entities.TaskList
 import com.vicky7230.tasker.data.db.entities.Task
+import com.vicky7230.tasker.data.db.entities.TaskList
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskAndTaskList
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskListAndCount
 import kotlinx.coroutines.flow.Flow
@@ -47,6 +47,10 @@ class AppDbHelper @Inject constructor(private val appDatabase: AppDatabase) : Db
 
     override suspend fun getTasksForList(listSlack: String): List<Task> {
         return appDatabase.taskDao().getTasksForList(listSlack)
+    }
+
+    override suspend fun setTaskFinished(id: Long): Int {
+        return appDatabase.taskDao().setTaskFinished(id)
     }
 
 }

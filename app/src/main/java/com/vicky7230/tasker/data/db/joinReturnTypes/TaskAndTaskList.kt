@@ -18,12 +18,15 @@ data class TaskAndTaskList(
     @ColumnInfo(name = "date_time")
     var dateTime: Long,
 
+    @ColumnInfo(name = "finished")
+    var finished: Boolean,
+
     @ColumnInfo(name = "list_slack")
     var listSlack: String,
 
-    @ColumnInfo(name = "name")
-    var name: String,
+    @ColumnInfo(name = "list_name")
+    var listName: String,
 
-    @ColumnInfo(name = "color")
-    var color: String
+    @ColumnInfo(name = "list_color")
+    var listColor: String
 )

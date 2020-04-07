@@ -6,8 +6,8 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.vicky7230.tasker.data.DataManager
 import com.vicky7230.tasker.data.db.entities.Task
-import com.vicky7230.tasker.data.db.joinReturnTypes.TaskAndTaskList
 import com.vicky7230.tasker.data.db.entities.TaskList
+import com.vicky7230.tasker.data.db.joinReturnTypes.TaskAndTaskList
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskListAndCount
 import com.vicky7230.tasker.data.network.Resource
 import com.vicky7230.tasker.ui._0base.BaseViewModel
@@ -23,6 +23,7 @@ class HomeViewModel @Inject constructor(
 
     var taskListAndCount = MutableLiveData<Resource<List<TaskListAndCount>>>()
     var taskAndTaskList = MutableLiveData<Resource<List<TaskAndTaskList>>>()
+    var taskFinished  = MutableLiveData<Long>()
 
     fun getData(todaysDateStart: Long, todaysDateEnd: Long) {
 
@@ -136,5 +137,13 @@ class HomeViewModel @Inject constructor(
         }
 
         dataManager.insertTasks(tasksAndListFromServer)
+    }
+
+    fun setTaskFinished(task: TaskAndTaskList) {
+        viewModelScope.launch {
+            val count = dataManager.setTaskFinished(task.id)
+            if (count > 0)
+                taskFinished.value = task.id
+        }
     }
 }

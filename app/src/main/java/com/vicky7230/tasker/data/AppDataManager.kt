@@ -112,6 +112,10 @@ constructor(
         return appDbHelper.getTasksForList(listSlack)
     }
 
+    override suspend fun setTaskFinished(id: Long): Int {
+        return appDbHelper.setTaskFinished(id)
+    }
+
     override fun areListsFetched(): Boolean {
         return appPreferencesHelper.areListsFetched()
     }

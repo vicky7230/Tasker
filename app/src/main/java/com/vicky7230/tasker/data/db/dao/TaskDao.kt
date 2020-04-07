@@ -17,9 +17,8 @@ interface TaskDao {
     suspend fun getTask(taskLongId: Long): Task
 
     @Query(
-        """SELECT 
-        tasks.id, tasks.task_id, tasks.task_slack, tasks.list_slack, tasks.task, tasks.date_time, 
-        lists.name, lists.color 
+        """SELECT tasks.id, tasks.task_id, tasks.task_slack,tasks.list_slack, tasks.task, tasks.date_time, tasks.finished,
+             lists.name as list_name, lists.color as list_color 
         FROM tasks LEFT JOIN lists 
         ON tasks.list_slack = lists.list_slack 
         WHERE tasks.date_time >= :todaysDateStart AND tasks.date_time <= :todaysDateEnd 
@@ -32,4 +31,7 @@ interface TaskDao {
 
     @Update
     suspend fun updateTask(task: Task): Int
+
+    @Query("UPDATE tasks SET finished = 1 WHERE id =:id")
+    suspend fun setTaskFinished(id: Long): Int
 }

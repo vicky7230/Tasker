@@ -25,5 +25,8 @@ data class Task(
     var dateTime: Long,
 
     @ColumnInfo(name = "list_slack")
-    var listSlack: String
+    var listSlack: String,
+
+    @ColumnInfo(name = "finished")
+    var finished: Boolean = false
 )
