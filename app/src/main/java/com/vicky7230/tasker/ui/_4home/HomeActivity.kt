@@ -1,20 +1,17 @@
 package com.vicky7230.tasker.ui._4home
 
+import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
-import android.view.animation.LinearInterpolator
 import android.widget.AdapterView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.cardview.widget.CardView
-import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,6 +25,7 @@ import com.vicky7230.tasker.data.network.Resource
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
 import com.vicky7230.tasker.ui._6taskList.TasksActivity
+import com.vicky7230.tasker.utils.AnimUtilskt
 import com.vicky7230.tasker.worker.UpdateTaskWorker
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
@@ -35,7 +33,7 @@ import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-
+import android.util.Pair as UtilPair
 
 class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsAdapter.Callback {
 
@@ -50,8 +48,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var listPopupWindow: ListPopupWindow
-
-    var products = arrayListOf("Task", "List")
+    private var options = arrayListOf("Task", "List")
 
     companion object {
         fun getStartIntent(context: Context): Intent {
@@ -75,7 +72,10 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
 
         createPopup()
 
-        add_task_button.setOnClickListener { rotateFab() }
+        add_button.setOnClickListener {
+            AnimUtilskt.rotateFab(this, add_button, 45.0F)
+            listPopupWindow.show()
+        }
 
         setUpTaskListsRecyclerView()
 
@@ -204,43 +204,12 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
         return calendar.time.time
     }
 
-    private fun rotateFab() {
-        add_task_button.backgroundTintList =
-            ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorBlue))
-
-        add_task_button.imageTintList =
-            ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorWhite))
-
-        ViewCompat.animate(add_task_button)
-            .rotation(45.0F)
-            .withLayer()
-            .setDuration(200L)
-            .setInterpolator(LinearInterpolator())
-            .start()
-
-        listPopupWindow.show()
-    }
-
-    private fun rotateBack() {
-        add_task_button.backgroundTintList =
-            ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorWhite))
-
-        add_task_button.imageTintList =
-            ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorBlue))
-
-        ViewCompat.animate(add_task_button)
-            .rotation(0.0F)
-            .withLayer()
-            .setDuration(200L)
-            .setInterpolator(LinearInterpolator())
-            .start()
-    }
 
     private fun createPopup() {
 
         listPopupWindow = ListPopupWindow(this)
-        listPopupWindow.setAdapter(PopupAdapter(products))
-        listPopupWindow.anchorView = add_task_button
+        listPopupWindow.setAdapter(PopupAdapter(options))
+        listPopupWindow.anchorView = add_button
         listPopupWindow.setDropDownGravity(Gravity.END)
         listPopupWindow.width = resources.getDimension(R.dimen.popup_width).toInt()
         listPopupWindow.height = ListPopupWindow.WRAP_CONTENT
@@ -249,7 +218,9 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
         listPopupWindow.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.curved_bg))
         listPopupWindow.isModal = true
         listPopupWindow.setOnItemClickListener(this)
-        listPopupWindow.setOnDismissListener { rotateBack() }
+        listPopupWindow.setOnDismissListener {
+            AnimUtilskt.rotateFab(this@HomeActivity, add_button, 0.0F)
+        }
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -265,6 +236,14 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
         taskListCard: CardView,
         listName: AppCompatTextView
     ) {
+
+        add_button.hide()
+
+        val options = ActivityOptions.makeSceneTransitionAnimation(
+            this,
+            UtilPair<View, String>(taskListCard, "cardAnimation")
+        )
+
         startActivity(
             TasksActivity.getStartIntent(
                 this@HomeActivity,
@@ -272,11 +251,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
                 taskListAndCount.color,
                 taskListAndCount.name
             ),
-            ActivityOptionsCompat.makeSceneTransitionAnimation(
-                this,
-                taskListCard,
-                "cardAnimation"
-            ).toBundle()
+            options.toBundle()
         )
     }
 
@@ -295,5 +270,10 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
             .setConstraints(constraints)
             .build()
         WorkManager.getInstance(this).enqueue(updateTaskWorkerRequest)
+    }
+
+    override fun onResume() {
+        add_button.show()
+        super.onResume()
     }
 }

@@ -57,25 +57,25 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
                 android:layout_marginLeft="60dp"
+                android:layout_marginTop="32dp"
                 android:text="Lists"
                 android:textColor="@color/colorDarkGray"
                 android:textSize="19sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/task_lists"
-                tools:listItem="@layout/task_lists_item_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="60dp"
-                android:layout_marginTop="15dp" />
+                android:layout_marginTop="15dp"
+                tools:listItem="@layout/task_lists_item_view" />
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_task_button"
+        android:id="@+id/add_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="16dp"

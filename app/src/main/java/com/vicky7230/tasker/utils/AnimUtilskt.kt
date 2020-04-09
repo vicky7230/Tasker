@@ -2,8 +2,15 @@ package com.vicky7230.tasker.utils
 
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
+import android.content.Context
+import android.content.res.ColorStateList
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.LinearInterpolator
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.vicky7230.tasker.R
 
 object AnimUtilskt {
 
@@ -25,5 +32,20 @@ object AnimUtilskt {
         animationSet.interpolator = AccelerateDecelerateInterpolator()
         animationSet.play(slideAnimator)
         animationSet.start()
+    }
+
+    fun rotateFab(context: Context, fab: FloatingActionButton, rotateTo : Float) {
+        fab.backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorBlue))
+
+        fab.imageTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorWhite))
+
+        ViewCompat.animate(fab)
+            .rotation(rotateTo)
+            .withLayer()
+            .setDuration(200L)
+            .setInterpolator(LinearInterpolator())
+            .start()
     }
 }

@@ -45,7 +45,7 @@ class AppDbHelper @Inject constructor(private val appDatabase: AppDatabase) : Db
         return appDatabase.taskDao().insertTasks(tasksAndListFromServer)
     }
 
-    override suspend fun getTasksForList(listSlack: String): List<Task> {
+    override fun getTasksForList(listSlack: String): Flow<List<Task>> {
         return appDatabase.taskDao().getTasksForList(listSlack)
     }
 

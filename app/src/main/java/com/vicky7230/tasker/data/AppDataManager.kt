@@ -2,8 +2,8 @@ package com.vicky7230.tasker.data
 
 import com.google.gson.JsonElement
 import com.vicky7230.tasker.data.db.AppDbHelper
-import com.vicky7230.tasker.data.db.entities.TaskList
 import com.vicky7230.tasker.data.db.entities.Task
+import com.vicky7230.tasker.data.db.entities.TaskList
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskAndTaskList
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskListAndCount
 import com.vicky7230.tasker.data.network.AppApiHelper
@@ -112,7 +112,7 @@ constructor(
         return appDbHelper.insertTasks(tasksAndListFromServer)
     }
 
-    override suspend fun getTasksForList(listSlack: String): List<Task> {
+    override fun getTasksForList(listSlack: String): Flow<List<Task>> {
         return appDbHelper.getTasksForList(listSlack)
     }
 

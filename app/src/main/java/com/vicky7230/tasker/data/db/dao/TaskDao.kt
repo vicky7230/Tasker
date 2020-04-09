@@ -27,7 +27,7 @@ interface TaskDao {
     fun getTasksForToday(todaysDateStart: Long, todaysDateEnd: Long): Flow<List<TaskAndTaskList>>
 
     @Query("SELECT * FROM tasks WHERE list_slack =:listSlack  ORDER BY id DESC")
-    suspend fun getTasksForList(listSlack: String): List<Task>
+    fun getTasksForList(listSlack: String): Flow<List<Task>>
 
     @Update
     suspend fun updateTask(task: Task): Int

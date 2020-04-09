@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.vicky7230.tasker.data.DataManager
 import com.vicky7230.tasker.data.db.entities.Task
 import com.vicky7230.tasker.ui._0base.BaseViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,7 +17,11 @@ class TasksViewModel @Inject constructor(
 
     fun getTasks(listSlack: String) {
         viewModelScope.launch {
-            tasks.value = dataManager.getTasksForList(listSlack)
+            dataManager.getTasksForList(listSlack)
+                .collect { tasksForList: List<Task> ->
+                    tasks.value = tasksForList
+                }
+
         }
     }
 
