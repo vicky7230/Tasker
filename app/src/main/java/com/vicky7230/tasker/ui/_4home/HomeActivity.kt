@@ -5,8 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.transition.Explode
 import android.view.Gravity
 import android.view.View
+import android.view.Window
 import android.widget.AdapterView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.ListPopupWindow
@@ -61,6 +63,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_home)
         taskListsAdapter.setCallback(this)
         homeViewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]

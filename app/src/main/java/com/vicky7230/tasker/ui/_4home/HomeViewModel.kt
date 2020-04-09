@@ -13,7 +13,6 @@ import com.vicky7230.tasker.data.network.Resource
 import com.vicky7230.tasker.ui._0base.BaseViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
@@ -23,7 +22,7 @@ class HomeViewModel @Inject constructor(
 
     var taskListAndCount = MutableLiveData<Resource<List<TaskListAndCount>>>()
     var taskAndTaskList = MutableLiveData<Resource<List<TaskAndTaskList>>>()
-    var taskFinished  = MutableLiveData<Long>()
+    var taskFinished = MutableLiveData<Long>()
 
     fun getData(todaysDateStart: Long, todaysDateEnd: Long) {
 
