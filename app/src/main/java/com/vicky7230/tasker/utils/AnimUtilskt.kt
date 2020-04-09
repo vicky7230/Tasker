@@ -34,12 +34,14 @@ object AnimUtilskt {
         animationSet.start()
     }
 
-    fun rotateFab(context: Context, fab: FloatingActionButton, rotateTo : Float) {
-        fab.backgroundTintList =
-            ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorBlue))
+    fun rotateFab(
+        fab: FloatingActionButton,
+        rotateTo: Float,
+        buttonColor: Int,
+        imageColor: Int) {
 
-        fab.imageTintList =
-            ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorWhite))
+        fab.backgroundTintList = ColorStateList.valueOf(buttonColor)
+        fab.imageTintList = ColorStateList.valueOf(imageColor)
 
         ViewCompat.animate(fab)
             .rotation(rotateTo)

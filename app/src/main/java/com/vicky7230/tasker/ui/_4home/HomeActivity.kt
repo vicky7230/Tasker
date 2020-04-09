@@ -73,7 +73,12 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
         createPopup()
 
         add_button.setOnClickListener {
-            AnimUtilskt.rotateFab(this, add_button, 45.0F)
+            AnimUtilskt.rotateFab(
+                add_button,
+                45.0F,
+                ContextCompat.getColor(this, R.color.colorBlue),
+                ContextCompat.getColor(this, R.color.colorWhite)
+            )
             listPopupWindow.show()
         }
 
@@ -219,7 +224,12 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
         listPopupWindow.isModal = true
         listPopupWindow.setOnItemClickListener(this)
         listPopupWindow.setOnDismissListener {
-            AnimUtilskt.rotateFab(this@HomeActivity, add_button, 0.0F)
+            AnimUtilskt.rotateFab(
+                add_button,
+                0.0F,
+                ContextCompat.getColor(this, R.color.colorWhite),
+                ContextCompat.getColor(this, R.color.colorBlue)
+            )
         }
     }
 

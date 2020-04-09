@@ -80,11 +80,14 @@ class TasksActivity : BaseActivity(), AdapterView.OnItemClickListener {
         createPopup()
 
         add_button_2.setOnClickListener {
-            AnimUtilskt.rotateFab(this, add_button_2, 45.0F)
+            AnimUtilskt.rotateFab(
+                add_button_2,
+                45.0F,
+                ContextCompat.getColor(this, R.color.colorBlue),
+                ContextCompat.getColor(this, R.color.colorWhite)
+            )
             listPopupWindow.show()
         }
-
-        add_button_2.hide()
 
         chromeFader = object : ElasticDragDismissLinearLayout.SystemChromeFader(this) {
             override fun onDragDismissed() {
@@ -149,7 +152,12 @@ class TasksActivity : BaseActivity(), AdapterView.OnItemClickListener {
         listPopupWindow.isModal = true
         listPopupWindow.setOnItemClickListener(this)
         listPopupWindow.setOnDismissListener {
-            AnimUtilskt.rotateFab(this@TasksActivity, add_button_2, 0.0F)
+            AnimUtilskt.rotateFab(
+                add_button_2,
+                0.0F,
+                ContextCompat.getColor(this, R.color.colorWhite),
+                ContextCompat.getColor(this, R.color.colorBlue)
+            )
         }
     }
 
@@ -166,12 +174,5 @@ class TasksActivity : BaseActivity(), AdapterView.OnItemClickListener {
         edit_list_name.visibility = View.GONE
         add_button_2.visibility = View.GONE
         super.onBackPressed()
-    }
-
-    override fun onEnterAnimationComplete() {
-        add_button_2.postDelayed({
-            add_button_2.show()
-        }, 700)
-        super.onEnterAnimationComplete()
     }
 }
