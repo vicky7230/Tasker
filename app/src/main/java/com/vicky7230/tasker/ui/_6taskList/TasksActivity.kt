@@ -6,8 +6,10 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.transition.ChangeBounds
 import android.view.Gravity
 import android.view.View
+import android.view.Window
 import android.widget.AdapterView
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.core.content.ContextCompat
@@ -63,6 +65,12 @@ class TasksActivity : BaseActivity(), AdapterView.OnItemClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
+
+        with(window) {
+            sharedElementEnterTransition = ChangeBounds()
+            sharedElementExitTransition = ChangeBounds()
+        }
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tasks)
 
@@ -135,6 +143,7 @@ class TasksActivity : BaseActivity(), AdapterView.OnItemClickListener {
             val listSlack = intent.getStringExtra(EXTRAS_LIST_SLACK)
             if (listSlack != null)
                 tasksViewModel.getTasks(listSlack)
+
         }
     }
 
@@ -173,6 +182,6 @@ class TasksActivity : BaseActivity(), AdapterView.OnItemClickListener {
         list_name.visibility = View.GONE
         edit_list_name.visibility = View.GONE
         add_button_2.visibility = View.GONE
-        super.onBackPressed()
+        supportFinishAfterTransition()
     }
 }
