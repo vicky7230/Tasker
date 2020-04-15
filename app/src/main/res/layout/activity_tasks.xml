@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.vicky7230.tasker.widget.ElasticDragDismissLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.vicky7230.tasker.widget.ElasticDragDismissFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/draggable_layout"
@@ -97,4 +97,4 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-</com.vicky7230.tasker.widget.ElasticDragDismissLinearLayout>
+</com.vicky7230.tasker.widget.ElasticDragDismissFrameLayout>

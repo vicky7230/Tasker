@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.transition.ChangeBounds
 import android.view.Gravity
 import android.view.View
-import android.view.Window
 import android.widget.AdapterView
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.core.content.ContextCompat
@@ -22,7 +21,7 @@ import com.vicky7230.tasker.ui._4home.PopupAdapter
 import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
 import com.vicky7230.tasker.utils.AnimUtilskt
 import com.vicky7230.tasker.utils.AppConstants
-import com.vicky7230.tasker.widget.ElasticDragDismissLinearLayout
+import com.vicky7230.tasker.widget.ElasticDragDismissFrameLayout
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_tasks.*
 import timber.log.Timber
@@ -39,7 +38,7 @@ class TasksActivity : BaseActivity(), AdapterView.OnItemClickListener {
 
     private lateinit var tasksViewModel: TasksViewModel
     private lateinit var listName: String
-    private lateinit var chromeFader: ElasticDragDismissLinearLayout.SystemChromeFader
+    private lateinit var chromeFader: ElasticDragDismissFrameLayout.SystemChromeFader
     private lateinit var listPopupWindow: ListPopupWindow
     private var options = arrayListOf("Task", "List")
 
@@ -97,7 +96,7 @@ class TasksActivity : BaseActivity(), AdapterView.OnItemClickListener {
             listPopupWindow.show()
         }
 
-        chromeFader = object : ElasticDragDismissLinearLayout.SystemChromeFader(this) {
+        chromeFader = object : ElasticDragDismissFrameLayout.SystemChromeFader(this) {
             override fun onDragDismissed() {
                 Timber.d("onDragDismissed")
                 list_name.visibility = View.GONE

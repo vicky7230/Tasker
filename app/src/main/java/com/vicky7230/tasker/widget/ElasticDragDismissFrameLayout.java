@@ -26,7 +26,7 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 
 import com.vicky7230.tasker.R;
 import com.vicky7230.tasker.utils.AnimUtils;
@@ -38,11 +38,11 @@ import java.util.List;
 
 
 /**
- * A {@link LinearLayout} which responds to nested scrolls to create drag-dismissable layouts.
+ * A {@link FrameLayout } which responds to nested scrolls to create drag-dismissable layouts.
  * Applies an elasticity factor to reduce movement as you approach the given dismiss distance.
  * Optionally also scales down content during drag.
  */
-public class ElasticDragDismissLinearLayout extends LinearLayout {
+public class ElasticDragDismissFrameLayout extends FrameLayout {
 
     // configurable attribs
     private float dragDismissDistance = Float.MAX_VALUE;
@@ -59,20 +59,20 @@ public class ElasticDragDismissLinearLayout extends LinearLayout {
 
     private List<ElasticDragDismissCallback> callbacks;
 
-    public ElasticDragDismissLinearLayout(Context context) {
+    public ElasticDragDismissFrameLayout (Context context) {
         this(context, null, 0, 0);
     }
 
-    public ElasticDragDismissLinearLayout(Context context, AttributeSet attrs) {
+    public ElasticDragDismissFrameLayout (Context context, AttributeSet attrs) {
         this(context, attrs, 0, 0);
     }
 
-    public ElasticDragDismissLinearLayout(Context context, AttributeSet attrs,
+    public ElasticDragDismissFrameLayout (Context context, AttributeSet attrs,
                                           int defStyleAttr) {
         this(context, attrs, defStyleAttr, 0);
     }
 
-    public ElasticDragDismissLinearLayout(Context context, AttributeSet attrs,
+    public ElasticDragDismissFrameLayout (Context context, AttributeSet attrs,
                                           int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
 

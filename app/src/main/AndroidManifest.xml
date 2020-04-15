@@ -15,28 +15,40 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
         <activity
             android:name=".ui._6taskList.TasksActivity"
-            android:screenOrientation="portrait" />
+            android:launchMode="singleTask"
+            android:parentActivityName="ui._4home.HomeActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
+            <!--<meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ui._4home.HomeActivity" />-->
+        </activity>
         <activity
             android:name=".ui._5newTask.NewTaskActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".ui._4home.HomeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".ui._3verifyOTP.VerifyOtpActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible" />
+            android:windowSoftInputMode="stateVisible"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".ui._2login.LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible" />
+            android:windowSoftInputMode="stateVisible"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".ui._1splash.SplashActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
