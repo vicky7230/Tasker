@@ -1,18 +1,16 @@
 package com.vicky7230.tasker.ui._4home
 
-import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.transition.Explode
 import android.view.Gravity
 import android.view.View
-import android.view.Window
 import android.widget.AdapterView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -35,7 +33,6 @@ import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import android.util.Pair as UtilPair
 
 class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsAdapter.Callback {
 
@@ -252,9 +249,10 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
 
         add_button.hide()
 
-        val options = ActivityOptions.makeSceneTransitionAnimation(
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
             this,
-            UtilPair<View, String>(taskListCard, "cardAnimation")
+            taskListCard,
+            "cardAnimation"
         )
 
         startActivity(
