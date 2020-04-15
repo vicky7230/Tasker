@@ -1,6 +1,6 @@
+# \[ 🚧 Work in progress 👷‍♀️⛏👷🔧️👷🔧 🚧 \] Tasker
 ![alt text](https://github.com/vicky7230/Tasker/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png "Logo")
 
-# Tasker
 ![License](https://img.shields.io/badge/LICENSE-Apache%20License%202.0-blue.svg)
  
 ### A Todo app written in 
