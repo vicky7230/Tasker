@@ -134,59 +134,75 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
         todays_tasks.isNestedScrollingEnabled = false
         todays_tasks.adapter = todaysTaskAdapter
 
+        val rightSwipeListener = object : RightSwipeListener {
+            override fun onRightSwiped(viewHolder: RecyclerView.ViewHolder) {
+                if (viewHolder is TodaysTaskAdapter.TaskViewHolder) {
+                    val task = todaysTaskAdapter.getData()[viewHolder.adapterPosition]
+                    task.finished = true
+                    homeViewModel.setTaskFinished(task)
+                    todaysTaskAdapter.notifyItemChanged(viewHolder.adapterPosition)
+                }
+            }
+        }
+
         val swipeHelper = object : SwipeHelper(
             this,
             todays_tasks,
             resources.getDimension(R.dimen.underlay_button_width).toInt(),
-            object : RightSwipeListener {
-                override fun onRightSwiped(viewHolder: RecyclerView.ViewHolder) {
-                    if (viewHolder is TodaysTaskAdapter.TaskViewHolder) {
-                        val task = todaysTaskAdapter.getData()[viewHolder.adapterPosition]
-                        task.finished = true
-                        homeViewModel.setTaskFinished(task)
-                        todaysTaskAdapter.notifyItemChanged(viewHolder.adapterPosition)
-                    }
-                }
-            }
+            rightSwipeListener
         ) {
             override fun instantiateMyButton(
                 viewHolder: RecyclerView.ViewHolder,
                 buffer: MutableList<UnderlayButton>
             ) {
-                buffer.add(
-                    UnderlayButton(
-                        this@HomeActivity,
-                        "Delete",
-                        30,
-                        R.drawable.ic_trash,
-                        ContextCompat.getColor(this@HomeActivity, R.color.colorRed),
-                        object : UnderlayButtonClickListener {
-                            override fun onClick(position: Int) {
-                                val item: TaskAndTaskList =
-                                    todaysTaskAdapter.getData()[position]
-                                todaysTaskAdapter.removeItem(position)
-
-                                val snackBar: Snackbar = Snackbar.make(
-                                    todays_tasks,
-                                    "Item was removed from the list.",
-                                    Snackbar.LENGTH_LONG
-                                )
-                                snackBar.setAction(
-                                    "UNDO",
-                                    View.OnClickListener {
-                                        todaysTaskAdapter.restoreItem(item, position)
-                                        todays_tasks.scrollToPosition(position)
-                                    })
-
-                                snackBar.setActionTextColor(Color.YELLOW)
-                                snackBar.show()
-                            }
-                        }
-                    )
-                )
+                buffer.add(deleteButton())
+                buffer.add(editButton())
             }
-
         }
+    }
+
+    private fun editButton(): UnderlayButton {
+        return UnderlayButton(
+            this@HomeActivity,
+            "Edit",
+            30,
+            R.drawable.ic_edit,
+            ContextCompat.getColor(this@HomeActivity, R.color.colorBlue),
+            object : UnderlayButtonClickListener {
+                override fun onClick(position: Int) {
+                    //TODO
+                }
+            }
+        )
+    }
+
+    private fun deleteButton(): UnderlayButton {
+        return UnderlayButton(
+            this@HomeActivity,
+            "Delete",
+            30,
+            R.drawable.ic_trash,
+            ContextCompat.getColor(this@HomeActivity, R.color.colorRed),
+            object : UnderlayButtonClickListener {
+                override fun onClick(position: Int) {
+
+                    val item: TaskAndTaskList = todaysTaskAdapter.getData()[position]
+                    todaysTaskAdapter.removeItem(position)
+
+                    val snackBar: Snackbar = Snackbar.make(
+                        todays_tasks,
+                        "Task was deleted.",
+                        Snackbar.LENGTH_LONG
+                    )
+                    snackBar.setAction("UNDO") {
+                        todaysTaskAdapter.restoreItem(item, position)
+                        todays_tasks.scrollToPosition(position)
+                    }
+                    snackBar.setActionTextColor(Color.YELLOW)
+                    snackBar.show()
+                }
+            }
+        )
     }
 
     private fun getTodaysDateStart(): Long {

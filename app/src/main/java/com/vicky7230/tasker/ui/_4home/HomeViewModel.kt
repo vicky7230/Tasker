@@ -140,9 +140,11 @@ class HomeViewModel @Inject constructor(
 
     fun setTaskFinished(task: TaskAndTaskList) {
         viewModelScope.launch {
-            val count = dataManager.setTaskFinished(task.id)
-            if (count > 0)
-                taskFinished.value = task.id
+            if (!task.finished) {
+                val count = dataManager.setTaskFinished(task.id)
+                if (count > 0)
+                    taskFinished.value = task.id
+            }
         }
     }
 }
