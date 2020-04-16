@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.transition.ChangeBounds
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -56,12 +55,6 @@ class TasksActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
-
-        with(window) {
-            sharedElementEnterTransition = ChangeBounds()
-            sharedElementExitTransition = ChangeBounds()
-        }
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tasks)
 
@@ -129,6 +122,8 @@ class TasksActivity : BaseActivity() {
     override fun onBackPressed() {
         list_name.visibility = View.GONE
         edit_list_name.visibility = View.GONE
-        supportFinishAfterTransition()
+        super.onBackPressed()
     }
+
+
 }
