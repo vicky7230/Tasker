@@ -147,4 +147,10 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    fun deleteTasK(task: TaskAndTaskList) {
+        viewModelScope.launch {
+            //TODO
+        }
+    }
 }

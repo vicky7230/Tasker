@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.work.*
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskAndTaskList
@@ -114,6 +115,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
                 }
                 is Resource.Success -> {
                     hideLoading()
+                    Timber.e(it.toString())
                     todaysTaskAdapter.updateItems(it.data)
                 }
             }
@@ -138,7 +140,6 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
             override fun onRightSwiped(viewHolder: RecyclerView.ViewHolder) {
                 if (viewHolder is TodaysTaskAdapter.TaskViewHolder) {
                     val task = todaysTaskAdapter.getData()[viewHolder.adapterPosition]
-                    task.finished = true
                     homeViewModel.setTaskFinished(task)
                     todaysTaskAdapter.notifyItemChanged(viewHolder.adapterPosition)
                 }
@@ -198,6 +199,14 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
                         todaysTaskAdapter.restoreItem(item, position)
                         todays_tasks.scrollToPosition(position)
                     }
+
+                    snackBar.addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar?>() {
+                        override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                            if (event == DISMISS_EVENT_TIMEOUT) {
+                                homeViewModel.deleteTasK(item)
+                            }
+                        }
+                    })
                     snackBar.setActionTextColor(Color.YELLOW)
                     snackBar.show()
                 }
