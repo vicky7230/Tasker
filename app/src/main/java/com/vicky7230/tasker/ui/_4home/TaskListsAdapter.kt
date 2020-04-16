@@ -25,10 +25,10 @@ class TaskListsAdapter(private val taskLists: MutableList<TaskListAndCount>) :
         )
     }
 
-    private lateinit var callback: Callback;
+    private lateinit var callback: Callback
 
     fun setCallback(callback: Callback) {
-        this.callback = callback;
+        this.callback = callback
     }
 
     fun updateItems(taskLists: List<TaskListAndCount>) {
