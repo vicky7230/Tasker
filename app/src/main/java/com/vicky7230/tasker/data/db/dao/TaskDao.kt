@@ -17,16 +17,30 @@ interface TaskDao {
     suspend fun getTask(taskLongId: Long): Task
 
     @Query(
-        """SELECT tasks.id, tasks.task_id, tasks.task_slack,tasks.list_slack, tasks.task, tasks.date_time, tasks.finished,
-             lists.name as list_name, lists.color as list_color 
+        """
+        SELECT 
+        tasks.id, tasks.task_id, tasks.task_slack,tasks.list_slack, tasks.task, tasks.date_time, tasks.finished, tasks.deleted, lists.name as list_name, lists.color as list_color 
         FROM tasks LEFT JOIN lists 
         ON tasks.list_slack = lists.list_slack 
-        WHERE tasks.date_time >= :todaysDateStart AND tasks.date_time <= :todaysDateEnd 
-        ORDER BY tasks.id DESC"""
+        WHERE tasks.date_time >= :todaysDateStart 
+        AND tasks.date_time <= :todaysDateEnd
+        AND tasks.deleted != 1
+        ORDER BY tasks.id DESC
+        """
     )
     fun getTasksForToday(todaysDateStart: Long, todaysDateEnd: Long): Flow<List<TaskAndTaskList>>
 
-    @Query("SELECT * FROM tasks WHERE list_slack =:listSlack AND finished != 1 AND deleted != 1 ORDER BY id DESC")
+    @Query(
+        """
+        SELECT 
+        * FROM tasks 
+        WHERE 
+        list_slack =:listSlack 
+        AND finished != 1 
+        AND deleted != 1 
+        ORDER BY id DESC
+        """
+    )
     fun getTasksForList(listSlack: String): Flow<List<Task>>
 
     @Update
@@ -34,4 +48,8 @@ interface TaskDao {
 
     @Query("UPDATE tasks SET finished = 1 WHERE id =:id")
     suspend fun setTaskFinished(id: Long): Int
+
+    @Query("UPDATE tasks SET deleted = 1 WHERE id =:id")
+    suspend fun setTaskDeleted(id: Long): Int
+
 }

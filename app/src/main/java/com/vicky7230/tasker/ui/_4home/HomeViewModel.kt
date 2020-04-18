@@ -23,6 +23,7 @@ class HomeViewModel @Inject constructor(
     var taskListAndCount = MutableLiveData<Resource<List<TaskListAndCount>>>()
     var taskAndTaskList = MutableLiveData<Resource<List<TaskAndTaskList>>>()
     var taskFinished = MutableLiveData<Long>()
+    var taskDeleted = MutableLiveData<Long>()
 
     fun getData(todaysDateStart: Long, todaysDateEnd: Long) {
 
@@ -131,8 +132,8 @@ class HomeViewModel @Inject constructor(
                     taskJsonElement.asJsonObject["task"].asString,
                     taskJsonElement.asJsonObject["date_time"].asLong,
                     taskJsonElement.asJsonObject["list_slack"].asString,
-                    taskJsonElement.asJsonObject["finished"].asString == "1",
-                    taskJsonElement.asJsonObject["deleted"].asString == "1"
+                    taskJsonElement.asJsonObject["finished"].asString.toInt(),
+                    taskJsonElement.asJsonObject["deleted"].asString.toInt()
                 )
             )
         }
@@ -142,7 +143,7 @@ class HomeViewModel @Inject constructor(
 
     fun setTaskFinished(task: TaskAndTaskList) {
         viewModelScope.launch {
-            if (!task.finished) {
+            if (task.finished != 1) {
                 val count = dataManager.setTaskFinished(task.id)
                 if (count > 0)
                     taskFinished.value = task.id
@@ -152,7 +153,11 @@ class HomeViewModel @Inject constructor(
 
     fun deleteTasK(task: TaskAndTaskList) {
         viewModelScope.launch {
-            //TODO
+            if (task.deleted != 1) {
+                val count = dataManager.setTaskDeleted(task.id)
+                if (count > 0)
+                    taskDeleted.value = task.id
+            }
         }
     }
 }

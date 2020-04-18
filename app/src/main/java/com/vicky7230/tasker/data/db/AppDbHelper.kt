@@ -53,4 +53,7 @@ class AppDbHelper @Inject constructor(private val appDatabase: AppDatabase) : Db
         return appDatabase.taskDao().setTaskFinished(id)
     }
 
+    override suspend fun setTaskDeleted(id: Long): Int {
+        return appDatabase.taskDao().setTaskDeleted(id)
+    }
 }

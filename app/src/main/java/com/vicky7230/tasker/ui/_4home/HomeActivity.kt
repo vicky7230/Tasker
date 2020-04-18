@@ -91,6 +91,10 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
             updateTask(taskLongId)
         })
 
+        homeViewModel.taskDeleted.observe(this, Observer { taskLongId: Long ->
+            updateTask(taskLongId)
+        })
+
         homeViewModel.taskListAndCount.observe(this, Observer {
             when (it) {
                 is Resource.Loading -> showLoading()

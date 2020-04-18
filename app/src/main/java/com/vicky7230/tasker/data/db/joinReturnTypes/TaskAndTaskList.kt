@@ -19,7 +19,10 @@ data class TaskAndTaskList(
     var dateTime: Long,
 
     @ColumnInfo(name = "finished")
-    var finished: Boolean,
+    var finished: Int,
+
+    @ColumnInfo(name = "deleted")
+    var deleted: Int,
 
     @ColumnInfo(name = "list_slack")
     var listSlack: String,

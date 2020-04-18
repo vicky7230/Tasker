@@ -14,16 +14,18 @@ interface TaskListDao {
     @Query("SELECT * FROM lists")
     fun getAllLists(): Flow<List<TaskList>>
 
-    @Query("""
-            SELECT 
-                l.id, l.list_slack, l.name, l.color , 
-                (
-                    SELECT COUNT(*)
-                    FROM tasks t
-                    WHERE t.list_slack = l.list_slack AND t.finished != 1 AND t.deleted != 1 
-                ) AS task_count
-            FROM lists l;
-            """)
+    @Query(
+        """
+        SELECT 
+            l.id, l.list_slack, l.name, l.color , 
+            (
+                SELECT COUNT(*)
+                FROM tasks t
+                WHERE t.list_slack = l.list_slack AND t.finished != 1 AND t.deleted != 1 
+            ) AS task_count
+        FROM lists l;
+        """
+    )
     fun getAllListsWithTaskCount(): Flow<List<TaskListAndCount>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

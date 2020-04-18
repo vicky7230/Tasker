@@ -120,6 +120,10 @@ constructor(
         return appDbHelper.setTaskFinished(id)
     }
 
+    override suspend fun setTaskDeleted(id: Long): Int {
+        return appDbHelper.setTaskDeleted(id)
+    }
+
     override fun areListsFetched(): Boolean {
         return appPreferencesHelper.areListsFetched()
     }

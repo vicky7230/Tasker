@@ -28,4 +28,6 @@ interface DbHelper {
     fun getTasksForList(listSlack: String): Flow<List<Task>>
 
     suspend fun setTaskFinished(id: Long): Int
+
+    suspend fun setTaskDeleted(id: Long): Int
 }

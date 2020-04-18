@@ -1,6 +1,5 @@
 package com.vicky7230.tasker.ui._4home
 
-import android.R.attr.data
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -59,7 +58,7 @@ class TodaysTaskAdapter(private val todaysTasks: MutableList<TaskAndTaskList>) :
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
         fun onBind(task: TaskAndTaskList) {
-            if (task.finished)
+            if (task.finished == 1)
                 itemView.task_ring.setImageResource(R.drawable.ic_marked)
             else
                 itemView.task_ring.setImageResource(R.drawable.ic_ring)
