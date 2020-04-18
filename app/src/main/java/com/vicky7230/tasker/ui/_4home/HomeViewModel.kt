@@ -130,7 +130,9 @@ class HomeViewModel @Inject constructor(
                     taskJsonElement.asJsonObject["task_slack"].asString,
                     taskJsonElement.asJsonObject["task"].asString,
                     taskJsonElement.asJsonObject["date_time"].asLong,
-                    taskJsonElement.asJsonObject["list_slack"].asString
+                    taskJsonElement.asJsonObject["list_slack"].asString,
+                    taskJsonElement.asJsonObject["finished"].asString == "1",
+                    taskJsonElement.asJsonObject["deleted"].asString == "1"
                 )
             )
         }

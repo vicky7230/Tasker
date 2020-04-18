@@ -28,5 +28,8 @@ data class Task(
     var listSlack: String,
 
     @ColumnInfo(name = "finished")
-    var finished: Boolean = false
+    var finished: Boolean = false,
+
+    @ColumnInfo(name = "deleted")
+    var deleted: Boolean = false
 )
