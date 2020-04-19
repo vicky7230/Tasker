@@ -20,7 +20,6 @@ import androidx.work.*
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.vicky7230.tasker.R
-import com.vicky7230.tasker.data.db.joinReturnTypes.TaskAndTaskList
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskListAndCount
 import com.vicky7230.tasker.data.network.Resource
 import com.vicky7230.tasker.ui._0base.BaseActivity
@@ -175,7 +174,8 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
             ContextCompat.getColor(this@HomeActivity, R.color.colorBlue),
             object : UnderlayButtonClickListener {
                 override fun onClick(position: Int) {
-                    //TODO
+                    val task = todaysTaskAdapter.getData()[position]
+                    startActivity(NewTaskActivity.getStartIntent(this@HomeActivity, task.id))
                 }
             }
         )
@@ -191,7 +191,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
             object : UnderlayButtonClickListener {
                 override fun onClick(position: Int) {
 
-                    val item: TaskAndTaskList = todaysTaskAdapter.getData()[position]
+                    val task = todaysTaskAdapter.getData()[position]
                     todaysTaskAdapter.removeItem(position)
 
                     val snackBar: Snackbar = Snackbar.make(
@@ -200,14 +200,14 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
                         Snackbar.LENGTH_LONG
                     )
                     snackBar.setAction("UNDO") {
-                        todaysTaskAdapter.restoreItem(item, position)
+                        todaysTaskAdapter.restoreItem(task, position)
                         todays_tasks.scrollToPosition(position)
                     }
 
                     snackBar.addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar?>() {
                         override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                             if (event == DISMISS_EVENT_TIMEOUT) {
-                                homeViewModel.deleteTasK(item)
+                                homeViewModel.deleteTasK(task)
                             }
                         }
                     })

@@ -14,6 +14,10 @@ class AppDbHelper @Inject constructor(private val appDatabase: AppDatabase) : Db
         return appDatabase.tasklistDao().getAllLists()
     }
 
+    override suspend fun getLists(): List<TaskList> {
+        return appDatabase.tasklistDao().getLists()
+    }
+
     override fun getAllListsWithTaskCount(): Flow<List<TaskListAndCount>> {
         return appDatabase.tasklistDao().getAllListsWithTaskCount()
     }

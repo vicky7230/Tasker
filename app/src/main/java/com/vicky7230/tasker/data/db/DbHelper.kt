@@ -11,6 +11,8 @@ interface DbHelper {
 
     fun getAllLists(): Flow<List<TaskList>>
 
+    suspend fun getLists(): List<TaskList>
+
     fun getAllListsWithTaskCount(): Flow<List<TaskListAndCount>>
 
     suspend fun insertTaskLists(taskLists: List<TaskList>): List<Long>

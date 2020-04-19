@@ -81,6 +81,10 @@ constructor(
         return appDbHelper.getAllLists()
     }
 
+    override suspend fun getLists(): List<TaskList> {
+        return appDbHelper.getLists()
+    }
+
     override fun getAllListsWithTaskCount(): Flow<List<TaskListAndCount>> {
         return appDbHelper.getAllListsWithTaskCount()
     }

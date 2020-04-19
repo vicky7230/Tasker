@@ -14,6 +14,9 @@ interface TaskListDao {
     @Query("SELECT * FROM lists")
     fun getAllLists(): Flow<List<TaskList>>
 
+    @Query("SELECT * FROM lists")
+    suspend fun getLists(): List<TaskList>
+
     @Query(
         """
         SELECT 
