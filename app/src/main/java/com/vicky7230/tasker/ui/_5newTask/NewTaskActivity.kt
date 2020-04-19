@@ -19,6 +19,7 @@ import com.vicky7230.tasker.data.db.entities.TaskList
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.utils.AnimUtilskt
 import com.vicky7230.tasker.worker.CreateTaskWorker
+import com.vicky7230.tasker.worker.UpdateTaskWorker
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_new_task.*
 import kotlinx.coroutines.delay
@@ -52,14 +53,20 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
     companion object {
 
         const val EXTRAS_TASK_LONG_ID = "taskLongId"
+        const val EXTRAS_OPERATION = "operation"
+        const val EXTRAS_OPERATION_CREATE = "taskCreate"
+        const val EXTRAS_OPERATION_UPDATE = "taskUpdate"
 
         fun getStartIntent(context: Context): Intent {
-            return Intent(context, NewTaskActivity::class.java)
+            val intent = Intent(context, NewTaskActivity::class.java)
+            intent.putExtra(EXTRAS_OPERATION, EXTRAS_OPERATION_CREATE)
+            return intent
         }
 
         fun getStartIntent(context: Context, taskLongId: Long): Intent {
             val intent = Intent(context, NewTaskActivity::class.java)
             intent.putExtra(EXTRAS_TASK_LONG_ID, taskLongId)
+            intent.putExtra(EXTRAS_OPERATION, EXTRAS_OPERATION_UPDATE)
             return intent
         }
     }
@@ -91,6 +98,66 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
             setTaskListViewContainerHeight()
         })
 
+        setTaskListListeners()
+
+        cancel_button.setOnClickListener {
+            finish()
+        }
+
+        done_button.setOnClickListener {
+
+            if (TextUtils.isEmpty(task_edit_text.text)) {
+                showError("Task is empty.")
+                return@setOnClickListener
+            }
+
+            if (intent != null && intent.getStringExtra(EXTRAS_OPERATION) != null)
+                if (intent.getStringExtra(EXTRAS_OPERATION) == EXTRAS_OPERATION_CREATE) {
+                    newTaskViewModel.insertTaskInDB(
+                        Task(
+                            0,
+                            RandomStringUtils.randomAlphanumeric(10),
+                            (-1).toString(),
+                            task_edit_text.text.toString(),
+                            calendarInstance.time.time,
+                            selectedTaskList2.listSlack
+                        )
+                    )
+                } else if (intent.getStringExtra(EXTRAS_OPERATION) == EXTRAS_OPERATION_UPDATE) {
+                    task.task = task_edit_text.text.toString()
+                    task.dateTime = calendarInstance.time.time
+                    task.listSlack = selectedTaskList2.listSlack
+                    newTaskViewModel.updateTaskInDB(task)
+                }
+
+        }
+
+        newTaskViewModel.taskInsertedInDB.observe(this, Observer { taskLongId: Long ->
+            createTaskOnServer(taskLongId)
+            finish()
+        })
+
+        newTaskViewModel.taskUpdatedInDB.observe(this, Observer { taskLongId: Long ->
+            updateTaskOnServer(taskLongId)
+            finish()
+        })
+
+        if (intent != null &&
+            intent.getLongExtra(EXTRAS_TASK_LONG_ID, -1L) != -1L
+        ) {
+            newTaskViewModel.task.observe(this, Observer { taskFromDb: Task ->
+                task = taskFromDb
+                initializeDateAndTimeViews(Date(task.dateTime))
+                task_edit_text.setText(task.task)
+            })
+            newTaskViewModel.getData(intent.getLongExtra(EXTRAS_TASK_LONG_ID, -1L))
+        } else {
+            initializeDateAndTimeViews(Date())
+            newTaskViewModel.getData(-1L)
+        }
+    }
+
+    private fun setTaskListListeners() {
         which_task_list.setOnClickListener { view: View ->
             if (!view.isSelected) {
                 UIUtil.hideKeyboard(this)
@@ -113,52 +180,23 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
             which_task_list.isSelected = false
             AnimUtilskt.slideView(task_list_view_container, taskListViewContainerHeight, 0)
         }
+    }
 
-        cancel_button.setOnClickListener {
-            finish()
-        }
-
-        done_button.setOnClickListener {
-
-            if (TextUtils.isEmpty(task_edit_text.text)) {
-                showError("Task is empty.")
-                return@setOnClickListener
-            }
-
-            newTaskViewModel.saveTaskInDB(
-                Task(
-                    0,
-                    RandomStringUtils.randomAlphanumeric(10),
-                    (-1).toString(),
-                    task_edit_text.text.toString(),
-                    calendarInstance.time.time,
-                    selectedTaskList2.listSlack
-                )
+    private fun updateTaskOnServer(taskLongId: Long) {
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+        val taskToUpdate = workDataOf(UpdateTaskWorker.TASK_LONG_ID to taskLongId)
+        val updateTaskWorkerRequest = OneTimeWorkRequestBuilder<UpdateTaskWorker>()
+            .setBackoffCriteria(
+                BackoffPolicy.LINEAR,
+                OneTimeWorkRequest.MIN_BACKOFF_MILLIS,
+                TimeUnit.MILLISECONDS
             )
-
-        }
-
-        newTaskViewModel.taskInserted.observe(this, Observer { taskLongId: Long ->
-
-            createTask(taskLongId)
-
-            finish()
-
-        })
-
-        if (intent != null &&
-            intent.getLongExtra(EXTRAS_TASK_LONG_ID, -1L) != -1L
-        ) {
-            newTaskViewModel.task.observe(this, Observer { taskFromDb: Task ->
-                task = taskFromDb
-                initializeDateAndTimeViews(Date(task.dateTime))
-                task_edit_text.setText(task.task)
-            })
-            newTaskViewModel.getData(intent.getLongExtra(EXTRAS_TASK_LONG_ID, -1L))
-        } else {
-            initializeDateAndTimeViews(Date())
-            newTaskViewModel.getData(-1L)
-        }
+            .setInputData(taskToUpdate)
+            .setConstraints(constraints)
+            .build()
+        WorkManager.getInstance(this).enqueue(updateTaskWorkerRequest)
     }
 
     private fun initializeTaskListView(taskList: List<TaskList>) {
@@ -317,7 +355,7 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
             })
     }
 
-    private fun createTask(taskLongId: Long) {
+    private fun createTaskOnServer(taskLongId: Long) {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()

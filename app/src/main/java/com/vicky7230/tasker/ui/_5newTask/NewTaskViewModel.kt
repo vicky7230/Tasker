@@ -14,7 +14,8 @@ class NewTaskViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     val taskList = MutableLiveData<List<TaskList>>()
-    var taskInserted = MutableLiveData<Long>()
+    var taskInsertedInDB = MutableLiveData<Long>()
+    var taskUpdatedInDB = MutableLiveData<Long>()
     var task = MutableLiveData<Task>()
 
     fun getData(taskLongId: Long) {
@@ -25,10 +26,17 @@ class NewTaskViewModel @Inject constructor(
         }
     }
 
-    fun saveTaskInDB(task: Task) {
+    fun insertTaskInDB(task: Task) {
         viewModelScope.launch {
             val taskId = dataManager.insertTask(task)
-            taskInserted.value = taskId
+            taskInsertedInDB.value = taskId
+        }
+    }
+
+    fun updateTaskInDB(task: Task) {
+        viewModelScope.launch {
+            dataManager.updateTask(task)
+            taskUpdatedInDB.value = task.id
         }
     }
 }
