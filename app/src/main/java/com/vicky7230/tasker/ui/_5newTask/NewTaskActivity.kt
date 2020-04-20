@@ -243,7 +243,7 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
         val formattedDate = dateFormatter.format(calendarInstance.time)
         task_date.text = formattedDate
 
-        val timeFormatter = SimpleDateFormat("h:m a", Locale.ENGLISH)
+        val timeFormatter = SimpleDateFormat("hh:mm a", Locale.ENGLISH)
         val formattedTime = timeFormatter.format(calendarInstance.time)
         task_time.text = formattedTime
 

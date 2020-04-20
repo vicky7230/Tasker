@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/curved_bg_bottom_sheet"
+    android:padding="15dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/account_circle"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_account_circle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/account_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="You(vicky7230@gmail.com)"
+            android:textColor="@color/colorBlack"
+            android:textSize="19sp"
+            app:layout_constraintBottom_toBottomOf="@id/account_circle"
+            app:layout_constraintLeft_toRightOf="@id/account_circle"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/account_circle" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/icon_marked"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="35dp"
+            app:layout_constraintLeft_toLeftOf="@id/account_circle"
+            app:layout_constraintRight_toRightOf="@id/account_circle"
+            app:layout_constraintTop_toBottomOf="@id/account_circle"
+            app:srcCompat="@drawable/ic_marked" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/finished_tasks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="Finished Tasks"
+            android:textColor="@color/colorBlack"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="@id/icon_marked"
+            app:layout_constraintLeft_toRightOf="@id/account_circle"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/icon_marked" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/icon_delete"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="25dp"
+            android:tint="@color/colorBlue"
+            app:layout_constraintLeft_toLeftOf="@id/account_circle"
+            app:layout_constraintRight_toRightOf="@id/account_circle"
+            app:layout_constraintTop_toBottomOf="@id/icon_marked"
+            app:srcCompat="@drawable/ic_trash" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/deleted_tasks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="Deleted Tasks"
+            android:textColor="@color/colorBlack"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="@id/icon_delete"
+            app:layout_constraintLeft_toRightOf="@id/account_circle"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/icon_delete" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

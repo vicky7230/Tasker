@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.work.*
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.vicky7230.tasker.R
@@ -82,6 +83,13 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
             listPopupWindow.show()
         }
 
+        more_button.setOnClickListener {
+            val view: View = layoutInflater.inflate(R.layout.bottom_sheet, null)
+            val dialog = BottomSheetDialog(this, R.style.BottomSheetDialog) // Style here
+            dialog.setContentView(view)
+            dialog.show()
+        }
+
         setUpTaskListsRecyclerView()
 
         setUpTodaysTasksRecyclerView()
@@ -103,7 +111,6 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
                 }
                 is Resource.Success -> {
                     hideLoading()
-                    //Timber.d(it.toString())
                     taskListsAdapter.updateItems(it.data)
                 }
             }

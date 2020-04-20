@@ -17,7 +17,7 @@ import java.util.*
 class TodaysTaskAdapter(private val todaysTasks: MutableList<TaskAndTaskList>) :
     RecyclerView.Adapter<TodaysTaskAdapter.TaskViewHolder>() {
 
-    val outputDateFormat = SimpleDateFormat("h:m a", Locale.ENGLISH)
+    val outputDateFormat = SimpleDateFormat("hh:mm a", Locale.ENGLISH)
 
     fun updateItems(tasks: List<TaskAndTaskList>) {
         this.todaysTasks.clear()
