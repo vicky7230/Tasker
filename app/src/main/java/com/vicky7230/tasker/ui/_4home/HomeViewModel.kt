@@ -24,6 +24,7 @@ class HomeViewModel @Inject constructor(
     var taskAndTaskList = MutableLiveData<Resource<List<TaskAndTaskList>>>()
     var taskFinished = MutableLiveData<Long>()
     var taskDeleted = MutableLiveData<Long>()
+    var userEmail = MutableLiveData<String>()
 
     fun getData(todaysDateStart: Long, todaysDateEnd: Long) {
 
@@ -159,5 +160,9 @@ class HomeViewModel @Inject constructor(
                     taskDeleted.value = task.id
             }
         }
+    }
+
+    fun getUserEmail() {
+        userEmail.value = dataManager.getUserEmail()
     }
 }

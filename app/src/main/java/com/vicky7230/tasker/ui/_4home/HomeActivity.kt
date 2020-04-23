@@ -49,6 +49,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var listPopupWindow: ListPopupWindow
     private var options = arrayListOf("Task", "List")
+    private lateinit var userEmail: String
 
     companion object {
         fun getStartIntent(context: Context): Intent {
@@ -87,12 +88,17 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
             val view: View = layoutInflater.inflate(R.layout.bottom_sheet, null)
             val dialog = BottomSheetDialog(this, R.style.BottomSheetDialog) // Style here
             dialog.setContentView(view)
+            dialog.findViewById<AppCompatTextView>(R.id.account_email)?.text = "You ($userEmail)"
             dialog.show()
         }
 
         setUpTaskListsRecyclerView()
 
         setUpTodaysTasksRecyclerView()
+
+        homeViewModel.userEmail.observe(this, Observer {
+            userEmail = it
+        })
 
         homeViewModel.taskFinished.observe(this, Observer { taskLongId: Long ->
             updateTask(taskLongId)
@@ -132,6 +138,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
         })
 
         homeViewModel.getData(getTodaysDateStart(), getTodaysDateEnd())
+        homeViewModel.getUserEmail()
     }
 
     private fun setUpTaskListsRecyclerView() {
