@@ -44,6 +44,20 @@ class TasksForListAdapter(
         return tasks.size
     }
 
+    fun removeItem(position: Int) {
+        tasks.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    fun restoreItem(item: Task, position: Int) {
+        tasks.add(position, item)
+        notifyItemInserted(position)
+    }
+
+    fun getData(): MutableList<Task> {
+        return tasks
+    }
+
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.onBind(tasks[position])
     }
