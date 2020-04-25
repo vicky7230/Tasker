@@ -11,6 +11,8 @@ interface ApiHelper {
 
     suspend fun verifyOtp(email: String, otp: String): Response<JsonElement>
 
+    suspend fun refreshToken(userId: String?, token: String?): Response<JsonElement>
+
     suspend fun getUserTaskLists(userId: String?, token: String?): Response<JsonElement>
 
     suspend fun createTask(taskData: TaskData): Response<JsonElement>

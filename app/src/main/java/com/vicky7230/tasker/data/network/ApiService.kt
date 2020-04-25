@@ -25,6 +25,13 @@ interface ApiService {
     ): Response<JsonElement>
 
     @FormUrlEncoded
+    @POST("api/LoginApi/refreshToken")
+    suspend fun refreshToken(
+        @Field("userID") userId: String?,
+        @Field("token") token: String?
+    ): Response<JsonElement>
+
+    @FormUrlEncoded
     @POST("api/TaskApi/getUserTaskLists")
     suspend fun getUserTaskLists(
         @Field("userID") userId: String?,

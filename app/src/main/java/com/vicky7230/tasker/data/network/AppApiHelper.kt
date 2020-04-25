@@ -16,6 +16,10 @@ class AppApiHelper @Inject constructor(private val apiService: ApiService) : Api
         return apiService.verifyOtp(email, otp)
     }
 
+    override suspend fun refreshToken(userId: String?, token: String?): Response<JsonElement> {
+        return apiService.refreshToken(userId, token)
+    }
+
     override suspend fun getUserTaskLists(userId: String?, token: String?): Response<JsonElement> {
         return apiService.getUserTaskLists(userId, token)
     }

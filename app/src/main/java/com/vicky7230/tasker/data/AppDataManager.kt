@@ -28,6 +28,10 @@ constructor(
         return appApiHelper.verifyOtp(email, otp)
     }
 
+    override suspend fun refreshToken(userId: String?, token: String?): Response<JsonElement> {
+        return appApiHelper.refreshToken(userId, token)
+    }
+
     override suspend fun getUserTaskLists(userId: String?, token: String?): Response<JsonElement> {
         return appApiHelper.getUserTaskLists(userId, token)
     }
