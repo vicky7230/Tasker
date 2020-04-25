@@ -48,15 +48,15 @@ class SplashActivity : BaseActivity() {
             when (tokenUpdated) {
                 is Resource.Loading -> {
                     retry_button.visibility = View.GONE
-                    showLoading()
+                    progress_bar.visibility = View.VISIBLE
                 }
                 is Resource.Error -> {
-                    hideLoading()
+                    progress_bar.visibility = View.GONE
                     retry_button.visibility = View.VISIBLE
                     showError(tokenUpdated.exception.localizedMessage)
                 }
                 is Resource.Success -> {
-                    hideLoading()
+                    progress_bar.visibility = View.GONE
                     if (tokenUpdated.data) {
                         startActivity(HomeActivity.getStartIntent(this@SplashActivity))
                         finish()
