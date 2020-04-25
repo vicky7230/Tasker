@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.*
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.vicky7230.tasker.R
@@ -23,9 +24,11 @@ import com.vicky7230.tasker.ui._4home.UnderlayButtonClickListener
 import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
 import com.vicky7230.tasker.utils.AppConstants
 import com.vicky7230.tasker.widget.ElasticDragDismissFrameLayout
+import com.vicky7230.tasker.worker.UpdateTaskWorker
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_tasks.*
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -75,7 +78,7 @@ class TasksActivity : BaseActivity() {
             override fun onRightSwiped(viewHolder: RecyclerView.ViewHolder) {
                 if (viewHolder is TasksForListAdapter.TaskViewHolder) {
                     val task = tasksForListAdapter.getData()[viewHolder.adapterPosition]
-                    //homeViewModel.setTaskFinished(task)
+                    tasksViewModel.setTaskFinished(task)
                     tasksForListAdapter.notifyItemChanged(viewHolder.adapterPosition)
                 }
             }
@@ -102,6 +105,13 @@ class TasksActivity : BaseActivity() {
     @SuppressLint("SetTextI18n")
     private fun init() {
 
+        tasksViewModel.taskFinished.observe(this, Observer { taskLongId: Long ->
+            updateTask(taskLongId)
+        })
+
+        tasksViewModel.taskDeleted.observe(this, Observer { taskLongId: Long ->
+            updateTask(taskLongId)
+        })
 
         chromeFader = object : ElasticDragDismissFrameLayout.SystemChromeFader(this) {
             override fun onDragDismissed() {
@@ -194,7 +204,7 @@ class TasksActivity : BaseActivity() {
                     snackBar.addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar?>() {
                         override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                             if (event == DISMISS_EVENT_TIMEOUT) {
-                                //homeViewModel.deleteTasK(task)
+                                tasksViewModel.deleteTasK(task)
                             }
                         }
                     })
@@ -203,6 +213,23 @@ class TasksActivity : BaseActivity() {
                 }
             }
         )
+    }
+
+    private fun updateTask(taskLongId: Long) {
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+        val taskToUpdate = workDataOf(UpdateTaskWorker.TASK_LONG_ID to taskLongId)
+        val updateTaskWorkerRequest = OneTimeWorkRequestBuilder<UpdateTaskWorker>()
+            .setBackoffCriteria(
+                BackoffPolicy.LINEAR,
+                OneTimeWorkRequest.MIN_BACKOFF_MILLIS,
+                TimeUnit.MILLISECONDS
+            )
+            .setInputData(taskToUpdate)
+            .setConstraints(constraints)
+            .build()
+        WorkManager.getInstance(this).enqueue(updateTaskWorkerRequest)
     }
 
     override fun onBackPressed() {

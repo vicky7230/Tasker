@@ -48,10 +48,10 @@ abstract class SwipeHelper(
         if (swipePosition < 0) return@OnTouchListener false
 
         val point = Point(motionEvent.rawX.toInt(), motionEvent.rawY.toInt())
-        val swipeViewHolder = recyclerView.findViewHolderForAdapterPosition(swipePosition)!!
-        val swipedItem = swipeViewHolder.itemView
+        val swipeViewHolder = recyclerView.findViewHolderForAdapterPosition(swipePosition)
+        val swipedItem = swipeViewHolder?.itemView
         val rect = Rect()
-        swipedItem.getGlobalVisibleRect(rect)
+        swipedItem?.getGlobalVisibleRect(rect)
 
         if (motionEvent.action == MotionEvent.ACTION_DOWN ||
             motionEvent.action == MotionEvent.ACTION_MOVE ||

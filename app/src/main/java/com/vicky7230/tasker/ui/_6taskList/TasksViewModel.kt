@@ -14,6 +14,8 @@ class TasksViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     val tasks = MutableLiveData<List<Task>>()
+    var taskFinished = MutableLiveData<Long>()
+    var taskDeleted = MutableLiveData<Long>()
 
     fun getTasks(listSlack: String) {
         viewModelScope.launch {
@@ -22,6 +24,26 @@ class TasksViewModel @Inject constructor(
                     tasks.value = tasksForList
                 }
 
+        }
+    }
+
+    fun deleteTasK(task: Task) {
+        viewModelScope.launch {
+            if (task.deleted != 1) {
+                val count = dataManager.setTaskDeleted(task.id)
+                if (count > 0)
+                    taskDeleted.value = task.id
+            }
+        }
+    }
+
+    fun setTaskFinished(task: Task) {
+        viewModelScope.launch {
+            if (task.deleted != 1) {
+                val count = dataManager.setTaskDeleted(task.id)
+                if (count > 0)
+                    taskDeleted.value = task.id
+            }
         }
     }
 
