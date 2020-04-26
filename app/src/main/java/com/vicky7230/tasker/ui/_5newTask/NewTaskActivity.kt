@@ -71,12 +71,15 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
         }
     }
 
+    override fun getViewModel(): NewTaskViewModel {
+        newTaskViewModel = ViewModelProvider(this, viewModelFactory)[NewTaskViewModel::class.java]
+        return newTaskViewModel
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_task)
-
-        newTaskViewModel = ViewModelProvider(this, viewModelFactory)[NewTaskViewModel::class.java]
 
         init()
     }

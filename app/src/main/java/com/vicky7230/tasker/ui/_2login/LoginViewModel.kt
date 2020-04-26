@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
     private val dataManager: DataManager
-) : BaseViewModel() {
+) : BaseViewModel(dataManager) {
 
     var resource = MutableLiveData<Resource<JsonElement>>()
 

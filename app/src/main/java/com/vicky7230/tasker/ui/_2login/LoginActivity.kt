@@ -26,14 +26,23 @@ class LoginActivity : BaseActivity() {
         fun getStartIntent(context: Context): Intent {
             return Intent(context, LoginActivity::class.java)
         }
+
+        fun getStartIntentNewTask(context: Context): Intent {
+            val intent = Intent(context, LoginActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            return intent
+        }
+    }
+
+    override fun getViewModel(): LoginViewModel {
+        loginViewModel = ViewModelProvider(this, viewModelFactory)[LoginViewModel::class.java]
+        return loginViewModel
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
-        loginViewModel = ViewModelProvider(this, viewModelFactory)[LoginViewModel::class.java]
 
         init()
     }

@@ -59,13 +59,17 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
         }
     }
 
+    override fun getViewModel(): HomeViewModel {
+        homeViewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
+        return homeViewModel
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_home)
         taskListsAdapter.setCallback(this)
-        homeViewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
 
         init()
     }

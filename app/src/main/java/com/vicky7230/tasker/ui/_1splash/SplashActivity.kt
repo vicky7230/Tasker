@@ -28,12 +28,15 @@ class SplashActivity : BaseActivity() {
 
     lateinit var splashViewModel: SplashViewModel
 
+    override fun getViewModel(): SplashViewModel {
+        splashViewModel = ViewModelProvider(this, viewModelFactory)[SplashViewModel::class.java]
+        return splashViewModel
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-
-        splashViewModel = ViewModelProvider(this, viewModelFactory)[SplashViewModel::class.java]
 
         init()
     }

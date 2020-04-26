@@ -32,13 +32,16 @@ class VerifyOtpActivity : BaseActivity() {
         }
     }
 
+    override fun getViewModel(): VerifyOtpViewModel {
+        verifyOtpViewModel =
+            ViewModelProvider(this, viewModelFactory)[VerifyOtpViewModel::class.java]
+        return verifyOtpViewModel
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_verify_otp)
-
-        verifyOtpViewModel =
-            ViewModelProvider(this, viewModelFactory)[VerifyOtpViewModel::class.java]
 
         init()
     }
@@ -47,7 +50,7 @@ class VerifyOtpActivity : BaseActivity() {
     private fun init() {
 
         verifyOtpViewModel.resource.observe(this, Observer {
-            when(it){
+            when (it) {
                 is Resource.Loading -> showLoading()
                 is Resource.Error -> {
                     hideLoading()

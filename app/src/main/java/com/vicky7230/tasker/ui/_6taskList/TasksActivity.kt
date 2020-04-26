@@ -64,12 +64,15 @@ class TasksActivity : BaseActivity() {
         }
     }
 
+    override fun getViewModel(): TasksViewModel {
+        tasksViewModel = ViewModelProvider(this, viewModelFactory)[TasksViewModel::class.java]
+        return tasksViewModel
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tasks)
-
-        tasksViewModel = ViewModelProvider(this, viewModelFactory)[TasksViewModel::class.java]
 
         tasks.layoutManager = LinearLayoutManager(this)
         tasks.adapter = tasksForListAdapter

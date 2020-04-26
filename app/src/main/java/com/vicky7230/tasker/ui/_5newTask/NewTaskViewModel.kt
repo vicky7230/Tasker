@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class NewTaskViewModel @Inject constructor(
     private val dataManager: DataManager
-) : BaseViewModel() {
+) : BaseViewModel(dataManager) {
 
     val taskList = MutableLiveData<List<TaskList>>()
     var taskInsertedInDB = MutableLiveData<Long>()

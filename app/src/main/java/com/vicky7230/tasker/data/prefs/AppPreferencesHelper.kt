@@ -6,6 +6,7 @@ package com.vicky7230.tasker.data.prefs
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.vicky7230.tasker.di.ApplicationContext
 import javax.inject.Inject
@@ -70,5 +71,14 @@ class AppPreferencesHelper @Inject constructor(@ApplicationContext context: Cont
 
     override fun setUserLoggedIn() {
         sharedPreferences.edit().putBoolean(PREF_KEY_USER_LOGGED_IN, true).apply()
+    }
+
+    override fun setUserLoggedOut() {
+        sharedPreferences.edit {
+            remove(PREF_KEY_ACCESS_TOKEN)
+            remove(PREF_KEY_USER_EMAIL)
+            remove(PREF_KEY_USER_ID)
+            remove(PREF_KEY_USER_LOGGED_IN)
+        }
     }
 }

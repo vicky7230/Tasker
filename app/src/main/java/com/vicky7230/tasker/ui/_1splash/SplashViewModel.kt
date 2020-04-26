@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class SplashViewModel @Inject constructor(
     private val dataManager: DataManager
-) : BaseViewModel() {
+) : BaseViewModel(dataManager) {
 
     var isUserLoggedIn = MutableLiveData<Boolean>()
     var tokenRefreshed = MutableLiveData<Resource<Boolean>>()

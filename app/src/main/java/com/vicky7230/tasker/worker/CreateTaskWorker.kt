@@ -7,9 +7,11 @@ import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.vicky7230.tasker.data.DataManager
 import com.vicky7230.tasker.di.ChildWorkerFactory
+import com.vicky7230.tasker.events.TokenExpireEvent
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.async
 import kotlinx.coroutines.supervisorScope
+import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 
 class CreateTaskWorker @AssistedInject constructor(
@@ -60,6 +62,8 @@ class CreateTaskWorker @AssistedInject constructor(
                             val rowsUpdated = updateTaskSlackJob.await()
                             if (rowsUpdated > 0)
                                 success = true
+                        } else if (!jsonObject["success"].asBoolean) {
+                            EventBus.getDefault().post(TokenExpireEvent())
                         }
                     }
                 } catch (e: Exception) {

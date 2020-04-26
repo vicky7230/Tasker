@@ -80,6 +80,10 @@ constructor(
         appPreferencesHelper.setUserLoggedIn()
     }
 
+    override fun setUserLoggedOut() {
+        appPreferencesHelper.setUserLoggedOut()
+    }
+
 
     override fun getAllLists(): Flow<List<TaskList>> {
         return appDbHelper.getAllLists()

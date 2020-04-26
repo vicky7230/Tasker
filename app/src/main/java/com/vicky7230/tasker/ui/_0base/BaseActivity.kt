@@ -4,16 +4,36 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.pm.PackageManager
 import android.os.Build
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.vicky7230.tasker.R
+import com.vicky7230.tasker.events.TokenExpireEvent
+import com.vicky7230.tasker.ui._2login.LoginActivity
 import com.vicky7230.tasker.utils.CommonUtils
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
+
 
 @SuppressLint("Registered")
-open class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity() {
 
     private var progressDialog: Dialog? = null
+    private lateinit var baseViewModel: BaseViewModel
+
+    abstract fun getViewModel(): BaseViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        baseViewModel = getViewModel()
+        baseViewModel.loggedOut.observe(this, Observer {
+            startActivity(LoginActivity.getStartIntentNewTask(this))
+            finish()
+        })
+    }
 
     fun hasPermissions(permissions: Array<String>): Boolean {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
@@ -63,4 +83,18 @@ open class BaseActivity : AppCompatActivity() {
             displayError(message)
     }
 
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        EventBus.getDefault().unregister(this)
+        super.onStop()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    open fun onTokenExpire(event: TokenExpireEvent) {
+        baseViewModel.onTokenExpire()
+    }
 }

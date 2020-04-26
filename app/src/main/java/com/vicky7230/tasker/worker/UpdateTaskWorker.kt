@@ -7,9 +7,11 @@ import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.vicky7230.tasker.data.DataManager
 import com.vicky7230.tasker.di.ChildWorkerFactory
+import com.vicky7230.tasker.events.TokenExpireEvent
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.async
 import kotlinx.coroutines.supervisorScope
+import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 
 class UpdateTaskWorker @AssistedInject constructor(
@@ -53,6 +55,8 @@ class UpdateTaskWorker @AssistedInject constructor(
                             val jsonObject = response.body()!!.asJsonObject
                             if (jsonObject["success"].asBoolean && jsonObject["updated"].asBoolean) {
                                 success = true
+                            } else if (!jsonObject["success"].asBoolean) {
+                                EventBus.getDefault().post(TokenExpireEvent())
                             }
                         }
                     } catch (e: Exception) {

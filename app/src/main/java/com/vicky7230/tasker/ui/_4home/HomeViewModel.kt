@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
     private val dataManager: DataManager
-) : BaseViewModel() {
+) : BaseViewModel(dataManager) {
 
     var taskListAndCount = MutableLiveData<Resource<List<TaskListAndCount>>>()
     var taskAndTaskList = MutableLiveData<Resource<List<TaskAndTaskList>>>()

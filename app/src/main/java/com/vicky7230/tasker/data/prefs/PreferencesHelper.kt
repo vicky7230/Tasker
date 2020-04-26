@@ -27,4 +27,6 @@ interface PreferencesHelper {
     fun getUserLoggedIn(): Boolean
 
     fun setUserLoggedIn()
+
+    fun setUserLoggedOut()
 }
