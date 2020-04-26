@@ -40,39 +40,42 @@ class CreateTaskWorker @AssistedInject constructor(
 
                 val task = getTaskFromDbJob.await()
 
-                val createTaskJob = async {
-                    dataManager.createTask(
-                        TaskData(
-                            dataManager.getUserId(),
-                            dataManager.getAccessToken(),
-                            task
-                        )
-                    )
-                }
+                if (dataManager.getAccessToken() != null) {
 
-                try {
-                    val response = createTaskJob.await()
-                    if (response.isSuccessful) {
-                        val jsonObject = response.body()!!.asJsonObject
-                        if (jsonObject["success"].asBoolean && jsonObject["created"].asBoolean) {
-                            task.taskSlack = jsonObject["task_slack"].asString
-                            val updateTaskSlackJob = async {
-                                dataManager.updateTask(task)
+                    val createTaskJob = async {
+                        dataManager.createTask(
+                            TaskData(
+                                dataManager.getUserId(),
+                                dataManager.getAccessToken(),
+                                task
+                            )
+                        )
+                    }
+
+                    try {
+                        val response = createTaskJob.await()
+                        if (response.isSuccessful) {
+                            val jsonObject = response.body()!!.asJsonObject
+                            if (jsonObject["success"].asBoolean && jsonObject["created"].asBoolean) {
+                                task.taskSlack = jsonObject["task_slack"].asString
+                                val updateTaskSlackJob = async {
+                                    dataManager.updateTask(task)
+                                }
+                                val rowsUpdated = updateTaskSlackJob.await()
+                                if (rowsUpdated > 0)
+                                    success = true
+                            } else if (!jsonObject["success"].asBoolean) {
+                                EventBus.getDefault().post(TokenExpireEvent())
                             }
-                            val rowsUpdated = updateTaskSlackJob.await()
-                            if (rowsUpdated > 0)
-                                success = true
-                        } else if (!jsonObject["success"].asBoolean) {
-                            EventBus.getDefault().post(TokenExpireEvent())
                         }
+                    } catch (e: Exception) {
+                        if (e is CancellationException) {
+                            Timber.d("Job was Cancelled....")
+                        }
+                        //Log exception
+                        Timber.e("Handling Exception......")
+                        Timber.e(e)
                     }
-                } catch (e: Exception) {
-                    if (e is CancellationException) {
-                        Timber.d("Job was Cancelled....")
-                    }
-                    //Log exception
-                    Timber.e("Handling Exception......")
-                    Timber.e(e)
                 }
             }
         } else {
