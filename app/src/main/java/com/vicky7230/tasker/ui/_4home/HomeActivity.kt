@@ -283,6 +283,12 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         if (position == 0) {
             startActivity(NewTaskActivity.getStartIntent(this))
+        } else {
+            val view: View = layoutInflater.inflate(R.layout.bottom_sheet_colors, null)
+            val dialog = BottomSheetDialog(this, R.style.BottomSheetDialog) // Style here
+            dialog.setContentView(view)
+            //dialog.findViewById<AppCompatTextView>(R.id.account_email)?.text = "You ($userEmail)"
+            dialog.show()
         }
 
         listPopupWindow.dismiss()
