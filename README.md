@@ -16,6 +16,11 @@
 </p>
 
 <p align="center">
+  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/a1.png" width="280">
+  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/a2.png" width="280">
+  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/a3.png" width="280">
+</p>
+<p align="center">
   <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/1.png" width="280">
   <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/2.png" width="280">
   <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/3.png" width="280">
