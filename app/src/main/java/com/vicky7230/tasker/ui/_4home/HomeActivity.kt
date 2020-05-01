@@ -56,6 +56,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
     private var options = arrayListOf("Task", "List")
     private lateinit var userEmail: String
     private var taskListColor: String = "-1"
+    private lateinit var colorsDialog: BottomSheetDialog
 
     companion object {
         fun getStartIntent(context: Context): Intent {
@@ -114,6 +115,9 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
                     showToast(it.exception.localizedMessage)
                 }
                 is Resource.Success -> {
+                    if (this::colorsDialog.isInitialized) {
+                        colorsDialog.dismiss()
+                    }
                     hideLoading()
                 }
             }
@@ -313,16 +317,16 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
         taskListColor = "-1"
 
         val view: View = layoutInflater.inflate(R.layout.bottom_sheet_colors, null)
-        val dialog = BottomSheetDialog(this, R.style.BottomSheetDialog) // Style here
-        dialog.setContentView(view)
-        dialog.setOnShowListener {
+        colorsDialog = BottomSheetDialog(this, R.style.BottomSheetDialog)
+        colorsDialog.setContentView(view)
+        colorsDialog.setOnShowListener {
             val bottomSheet: FrameLayout =
-                dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout
+                colorsDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout
             BottomSheetBehavior.from(bottomSheet).setState(BottomSheetBehavior.STATE_EXPANDED)
         }
-        dialog.findViewById<MaterialButton>(R.id.create_list_button)?.setOnClickListener {
+        colorsDialog.findViewById<MaterialButton>(R.id.create_list_button)?.setOnClickListener {
 
-            if (dialog.findViewById<AppCompatEditText>(R.id.new_list_name)!!.text!!.isEmpty()) {
+            if (colorsDialog.findViewById<AppCompatEditText>(R.id.new_list_name)!!.text!!.isEmpty()) {
                 showToast("Please enter list name.")
                 return@setOnClickListener
             }
@@ -334,56 +338,56 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
 
             homeViewModel.createNewList(
                 taskListColor,
-                dialog.findViewById<AppCompatEditText>(R.id.new_list_name)!!.text!!.toString()
+                colorsDialog.findViewById<AppCompatEditText>(R.id.new_list_name)!!.text!!.toString()
             )
         }
         val listener = View.OnClickListener() {
-            dialog.findViewById<AppCompatImageView>(R.id.color_1)?.setImageDrawable(null)
-            dialog.findViewById<AppCompatImageView>(R.id.color_2)?.setImageDrawable(null)
-            dialog.findViewById<AppCompatImageView>(R.id.color_3)?.setImageDrawable(null)
-            dialog.findViewById<AppCompatImageView>(R.id.color_4)?.setImageDrawable(null)
-            dialog.findViewById<AppCompatImageView>(R.id.color_5)?.setImageDrawable(null)
-            dialog.findViewById<AppCompatImageView>(R.id.color_6)?.setImageDrawable(null)
-            dialog.findViewById<AppCompatImageView>(R.id.color_7)?.setImageDrawable(null)
-            dialog.findViewById<AppCompatImageView>(R.id.color_8)?.setImageDrawable(null)
-            dialog.findViewById<AppCompatImageView>(R.id.color_9)?.setImageDrawable(null)
-            dialog.findViewById<AppCompatImageView>(R.id.color_10)?.setImageDrawable(null)
-            dialog.findViewById<AppCompatImageView>(R.id.color_11)?.setImageDrawable(null)
-            dialog.findViewById<AppCompatImageView>(R.id.color_12)?.setImageDrawable(null)
-            dialog.findViewById<AppCompatImageView>(R.id.color_13)?.setImageDrawable(null)
-            dialog.findViewById<AppCompatImageView>(R.id.color_14)?.setImageDrawable(null)
-            dialog.findViewById<AppCompatImageView>(R.id.color_15)?.setImageDrawable(null)
-            dialog.findViewById<AppCompatImageView>(R.id.color_16)?.setImageDrawable(null)
-            dialog.findViewById<AppCompatImageView>(R.id.color_17)?.setImageDrawable(null)
-            dialog.findViewById<AppCompatImageView>(R.id.color_18)?.setImageDrawable(null)
-            dialog.findViewById<AppCompatImageView>(R.id.color_19)?.setImageDrawable(null)
-            dialog.findViewById<AppCompatImageView>(R.id.color_20)?.setImageDrawable(null)
+            colorsDialog.findViewById<AppCompatImageView>(R.id.color_1)?.setImageDrawable(null)
+            colorsDialog.findViewById<AppCompatImageView>(R.id.color_2)?.setImageDrawable(null)
+            colorsDialog.findViewById<AppCompatImageView>(R.id.color_3)?.setImageDrawable(null)
+            colorsDialog.findViewById<AppCompatImageView>(R.id.color_4)?.setImageDrawable(null)
+            colorsDialog.findViewById<AppCompatImageView>(R.id.color_5)?.setImageDrawable(null)
+            colorsDialog.findViewById<AppCompatImageView>(R.id.color_6)?.setImageDrawable(null)
+            colorsDialog.findViewById<AppCompatImageView>(R.id.color_7)?.setImageDrawable(null)
+            colorsDialog.findViewById<AppCompatImageView>(R.id.color_8)?.setImageDrawable(null)
+            colorsDialog.findViewById<AppCompatImageView>(R.id.color_9)?.setImageDrawable(null)
+            colorsDialog.findViewById<AppCompatImageView>(R.id.color_10)?.setImageDrawable(null)
+            colorsDialog.findViewById<AppCompatImageView>(R.id.color_11)?.setImageDrawable(null)
+            colorsDialog.findViewById<AppCompatImageView>(R.id.color_12)?.setImageDrawable(null)
+            colorsDialog.findViewById<AppCompatImageView>(R.id.color_13)?.setImageDrawable(null)
+            colorsDialog.findViewById<AppCompatImageView>(R.id.color_14)?.setImageDrawable(null)
+            colorsDialog.findViewById<AppCompatImageView>(R.id.color_15)?.setImageDrawable(null)
+            colorsDialog.findViewById<AppCompatImageView>(R.id.color_16)?.setImageDrawable(null)
+            colorsDialog.findViewById<AppCompatImageView>(R.id.color_17)?.setImageDrawable(null)
+            colorsDialog.findViewById<AppCompatImageView>(R.id.color_18)?.setImageDrawable(null)
+            colorsDialog.findViewById<AppCompatImageView>(R.id.color_19)?.setImageDrawable(null)
+            colorsDialog.findViewById<AppCompatImageView>(R.id.color_20)?.setImageDrawable(null)
             (it as AppCompatImageView).setImageResource(R.drawable.ic_done_white)
             taskListColor = it.tag as String
             Timber.e(taskListColor)
         }
 
-        dialog.findViewById<AppCompatImageView>(R.id.color_1)?.setOnClickListener(listener)
-        dialog.findViewById<AppCompatImageView>(R.id.color_2)?.setOnClickListener(listener)
-        dialog.findViewById<AppCompatImageView>(R.id.color_3)?.setOnClickListener(listener)
-        dialog.findViewById<AppCompatImageView>(R.id.color_4)?.setOnClickListener(listener)
-        dialog.findViewById<AppCompatImageView>(R.id.color_5)?.setOnClickListener(listener)
-        dialog.findViewById<AppCompatImageView>(R.id.color_6)?.setOnClickListener(listener)
-        dialog.findViewById<AppCompatImageView>(R.id.color_7)?.setOnClickListener(listener)
-        dialog.findViewById<AppCompatImageView>(R.id.color_8)?.setOnClickListener(listener)
-        dialog.findViewById<AppCompatImageView>(R.id.color_9)?.setOnClickListener(listener)
-        dialog.findViewById<AppCompatImageView>(R.id.color_10)?.setOnClickListener(listener)
-        dialog.findViewById<AppCompatImageView>(R.id.color_11)?.setOnClickListener(listener)
-        dialog.findViewById<AppCompatImageView>(R.id.color_12)?.setOnClickListener(listener)
-        dialog.findViewById<AppCompatImageView>(R.id.color_13)?.setOnClickListener(listener)
-        dialog.findViewById<AppCompatImageView>(R.id.color_14)?.setOnClickListener(listener)
-        dialog.findViewById<AppCompatImageView>(R.id.color_15)?.setOnClickListener(listener)
-        dialog.findViewById<AppCompatImageView>(R.id.color_16)?.setOnClickListener(listener)
-        dialog.findViewById<AppCompatImageView>(R.id.color_17)?.setOnClickListener(listener)
-        dialog.findViewById<AppCompatImageView>(R.id.color_18)?.setOnClickListener(listener)
-        dialog.findViewById<AppCompatImageView>(R.id.color_19)?.setOnClickListener(listener)
-        dialog.findViewById<AppCompatImageView>(R.id.color_20)?.setOnClickListener(listener)
-        dialog.show()
+        colorsDialog.findViewById<AppCompatImageView>(R.id.color_1)?.setOnClickListener(listener)
+        colorsDialog.findViewById<AppCompatImageView>(R.id.color_2)?.setOnClickListener(listener)
+        colorsDialog.findViewById<AppCompatImageView>(R.id.color_3)?.setOnClickListener(listener)
+        colorsDialog.findViewById<AppCompatImageView>(R.id.color_4)?.setOnClickListener(listener)
+        colorsDialog.findViewById<AppCompatImageView>(R.id.color_5)?.setOnClickListener(listener)
+        colorsDialog.findViewById<AppCompatImageView>(R.id.color_6)?.setOnClickListener(listener)
+        colorsDialog.findViewById<AppCompatImageView>(R.id.color_7)?.setOnClickListener(listener)
+        colorsDialog.findViewById<AppCompatImageView>(R.id.color_8)?.setOnClickListener(listener)
+        colorsDialog.findViewById<AppCompatImageView>(R.id.color_9)?.setOnClickListener(listener)
+        colorsDialog.findViewById<AppCompatImageView>(R.id.color_10)?.setOnClickListener(listener)
+        colorsDialog.findViewById<AppCompatImageView>(R.id.color_11)?.setOnClickListener(listener)
+        colorsDialog.findViewById<AppCompatImageView>(R.id.color_12)?.setOnClickListener(listener)
+        colorsDialog.findViewById<AppCompatImageView>(R.id.color_13)?.setOnClickListener(listener)
+        colorsDialog.findViewById<AppCompatImageView>(R.id.color_14)?.setOnClickListener(listener)
+        colorsDialog.findViewById<AppCompatImageView>(R.id.color_15)?.setOnClickListener(listener)
+        colorsDialog.findViewById<AppCompatImageView>(R.id.color_16)?.setOnClickListener(listener)
+        colorsDialog.findViewById<AppCompatImageView>(R.id.color_17)?.setOnClickListener(listener)
+        colorsDialog.findViewById<AppCompatImageView>(R.id.color_18)?.setOnClickListener(listener)
+        colorsDialog.findViewById<AppCompatImageView>(R.id.color_19)?.setOnClickListener(listener)
+        colorsDialog.findViewById<AppCompatImageView>(R.id.color_20)?.setOnClickListener(listener)
+        colorsDialog.show()
     }
 
     override fun onListClick(
