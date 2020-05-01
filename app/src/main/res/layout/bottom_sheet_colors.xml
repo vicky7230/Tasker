@@ -8,9 +8,32 @@
     android:padding="15dp">
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="29dp"
+        android:layout_marginTop="20dp"
+        android:text="Enter List Name"
+        android:textColor="@color/colorBlue"
+        android:textSize="19dp" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/new_list_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="26dp"
+        android:layout_marginLeft="29dp"
+        android:layout_marginRight="29dp"
+        android:hint="Enter here"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:textColorHint="@color/colorHints"
+        android:textSize="19sp"
+        app:backgroundTint="@color/colorHints" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="29dp"
+        android:layout_marginTop="15dp"
         android:text="Select a color"
         android:textColor="@color/colorBlue"
         android:textSize="19dp" />
@@ -21,42 +44,50 @@
         android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
-        <View
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/color_1"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:background="@drawable/curved_color"
             android:backgroundTint="#EF5350"
+            android:padding="10dp"
+            android:tag="#EF5350"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/color_2"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <View
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/color_2"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:background="@drawable/curved_color"
             android:backgroundTint="#EC407A"
+            android:padding="10dp"
+            android:tag="#EC407A"
             app:layout_constraintLeft_toRightOf="@id/color_1"
             app:layout_constraintRight_toLeftOf="@id/color_3"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <View
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/color_3"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:background="@drawable/curved_color"
-            android:backgroundTint="#EC407A"
+            android:backgroundTint="#AB47BC"
+            android:padding="10dp"
+            android:tag="#AB47BC"
             app:layout_constraintLeft_toRightOf="@id/color_2"
             app:layout_constraintRight_toLeftOf="@id/color_4"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <View
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/color_4"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:background="@drawable/curved_color"
             android:backgroundTint="#7E57C2"
+            android:padding="10dp"
+            android:tag="#7E57C2"
             app:layout_constraintLeft_toRightOf="@id/color_3"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -68,42 +99,50 @@
         android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
-        <View
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/color_5"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:background="@drawable/curved_color"
             android:backgroundTint="#5C6BC0"
+            android:padding="10dp"
+            android:tag="#5C6BC0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/color_6"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <View
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/color_6"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:background="@drawable/curved_color"
             android:backgroundTint="#3498DB"
+            android:padding="10dp"
+            android:tag="#3498DB"
             app:layout_constraintLeft_toRightOf="@id/color_5"
             app:layout_constraintRight_toLeftOf="@id/color_7"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <View
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/color_7"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:background="@drawable/curved_color"
             android:backgroundTint="#42A5F5"
+            android:padding="10dp"
+            android:tag="#42A5F5"
             app:layout_constraintLeft_toRightOf="@id/color_6"
             app:layout_constraintRight_toLeftOf="@id/color_8"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <View
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/color_8"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:background="@drawable/curved_color"
             android:backgroundTint="#26C6DA"
+            android:padding="10dp"
+            android:tag="#26C6DA"
             app:layout_constraintLeft_toRightOf="@id/color_7"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -115,42 +154,50 @@
         android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
-        <View
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/color_9"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:background="@drawable/curved_color"
             android:backgroundTint="#26A69A"
+            android:padding="10dp"
+            android:tag="#26A69A"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/color_10"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <View
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/color_10"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:background="@drawable/curved_color"
             android:backgroundTint="#66BB6A"
+            android:padding="10dp"
+            android:tag="#66BB6A"
             app:layout_constraintLeft_toRightOf="@id/color_9"
             app:layout_constraintRight_toLeftOf="@id/color_11"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <View
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/color_11"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:background="@drawable/curved_color"
             android:backgroundTint="#9CCC65"
+            android:padding="10dp"
+            android:tag="#9CCC65"
             app:layout_constraintLeft_toRightOf="@id/color_10"
             app:layout_constraintRight_toLeftOf="@id/color_12"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <View
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/color_12"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:background="@drawable/curved_color"
             android:backgroundTint="#D4E157"
+            android:padding="10dp"
+            android:tag="#D4E157"
             app:layout_constraintLeft_toRightOf="@id/color_11"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -162,42 +209,50 @@
         android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
-        <View
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/color_13"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:background="@drawable/curved_color"
             android:backgroundTint="#FFEE58"
+            android:padding="10dp"
+            android:tag="#FFEE58"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/color_14"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <View
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/color_14"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:background="@drawable/curved_color"
             android:backgroundTint="#FFCA28"
+            android:padding="10dp"
+            android:tag="#FFCA28"
             app:layout_constraintLeft_toRightOf="@id/color_13"
             app:layout_constraintRight_toLeftOf="@id/color_15"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <View
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/color_15"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:background="@drawable/curved_color"
             android:backgroundTint="#FFA726"
+            android:padding="10dp"
+            android:tag="#FFA726"
             app:layout_constraintLeft_toRightOf="@id/color_14"
             app:layout_constraintRight_toLeftOf="@id/color_16"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <View
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/color_16"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:background="@drawable/curved_color"
             android:backgroundTint="#FF7043"
+            android:padding="10dp"
+            android:tag="#FF7043"
             app:layout_constraintLeft_toRightOf="@id/color_15"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -209,45 +264,62 @@
         android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
-        <View
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/color_17"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:background="@drawable/curved_color"
             android:backgroundTint="#8D6E63"
+            android:padding="10dp"
+            android:tag="#8D6E63"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/color_18"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <View
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/color_18"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:background="@drawable/curved_color"
             android:backgroundTint="#BDBDBD"
+            android:padding="10dp"
+            android:tag="#BDBDBD"
             app:layout_constraintLeft_toRightOf="@id/color_17"
             app:layout_constraintRight_toLeftOf="@id/color_19"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <View
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/color_19"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:background="@drawable/curved_color"
             android:backgroundTint="#78909C"
+            android:padding="10dp"
+            android:tag="#78909C"
             app:layout_constraintLeft_toRightOf="@id/color_18"
             app:layout_constraintRight_toLeftOf="@id/color_20"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <View
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/color_20"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:background="@drawable/curved_color"
             android:backgroundTint="#000000"
+            android:padding="10dp"
+            android:tag="#000000"
             app:layout_constraintLeft_toRightOf="@id/color_19"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/create_list_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="35dp"
+        android:text="CREATE LIST" />
 
 </LinearLayout>

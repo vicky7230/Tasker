@@ -36,4 +36,13 @@ class AppApiHelper @Inject constructor(private val apiService: ApiService) : Api
         return apiService.getUserTasks(userId, token)
     }
 
+    override suspend fun createNewList(
+        userId: String?,
+        token: String?,
+        listColor: String,
+        listName: String
+    ): Response<JsonElement> {
+        return apiService.createNewList(userId, token, listColor, listName)
+    }
+
 }

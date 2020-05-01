@@ -55,4 +55,13 @@ interface ApiService {
         @Field("token") token: String?
     ): Response<JsonElement>
 
+    @FormUrlEncoded
+    @POST("api/TaskApi/createNewList")
+    suspend fun createNewList(
+        @Field("userID") userId: String?,
+        @Field("token") token: String?,
+        @Field("list_color") listColor: String,
+        @Field("list_name") listName: String
+    ): Response<JsonElement>
+
 }

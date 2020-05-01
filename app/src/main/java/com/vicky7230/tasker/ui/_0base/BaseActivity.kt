@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -81,6 +82,10 @@ abstract class BaseActivity : AppCompatActivity() {
     fun showError(message: String?) {
         if (message != null)
             displayError(message)
+    }
+
+    fun showToast(message: String?) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
     override fun onStart() {

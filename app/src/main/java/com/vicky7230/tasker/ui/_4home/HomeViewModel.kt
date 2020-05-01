@@ -10,9 +10,11 @@ import com.vicky7230.tasker.data.db.entities.TaskList
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskAndTaskList
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskListAndCount
 import com.vicky7230.tasker.data.network.Resource
+import com.vicky7230.tasker.events.TokenExpireEvent
 import com.vicky7230.tasker.ui._0base.BaseViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
 import java.io.IOException
 import javax.inject.Inject
 
@@ -25,6 +27,7 @@ class HomeViewModel @Inject constructor(
     var taskFinished = MutableLiveData<Long>()
     var taskDeleted = MutableLiveData<Long>()
     var userEmail = MutableLiveData<String>()
+    var newListCreated = MutableLiveData<Resource<JsonElement>>()
 
     fun getData(todaysDateStart: Long, todaysDateEnd: Long) {
 
@@ -164,5 +167,60 @@ class HomeViewModel @Inject constructor(
 
     fun getUserEmail() {
         userEmail.value = dataManager.getUserEmail()
+    }
+
+    fun createNewList(listColor: String, listName: String) {
+        viewModelScope.launch {
+
+            newListCreated.value = Resource.Loading
+
+            val response = safeApiCall {
+                dataManager.createNewList(
+                    dataManager.getUserId(),
+                    dataManager.getAccessToken(),
+                    listColor,
+                    listName
+                )
+            }
+
+            when (response) {
+                is Resource.Success -> {
+                    val jsonObject = response.data.asJsonObject
+                    if (jsonObject["success"].asBoolean) {
+                        if (jsonObject["created"].asBoolean) {
+                            insertTaskList(jsonObject, listName, listColor)
+                            newListCreated.value = Resource.Success(response.data)
+                        } else {
+                            newListCreated.value =
+                                Resource.Error(IOException(jsonObject["message"].asString))
+                        }
+                    } else {
+                        newListCreated.value =
+                            Resource.Error(IOException(jsonObject["message"].asString))
+                        EventBus.getDefault().post(TokenExpireEvent())
+                    }
+                }
+                is Resource.Error -> {
+                    newListCreated.value = response
+                }
+            }
+        }
+    }
+
+    private suspend fun insertTaskList(
+        jsonObject: JsonObject,
+        listName: String,
+        listColor: String
+    ) {
+        val newTaskList: MutableList<TaskList> = arrayListOf()
+        newTaskList.add(
+            TaskList(
+                0,
+                jsonObject["list_slack"].asString,
+                listName,
+                listColor
+            )
+        )
+        dataManager.insertTaskLists(newTaskList)
     }
 }

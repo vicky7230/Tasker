@@ -20,4 +20,11 @@ interface ApiHelper {
     suspend fun updateTask(taskData: TaskData): Response<JsonElement>
 
     suspend fun getUserTasks(userId: String?, token: String?): Response<JsonElement>
+
+    suspend fun createNewList(
+        userId: String?,
+        token: String?,
+        listColor: String,
+        listName: String
+    ): Response<JsonElement>
 }

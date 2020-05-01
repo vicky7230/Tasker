@@ -48,6 +48,15 @@ constructor(
         return appApiHelper.getUserTasks(userId, token)
     }
 
+    override suspend fun createNewList(
+        userId: String?,
+        token: String?,
+        listColor: String,
+        listName: String
+    ): Response<JsonElement> {
+        return appApiHelper.createNewList(userId, token, listColor, listName)
+    }
+
     override fun getAccessToken(): String? {
         return appPreferencesHelper.getAccessToken()
     }

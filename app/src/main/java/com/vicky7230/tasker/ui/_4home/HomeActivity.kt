@@ -7,6 +7,9 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.widget.AdapterView
+import android.widget.FrameLayout
+import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.cardview.widget.CardView
@@ -17,7 +20,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.work.*
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.vicky7230.tasker.R
@@ -50,6 +55,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
     private lateinit var listPopupWindow: ListPopupWindow
     private var options = arrayListOf("Task", "List")
     private lateinit var userEmail: String
+    private var taskListColor: String = "-1"
 
     companion object {
         fun getStartIntent(context: Context): Intent {
@@ -99,6 +105,19 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
         setUpTaskListsRecyclerView()
 
         setUpTodaysTasksRecyclerView()
+
+        homeViewModel.newListCreated.observe(this, Observer {
+            when (it) {
+                is Resource.Loading -> showLoading()
+                is Resource.Error -> {
+                    hideLoading()
+                    showToast(it.exception.localizedMessage)
+                }
+                is Resource.Success -> {
+                    hideLoading()
+                }
+            }
+        })
 
         homeViewModel.userEmail.observe(this, Observer {
             userEmail = it
@@ -284,14 +303,87 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
         if (position == 0) {
             startActivity(NewTaskActivity.getStartIntent(this))
         } else {
-            val view: View = layoutInflater.inflate(R.layout.bottom_sheet_colors, null)
-            val dialog = BottomSheetDialog(this, R.style.BottomSheetDialog) // Style here
-            dialog.setContentView(view)
-            //dialog.findViewById<AppCompatTextView>(R.id.account_email)?.text = "You ($userEmail)"
-            dialog.show()
+            showCreateListDialog()
+        }
+        listPopupWindow.dismiss()
+    }
+
+    private fun showCreateListDialog() {
+
+        taskListColor = "-1"
+
+        val view: View = layoutInflater.inflate(R.layout.bottom_sheet_colors, null)
+        val dialog = BottomSheetDialog(this, R.style.BottomSheetDialog) // Style here
+        dialog.setContentView(view)
+        dialog.setOnShowListener {
+            val bottomSheet: FrameLayout =
+                dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout
+            BottomSheetBehavior.from(bottomSheet).setState(BottomSheetBehavior.STATE_EXPANDED)
+        }
+        dialog.findViewById<MaterialButton>(R.id.create_list_button)?.setOnClickListener {
+
+            if (dialog.findViewById<AppCompatEditText>(R.id.new_list_name)!!.text!!.isEmpty()) {
+                showToast("Please enter list name.")
+                return@setOnClickListener
+            }
+
+            if (taskListColor.equals("-1", true)) {
+                showToast("Please select a color.")
+                return@setOnClickListener
+            }
+
+            homeViewModel.createNewList(
+                taskListColor,
+                dialog.findViewById<AppCompatEditText>(R.id.new_list_name)!!.text!!.toString()
+            )
+        }
+        val listener = View.OnClickListener() {
+            dialog.findViewById<AppCompatImageView>(R.id.color_1)?.setImageDrawable(null)
+            dialog.findViewById<AppCompatImageView>(R.id.color_2)?.setImageDrawable(null)
+            dialog.findViewById<AppCompatImageView>(R.id.color_3)?.setImageDrawable(null)
+            dialog.findViewById<AppCompatImageView>(R.id.color_4)?.setImageDrawable(null)
+            dialog.findViewById<AppCompatImageView>(R.id.color_5)?.setImageDrawable(null)
+            dialog.findViewById<AppCompatImageView>(R.id.color_6)?.setImageDrawable(null)
+            dialog.findViewById<AppCompatImageView>(R.id.color_7)?.setImageDrawable(null)
+            dialog.findViewById<AppCompatImageView>(R.id.color_8)?.setImageDrawable(null)
+            dialog.findViewById<AppCompatImageView>(R.id.color_9)?.setImageDrawable(null)
+            dialog.findViewById<AppCompatImageView>(R.id.color_10)?.setImageDrawable(null)
+            dialog.findViewById<AppCompatImageView>(R.id.color_11)?.setImageDrawable(null)
+            dialog.findViewById<AppCompatImageView>(R.id.color_12)?.setImageDrawable(null)
+            dialog.findViewById<AppCompatImageView>(R.id.color_13)?.setImageDrawable(null)
+            dialog.findViewById<AppCompatImageView>(R.id.color_14)?.setImageDrawable(null)
+            dialog.findViewById<AppCompatImageView>(R.id.color_15)?.setImageDrawable(null)
+            dialog.findViewById<AppCompatImageView>(R.id.color_16)?.setImageDrawable(null)
+            dialog.findViewById<AppCompatImageView>(R.id.color_17)?.setImageDrawable(null)
+            dialog.findViewById<AppCompatImageView>(R.id.color_18)?.setImageDrawable(null)
+            dialog.findViewById<AppCompatImageView>(R.id.color_19)?.setImageDrawable(null)
+            dialog.findViewById<AppCompatImageView>(R.id.color_20)?.setImageDrawable(null)
+            (it as AppCompatImageView).setImageResource(R.drawable.ic_done_white)
+            taskListColor = it.tag as String
+            Timber.e(taskListColor)
         }
 
-        listPopupWindow.dismiss()
+        dialog.findViewById<AppCompatImageView>(R.id.color_1)?.setOnClickListener(listener)
+        dialog.findViewById<AppCompatImageView>(R.id.color_2)?.setOnClickListener(listener)
+        dialog.findViewById<AppCompatImageView>(R.id.color_3)?.setOnClickListener(listener)
+        dialog.findViewById<AppCompatImageView>(R.id.color_4)?.setOnClickListener(listener)
+        dialog.findViewById<AppCompatImageView>(R.id.color_5)?.setOnClickListener(listener)
+        dialog.findViewById<AppCompatImageView>(R.id.color_6)?.setOnClickListener(listener)
+        dialog.findViewById<AppCompatImageView>(R.id.color_7)?.setOnClickListener(listener)
+        dialog.findViewById<AppCompatImageView>(R.id.color_8)?.setOnClickListener(listener)
+        dialog.findViewById<AppCompatImageView>(R.id.color_9)?.setOnClickListener(listener)
+        dialog.findViewById<AppCompatImageView>(R.id.color_10)?.setOnClickListener(listener)
+        dialog.findViewById<AppCompatImageView>(R.id.color_11)?.setOnClickListener(listener)
+        dialog.findViewById<AppCompatImageView>(R.id.color_12)?.setOnClickListener(listener)
+        dialog.findViewById<AppCompatImageView>(R.id.color_13)?.setOnClickListener(listener)
+        dialog.findViewById<AppCompatImageView>(R.id.color_14)?.setOnClickListener(listener)
+        dialog.findViewById<AppCompatImageView>(R.id.color_15)?.setOnClickListener(listener)
+        dialog.findViewById<AppCompatImageView>(R.id.color_16)?.setOnClickListener(listener)
+        dialog.findViewById<AppCompatImageView>(R.id.color_17)?.setOnClickListener(listener)
+        dialog.findViewById<AppCompatImageView>(R.id.color_18)?.setOnClickListener(listener)
+        dialog.findViewById<AppCompatImageView>(R.id.color_19)?.setOnClickListener(listener)
+        dialog.findViewById<AppCompatImageView>(R.id.color_20)?.setOnClickListener(listener)
+        dialog.show()
     }
 
     override fun onListClick(
