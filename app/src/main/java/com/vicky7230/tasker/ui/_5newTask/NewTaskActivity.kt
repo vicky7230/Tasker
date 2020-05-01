@@ -18,6 +18,7 @@ import com.vicky7230.tasker.data.db.entities.Task
 import com.vicky7230.tasker.data.db.entities.TaskList
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.utils.AnimUtilskt
+import com.vicky7230.tasker.utils.ViewUtils
 import com.vicky7230.tasker.worker.CreateTaskWorker
 import com.vicky7230.tasker.worker.UpdateTaskWorker
 import dagger.android.AndroidInjection
@@ -98,7 +99,7 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
 
             initializeTaskListView(taskList)
 
-            setTaskListViewContainerHeight()
+            taskListViewContainerHeight = ViewUtils.dpToPx(348F)
         })
 
         setTaskListListeners()
@@ -223,20 +224,6 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
                 ColorStateList.valueOf(Color.parseColor(taskList2[0].color))
         }
         taskListsAdapter2.updateItems(taskList2)
-    }
-
-    private fun setTaskListViewContainerHeight() {
-        task_list_view_container.viewTreeObserver.addOnGlobalLayoutListener(
-            object : OnGlobalLayoutListener {
-                override fun onGlobalLayout() {
-                    // gets called after layout has been done but before display
-                    // so we can get the height then hide the view
-                    taskListViewContainerHeight =
-                        task_list_view_container.height // Ahaha!  Gotcha
-                    task_list_view_container.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                    task_list_view_container.visibility = View.GONE
-                }
-            })
     }
 
     private fun initializeDateAndTimeViews(date: Date) {
