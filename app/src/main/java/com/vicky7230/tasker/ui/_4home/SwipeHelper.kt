@@ -28,6 +28,7 @@ abstract class SwipeHelper(
     var swipeThreshold = 0.5f
     private val buttonBuffer: MutableMap<Int, MutableList<UnderlayButton>>
     lateinit var removerQueue: LinkedList<Int>
+    private var swipedBack = true
 
     abstract fun instantiateMyButton(
         viewHolder: RecyclerView.ViewHolder,
@@ -37,8 +38,9 @@ abstract class SwipeHelper(
     private val gestureListener = object : GestureDetector.SimpleOnGestureListener() {
         override fun onSingleTapUp(e: MotionEvent): Boolean {
             for (button in buttonList!!) {
-                if (button.onclick(e.x, e.y))
-                    break
+                if (!swipedBack)
+                    if (button.onclick(e.x, e.y))
+                        break
             }
             return true
         }
@@ -173,6 +175,8 @@ abstract class SwipeHelper(
             swipePosition = pos
             return
         }
+
+        swipedBack = dX == 0f
 
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
             if (dX < 0) {
