@@ -33,4 +33,7 @@ interface TaskListDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTaskLists(taskLists: List<TaskList>): List<Long>
+
+    @Query("UPDATE lists SET name=:name WHERE list_slack=:listSlack")
+    suspend fun updateTaskList(name: String, listSlack: String): Int
 }

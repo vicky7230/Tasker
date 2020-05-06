@@ -32,4 +32,6 @@ interface DbHelper {
     suspend fun setTaskFinished(id: Long): Int
 
     suspend fun setTaskDeleted(id: Long): Int
+
+    suspend fun updateTaskList(name: String, listSlack: String): Int
 }

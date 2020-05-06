@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="29dp"
         android:layout_marginTop="20dp"
-        android:text="Enter List Name"
+        android:text="Enter list name"
         android:textColor="@color/colorBlue"
         android:textSize="19dp" />
 

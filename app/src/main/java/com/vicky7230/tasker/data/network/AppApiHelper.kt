@@ -45,4 +45,13 @@ class AppApiHelper @Inject constructor(private val apiService: ApiService) : Api
         return apiService.createNewList(userId, token, listColor, listName)
     }
 
+    override suspend fun renameList(
+        userId: String?,
+        token: String?,
+        listName: String,
+        listSlack: String
+    ): Response<JsonElement> {
+        return apiService.renameList(userId, token, listName, listSlack)
+    }
+
 }

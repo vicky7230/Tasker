@@ -57,6 +57,15 @@ constructor(
         return appApiHelper.createNewList(userId, token, listColor, listName)
     }
 
+    override suspend fun renameList(
+        userId: String?,
+        token: String?,
+        listName: String,
+        listSlack: String
+    ): Response<JsonElement> {
+        return appApiHelper.renameList(userId, token, listName, listSlack)
+    }
+
     override fun getAccessToken(): String? {
         return appPreferencesHelper.getAccessToken()
     }
@@ -143,6 +152,10 @@ constructor(
 
     override suspend fun setTaskDeleted(id: Long): Int {
         return appDbHelper.setTaskDeleted(id)
+    }
+
+    override suspend fun updateTaskList(name: String, listSlack: String): Int {
+        return appDbHelper.updateTaskList(name, listSlack)
     }
 
     override fun areListsFetched(): Boolean {

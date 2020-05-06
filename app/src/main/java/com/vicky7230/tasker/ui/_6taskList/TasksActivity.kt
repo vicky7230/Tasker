@@ -7,15 +7,19 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.work.*
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.vicky7230.tasker.R
+import com.vicky7230.tasker.data.network.Resource
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.ui._4home.RightSwipeListener
 import com.vicky7230.tasker.ui._4home.SwipeHelper
@@ -43,6 +47,7 @@ class TasksActivity : BaseActivity() {
     private lateinit var tasksViewModel: TasksViewModel
     private lateinit var listName: String
     private lateinit var chromeFader: ElasticDragDismissFrameLayout.SystemChromeFader
+    private lateinit var listRenameDialog: BottomSheetDialog
 
     companion object {
 
@@ -108,6 +113,27 @@ class TasksActivity : BaseActivity() {
     @SuppressLint("SetTextI18n")
     private fun init() {
 
+        edit_list_name.setOnClickListener {
+            showRenameListDialog()
+        }
+
+        tasksViewModel.listRenamed.observe(this, Observer {
+            when (it) {
+                is Resource.Loading -> showLoading()
+                is Resource.Error -> {
+                    hideLoading()
+                    showToast(it.exception.localizedMessage)
+                }
+                is Resource.Success -> {
+                    if (this::listRenameDialog.isInitialized) {
+                        listRenameDialog.dismiss()
+                    }
+                    list_name.text = it.data
+                    hideLoading()
+                }
+            }
+        })
+
         tasksViewModel.taskFinished.observe(this, Observer { taskLongId: Long ->
             updateTask(taskLongId)
         })
@@ -165,6 +191,33 @@ class TasksActivity : BaseActivity() {
         }
     }
 
+    private fun showRenameListDialog() {
+        val view: View = layoutInflater.inflate(R.layout.bottom_sheet_rename_list, null)
+        listRenameDialog = BottomSheetDialog(this, R.style.BottomSheetDialog)
+        listRenameDialog.setContentView(view)
+
+        val newListName = listRenameDialog.findViewById<AppCompatEditText>(R.id.new_list_name)
+        val renameListButton =
+            listRenameDialog.findViewById<MaterialButton>(R.id.rename_list_button)
+
+        renameListButton?.setOnClickListener {
+            if (newListName!!.text!!.isEmpty()) {
+                showToast("Please enter list name.")
+                return@setOnClickListener
+            }
+
+            if (intent != null && intent.getStringExtra(EXTRAS_LIST_SLACK) != null) {
+                val listSlack = intent.getStringExtra(EXTRAS_LIST_SLACK)
+                tasksViewModel.renameTaskList(
+                    newListName.text.toString(),
+                    listSlack!!
+                )
+            }
+        }
+
+        listRenameDialog.show()
+    }
+
     private fun editButton(): UnderlayButton {
         return UnderlayButton(
             this@TasksActivity,
@@ -204,7 +257,8 @@ class TasksActivity : BaseActivity() {
                         tasks.scrollToPosition(position)
                     }
 
-                    snackBar.addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar?>() {
+                    snackBar.addCallback(object :
+                        BaseTransientBottomBar.BaseCallback<Snackbar?>() {
                         override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                             if (event == DISMISS_EVENT_TIMEOUT) {
                                 tasksViewModel.deleteTasK(task)

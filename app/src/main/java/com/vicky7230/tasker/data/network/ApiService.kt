@@ -64,4 +64,13 @@ interface ApiService {
         @Field("list_name") listName: String
     ): Response<JsonElement>
 
+    @FormUrlEncoded
+    @POST("api/TaskApi/renameList")
+    suspend fun renameList(
+        @Field("userID") userId: String?,
+        @Field("token") token: String?,
+        @Field("list_name") listName: String,
+        @Field("list_slack") listSlack: String
+    ): Response<JsonElement>
+
 }

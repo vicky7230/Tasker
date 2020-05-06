@@ -27,4 +27,11 @@ interface ApiHelper {
         listColor: String,
         listName: String
     ): Response<JsonElement>
+
+    suspend fun renameList(
+        userId: String?,
+        token: String?,
+        listName: String,
+        listSlack: String
+    ): Response<JsonElement>
 }
