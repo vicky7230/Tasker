@@ -12,6 +12,8 @@ import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
 import com.vicky7230.tasker.ui._5newTask.NewTaskModule
 import com.vicky7230.tasker.ui._6taskList.TasksActivity
 import com.vicky7230.tasker.ui._6taskList.TasksModule
+import com.vicky7230.tasker.ui._7finishedDeleted.FinishedDeletedTasksActivity
+import com.vicky7230.tasker.ui._7finishedDeleted.FinishedDeletedTasksModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -20,6 +22,15 @@ import dagger.android.ContributesAndroidInjector
  */
 @Module
 abstract class ActivityBindingModule {
+
+    @ContributesAndroidInjector(modules = [(SplashModule::class)])
+    abstract fun bindSplashActivity(): SplashActivity
+
+    @ContributesAndroidInjector(modules = [(LoginModule::class)])
+    abstract fun bindLoginActivity(): LoginActivity
+
+    @ContributesAndroidInjector(modules = [(VerifyOtpModule::class)])
+    abstract fun bindVerifyOtpActivity(): VerifyOtpActivity
 
     @ContributesAndroidInjector(modules = [(HomeModule::class)])
     abstract fun bindHomeActivity(): HomeActivity
@@ -30,13 +41,7 @@ abstract class ActivityBindingModule {
     @ContributesAndroidInjector(modules = [(TasksModule::class)])
     abstract fun bindTasksActivity(): TasksActivity
 
-    @ContributesAndroidInjector(modules = [(LoginModule::class)])
-    abstract fun bindLoginActivity(): LoginActivity
-
-    @ContributesAndroidInjector(modules = [(VerifyOtpModule::class)])
-    abstract fun bindVerifyOtpActivity(): VerifyOtpActivity
-
-    @ContributesAndroidInjector(modules = [(SplashModule::class)])
-    abstract fun bindSplashActivity(): SplashActivity
+    @ContributesAndroidInjector(modules = [(FinishedDeletedTasksModule::class)])
+    abstract fun bindFinishedDeletedTasksActivity(): FinishedDeletedTasksActivity
 
 }

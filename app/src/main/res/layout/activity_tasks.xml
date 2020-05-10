@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
-    android:orientation="vertical"
     app:dragDismissDistance="190dp"
     app:dragDismissScale="0.95"
     tools:context=".ui._6taskList.TasksActivity">

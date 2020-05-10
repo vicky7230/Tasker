@@ -64,4 +64,13 @@ class AppDbHelper @Inject constructor(private val appDatabase: AppDatabase) : Db
     override suspend fun updateTaskList(name: String, listSlack: String): Int {
         return appDatabase.tasklistDao().updateTaskList(name, listSlack)
     }
+
+    override suspend fun getDeletedTasks(): List<TaskAndTaskList> {
+        return appDatabase.taskDao().getDeletedTasks()
+    }
+
+    override suspend fun getFinishedTasks(): List<TaskAndTaskList> {
+        return appDatabase.taskDao().getFinishedTasks()
+    }
+
 }

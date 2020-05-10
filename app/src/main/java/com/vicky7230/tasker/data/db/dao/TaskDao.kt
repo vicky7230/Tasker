@@ -52,4 +52,27 @@ interface TaskDao {
     @Query("UPDATE tasks SET deleted = 1 WHERE id =:id")
     suspend fun setTaskDeleted(id: Long): Int
 
+    @Query(
+        """
+        SELECT 
+        tasks.id, tasks.task_id, tasks.task_slack,tasks.list_slack, tasks.task, tasks.date_time, tasks.finished, tasks.deleted, lists.name as list_name, lists.color as list_color 
+        FROM tasks LEFT JOIN lists 
+        ON tasks.list_slack = lists.list_slack
+        WHERE tasks.deleted = 1
+        ORDER BY tasks.id DESC
+        """
+    )
+    suspend fun getDeletedTasks(): List<TaskAndTaskList>
+
+    @Query(
+        """
+        SELECT 
+        tasks.id, tasks.task_id, tasks.task_slack,tasks.list_slack, tasks.task, tasks.date_time, tasks.finished, tasks.deleted, lists.name as list_name, lists.color as list_color 
+        FROM tasks LEFT JOIN lists 
+        ON tasks.list_slack = lists.list_slack
+        WHERE tasks.finished = 1
+        ORDER BY tasks.id DESC
+        """
+    )
+    suspend fun getFinishedTasks(): List<TaskAndTaskList>
 }

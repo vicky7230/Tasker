@@ -16,7 +16,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
-        <activity android:name=".ui._7finishedDeleted.FinishedDeletedTasksActivity"></activity>
+        <activity
+            android:name=".ui._7finishedDeleted.FinishedDeletedTasksActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".ui._6taskList.TasksActivity"
             android:screenOrientation="portrait"

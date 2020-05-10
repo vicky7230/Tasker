@@ -1,5 +1,6 @@
 package com.vicky7230.tasker.data.db.joinReturnTypes
 
+import androidx.annotation.Nullable
 import androidx.room.ColumnInfo
 
 data class TaskAndTaskList(

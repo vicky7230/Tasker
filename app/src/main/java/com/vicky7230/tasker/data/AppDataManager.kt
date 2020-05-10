@@ -158,6 +158,14 @@ constructor(
         return appDbHelper.updateTaskList(name, listSlack)
     }
 
+    override suspend fun getDeletedTasks(): List<TaskAndTaskList> {
+        return appDbHelper.getDeletedTasks()
+    }
+
+    override suspend fun getFinishedTasks(): List<TaskAndTaskList> {
+        return appDbHelper.getFinishedTasks()
+    }
+
     override fun areListsFetched(): Boolean {
         return appPreferencesHelper.areListsFetched()
     }

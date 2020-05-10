@@ -31,10 +31,12 @@ import com.vicky7230.tasker.data.network.Resource
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
 import com.vicky7230.tasker.ui._6taskList.TasksActivity
+import com.vicky7230.tasker.ui._7finishedDeleted.FinishedDeletedTasksActivity
 import com.vicky7230.tasker.utils.AnimUtilskt
 import com.vicky7230.tasker.worker.UpdateTaskWorker
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.bottom_sheet.*
 import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -99,7 +101,23 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
             val view: View = layoutInflater.inflate(R.layout.bottom_sheet, null)
             val dialog = BottomSheetDialog(this, R.style.BottomSheetDialog) // Style here
             dialog.setContentView(view)
-            dialog.findViewById<AppCompatTextView>(R.id.account_email)?.text = "You ($userEmail)"
+            dialog.account_email.text = "You ($userEmail)"
+            dialog.finished_tasks.setOnClickListener {
+                startActivity(
+                    FinishedDeletedTasksActivity.getStartIntent(
+                        this,
+                        FinishedDeletedTasksActivity.FLAG_FINISHED
+                    )
+                )
+            }
+            dialog.deleted_tasks.setOnClickListener {
+                startActivity(
+                    FinishedDeletedTasksActivity.getStartIntent(
+                        this,
+                        FinishedDeletedTasksActivity.FLAG_DELETED
+                    )
+                )
+            }
             dialog.show()
         }
 
