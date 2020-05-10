@@ -80,5 +80,4 @@ class FinishedDeletedTasksActivity : BaseActivity() {
                 finishedDeletedTasksViewModel.getFinishedTasks()
         }
     }
-
 }

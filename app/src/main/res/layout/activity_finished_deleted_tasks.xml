@@ -13,30 +13,13 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="9dp"
-        android:background="@drawable/curved_bg_task_list_activity"
         android:fillViewport="true">
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/deleted_finished_tasks"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <View
-                android:id="@+id/curved_asset"
-                android:layout_width="37dp"
-                android:layout_height="5dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/small_curved_rectangle" />
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/deleted_finished_tasks"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp" />
-        </LinearLayout>
+            android:layout_marginTop="15dp" />
 
     </androidx.core.widget.NestedScrollView>
 

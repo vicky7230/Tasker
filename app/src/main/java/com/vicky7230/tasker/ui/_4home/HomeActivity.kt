@@ -1,5 +1,6 @@
 package com.vicky7230.tasker.ui._4home
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -83,6 +84,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
         init()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun init() {
 
         createPopup()
@@ -101,7 +103,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
             val view: View = layoutInflater.inflate(R.layout.bottom_sheet, null)
             val dialog = BottomSheetDialog(this, R.style.BottomSheetDialog) // Style here
             dialog.setContentView(view)
-            dialog.account_email.text = "You ($userEmail)"
+            dialog.account_email.text = "You : $userEmail"
             dialog.finished_tasks.setOnClickListener {
                 startActivity(
                     FinishedDeletedTasksActivity.getStartIntent(
