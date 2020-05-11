@@ -146,17 +146,31 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
             finish()
         })
 
+        initializeDateAndTimeViews(Date())
+
         if (intent != null &&
             intent.getLongExtra(EXTRAS_TASK_LONG_ID, -1L) != -1L
         ) {
             newTaskViewModel.task.observe(this, Observer { taskFromDb: Task ->
                 task = taskFromDb
-                initializeDateAndTimeViews(Date(task.dateTime))
+                //initializeDateAndTimeViews(Date(task.dateTime))
+                val date = Date(task.dateTime)
+                calendarInstance.time = date
+                val dateFormatter = SimpleDateFormat("d LLL yyyy", Locale.ENGLISH)
+                val formattedDate = dateFormatter.format(calendarInstance.time)
+                task_date.text = formattedDate
+
+                val timeFormatter = SimpleDateFormat("hh:mm a", Locale.ENGLISH)
+                val formattedTime = timeFormatter.format(calendarInstance.time)
+                task_time.text = formattedTime
+
+                calendar_view.minDate = calendarInstance.time.time
+                calendar_view.date = calendarInstance.time.time
+
                 task_edit_text.setText(task.task)
             })
             newTaskViewModel.getData(intent.getLongExtra(EXTRAS_TASK_LONG_ID, -1L))
         } else {
-            initializeDateAndTimeViews(Date())
             newTaskViewModel.getData(-1L)
         }
     }
@@ -239,6 +253,7 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
 
         calendar_view.minDate = calendarInstance.time.time
         calendar_view.date = calendarInstance.time.time
+
         calendar_view.setOnDateChangeListener { view, year, month, dayOfMonth ->
             calendarInstance.set(year, month, dayOfMonth)
             val selectedDate = dateFormatter.format(calendarInstance.time)
