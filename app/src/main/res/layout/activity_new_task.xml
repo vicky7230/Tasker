@@ -60,7 +60,7 @@
         android:gravity="top"
         android:hint="What do you want to do?"
         android:imeOptions="actionDone"
-        android:inputType="text"
+        android:inputType="textMultiLine"
         app:layout_constraintBottom_toTopOf="@id/lower_layer"
         app:layout_constraintLeft_toRightOf="@id/ring"
         app:layout_constraintRight_toRightOf="parent"

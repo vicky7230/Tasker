@@ -22,6 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="18dp"
         android:layout_marginRight="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textColor="@color/colorWhite"
         android:textSize="18dp"
         app:layout_constraintBottom_toTopOf="@id/task_time"
