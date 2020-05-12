@@ -19,7 +19,7 @@ class TasksForListAdapter(
 ) : RecyclerView.Adapter<TasksForListAdapter.TaskViewHolder>() {
 
     lateinit var listName: String
-    val outputDateFormat = SimpleDateFormat("d LLL yyyy h:m a", Locale.ENGLISH)
+    val outputDateFormat = SimpleDateFormat("d LLL yyyy hh:mm a", Locale.ENGLISH)
 
     fun updateItems(tasks: List<Task>, listName: String) {
         this.tasks.clear()

@@ -103,7 +103,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
             val view: View = layoutInflater.inflate(R.layout.bottom_sheet, null)
             val dialog = BottomSheetDialog(this, R.style.BottomSheetDialog) // Style here
             dialog.setContentView(view)
-            dialog.account_email.text = "You : $userEmail"
+            dialog.account_email.text = "You($userEmail)"
             dialog.finished_tasks.setOnClickListener {
                 startActivity(
                     FinishedDeletedTasksActivity.getStartIntent(

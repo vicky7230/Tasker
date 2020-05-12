@@ -17,7 +17,7 @@ import java.util.*
 class DeletedFinishedTasksAdapter(private val deletedFinishedTasks: MutableList<TaskAndTaskList>) :
     RecyclerView.Adapter<DeletedFinishedTasksAdapter.TaskViewHolder>() {
 
-    val outputDateFormat = SimpleDateFormat("hh:mm a", Locale.ENGLISH)
+    val outputDateFormat = SimpleDateFormat("d LLL yyyy hh:mm a", Locale.ENGLISH)
 
     fun updateItems(tasks: List<TaskAndTaskList>) {
         this.deletedFinishedTasks.clear()
