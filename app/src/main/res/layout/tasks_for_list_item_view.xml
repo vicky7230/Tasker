@@ -29,6 +29,7 @@
         app:layout_constraintBottom_toTopOf="@id/task_time"
         app:layout_constraintLeft_toRightOf="@id/task_ring"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="Start Making Presentation" />
 
