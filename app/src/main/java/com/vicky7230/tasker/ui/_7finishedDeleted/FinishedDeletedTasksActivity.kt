@@ -12,7 +12,6 @@ import com.vicky7230.tasker.ui._0base.BaseViewModel
 import com.vicky7230.tasker.widget.ElasticDragDismissFrameLayout
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_finished_deleted_tasks.*
-import timber.log.Timber
 import javax.inject.Inject
 
 class FinishedDeletedTasksActivity : BaseActivity() {
@@ -24,7 +23,6 @@ class FinishedDeletedTasksActivity : BaseActivity() {
     lateinit var finishedTasksAdapter: DeletedFinishedTasksAdapter
 
     private lateinit var finishedDeletedTasksViewModel: FinishedDeletedTasksViewModel
-    private lateinit var chromeFader: ElasticDragDismissFrameLayout.SystemChromeFader
 
     companion object {
 
@@ -58,15 +56,6 @@ class FinishedDeletedTasksActivity : BaseActivity() {
 
         deleted_finished_tasks.layoutManager = LinearLayoutManager(this)
         deleted_finished_tasks.adapter = finishedTasksAdapter
-
-        chromeFader = object : ElasticDragDismissFrameLayout.SystemChromeFader(this) {
-            override fun onDragDismissed() {
-                Timber.d("onDragDismissed")
-                finish()
-            }
-        }
-
-        draggable_layout_2.addListener(chromeFader)
 
         finishedDeletedTasksViewModel.tasks.observe(this, Observer {
             finishedTasksAdapter.updateItems(it)

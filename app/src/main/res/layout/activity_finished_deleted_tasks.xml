@@ -1,26 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.vicky7230.tasker.widget.ElasticDragDismissFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/draggable_layout_2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent"
-    app:dragDismissDistance="190dp"
-    app:dragDismissScale="0.95"
     tools:context=".ui._7finishedDeleted.FinishedDeletedTasksActivity">
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/deleted_finished_tasks"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/deleted_finished_tasks"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp" />
-
-    </androidx.core.widget.NestedScrollView>
-
-</com.vicky7230.tasker.widget.ElasticDragDismissFrameLayout>
+</FrameLayout>
