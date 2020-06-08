@@ -60,6 +60,8 @@
             android:enabled="false"
             android:exported="false"
             tools:node="remove" />
+
+        <receiver android:name=".receiver.ReminderBroadcastReceiver"/>
     </application>
 
 </manifest>

@@ -1,9 +1,14 @@
 package com.vicky7230.tasker.ui._5newTask
 
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -16,6 +21,7 @@ import androidx.work.*
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.data.db.entities.Task
 import com.vicky7230.tasker.data.db.entities.TaskList
+import com.vicky7230.tasker.receiver.ReminderBroadcastReceiver
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.utils.AnimUtilskt
 import com.vicky7230.tasker.utils.ViewUtils
@@ -57,6 +63,7 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
         const val EXTRAS_OPERATION = "operation"
         const val EXTRAS_OPERATION_CREATE = "taskCreate"
         const val EXTRAS_OPERATION_UPDATE = "taskUpdate"
+        const val EXTRAS_TASK = "task"
 
         fun getStartIntent(context: Context): Intent {
             val intent = Intent(context, NewTaskActivity::class.java)
@@ -137,6 +144,7 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
         }
 
         newTaskViewModel.taskInsertedInDB.observe(this, Observer { taskLongId: Long ->
+            createReminder()
             createTaskOnServer(taskLongId)
             finish()
         })
@@ -172,6 +180,37 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
             newTaskViewModel.getData(intent.getLongExtra(EXTRAS_TASK_LONG_ID, -1L))
         } else {
             newTaskViewModel.getData(-1L)
+        }
+    }
+
+    private fun createReminder() {
+
+        createNotificationChannel()
+
+        val intent = Intent(this, ReminderBroadcastReceiver::class.java)
+        intent.putExtra(EXTRAS_TASK, task_edit_text.text.toString())
+        val pendingIntent =
+            PendingIntent.getBroadcast(this, 101, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        alarmManager.set(
+            AlarmManager.RTC_WAKEUP,
+            calendarInstance.time.time,
+            pendingIntent
+        )
+
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Notify Task"
+            val description = "Channel for task reminder"
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel = NotificationChannel("Notify_Task", name, importance)
+            channel.description = description
+
+            val notificationManager = getSystemService(NotificationManager::class.java)
+            notificationManager.createNotificationChannel(channel)
         }
     }
 
