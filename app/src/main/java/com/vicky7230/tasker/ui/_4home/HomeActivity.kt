@@ -1,9 +1,11 @@
 package com.vicky7230.tasker.ui._4home
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -119,6 +121,29 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
                         FinishedDeletedTasksActivity.FLAG_DELETED
                     )
                 )
+            }
+            dialog.privacy_policy.setOnClickListener {
+                val i = Intent(Intent.ACTION_VIEW)
+                i.data = Uri.parse("https://tasker-1.flycricket.io/privacy.html")
+                startActivity(i)
+            }
+            dialog.rate.setOnClickListener {
+                val appPackageName = packageName
+                try {
+                    startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("market://details?id=$appPackageName")
+                        )
+                    )
+                } catch (e: ActivityNotFoundException) {
+                    startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                        )
+                    )
+                }
             }
             dialog.show()
         }

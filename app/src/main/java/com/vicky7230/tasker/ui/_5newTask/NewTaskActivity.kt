@@ -150,6 +150,7 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
         })
 
         newTaskViewModel.taskUpdatedInDB.observe(this, Observer { taskLongId: Long ->
+            updateReminder()
             updateTaskOnServer(taskLongId)
             finish()
         })
@@ -193,6 +194,27 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
             PendingIntent.getBroadcast(this, 101, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        alarmManager.set(
+            AlarmManager.RTC_WAKEUP,
+            calendarInstance.time.time,
+            pendingIntent
+        )
+
+    }
+
+    private fun updateReminder() {
+
+        createNotificationChannel()
+
+        val intent = Intent(this, ReminderBroadcastReceiver::class.java)
+        intent.putExtra(EXTRAS_TASK, task_edit_text.text.toString())
+        val pendingIntent =
+            PendingIntent.getBroadcast(this, 101, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+
+        alarmManager.cancel(pendingIntent)
+
         alarmManager.set(
             AlarmManager.RTC_WAKEUP,
             calendarInstance.time.time,

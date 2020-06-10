@@ -6,6 +6,10 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: 'com.google.gms.google-services'
+
+apply plugin: 'com.google.firebase.crashlytics'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -88,6 +92,9 @@ dependencies {
     implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC1'
 
     implementation 'org.apache.commons:commons-lang3:3.9'
+
+    implementation 'com.google.firebase:firebase-analytics:17.4.3'
+    implementation 'com.google.firebase:firebase-crashlytics:17.0.1'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

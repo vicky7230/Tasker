@@ -1,0 +1,117 @@
+{
+  "project_info": {
+    "project_number": "941725861792",
+    "firebase_url": "https://flux-198916.firebaseio.com",
+    "project_id": "flux-198916",
+    "storage_bucket": "flux-198916.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941725861792:android:98164d74d0dfe651",
+        "android_client_info": {
+          "package_name": "com.vicky7230.flux"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "941725861792-hta9unfa0u95qqtp9nsui34n9h999a5l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vicky7230.flux",
+            "certificate_hash": "3f1beff297f34f4b1697ddfdaa566398f9da60f0"
+          }
+        },
+        {
+          "client_id": "941725861792-p4rtaplev9ia11dv8nuklteb5929bbv2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtwDb8SdJUX4CU0nqJRo56k2thBcOxozA"
+        },
+        {
+          "current_key": "AIzaSyBAjdpu-fAB3lfffDQkmh4XrR3ZmwVP4mw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "941725861792-p4rtaplev9ia11dv8nuklteb5929bbv2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-1032374578265411~5896208213"
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941725861792:android:175d04a27c3c4862",
+        "android_client_info": {
+          "package_name": "com.vicky7230.sunny"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "941725861792-p4rtaplev9ia11dv8nuklteb5929bbv2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtwDb8SdJUX4CU0nqJRo56k2thBcOxozA"
+        },
+        {
+          "current_key": "AIzaSyBAjdpu-fAB3lfffDQkmh4XrR3ZmwVP4mw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "941725861792-p4rtaplev9ia11dv8nuklteb5929bbv2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-1032374578265411~1972531498"
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941725861792:android:516d2ddfc7d4324e3846c5",
+        "android_client_info": {
+          "package_name": "com.vicky7230.tasker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "941725861792-p4rtaplev9ia11dv8nuklteb5929bbv2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtwDb8SdJUX4CU0nqJRo56k2thBcOxozA"
+        },
+        {
+          "current_key": "AIzaSyBAjdpu-fAB3lfffDQkmh4XrR3ZmwVP4mw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "941725861792-p4rtaplev9ia11dv8nuklteb5929bbv2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
