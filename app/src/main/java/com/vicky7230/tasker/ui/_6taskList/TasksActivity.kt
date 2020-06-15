@@ -1,10 +1,12 @@
 package com.vicky7230.tasker.ui._6taskList
 
 import android.annotation.SuppressLint
+import android.app.Instrumentation
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
@@ -293,5 +295,14 @@ class TasksActivity : BaseActivity() {
         list_name.visibility = View.GONE
         edit_list_name.visibility = View.GONE
         super.onBackPressed()
+    }
+
+    override fun onStop() {
+        //Fixes shared element transition
+        //https://stackoverflow.com/questions/60876188/android-clears-activity-to-activity-shared-element-transition-exit-animation-aft
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q && !isFinishing) {
+            Instrumentation().callActivityOnSaveInstanceState(this, Bundle())
+        }
+        super.onStop()
     }
 }
