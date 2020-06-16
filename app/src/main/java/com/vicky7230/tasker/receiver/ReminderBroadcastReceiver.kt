@@ -29,6 +29,7 @@ class ReminderBroadcastReceiver : BroadcastReceiver() {
             .setContentText(intent.getStringExtra(NewTaskActivity.EXTRAS_TASK))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pi)
+            .setAutoCancel(true)
 
         val nm = NotificationManagerCompat.from(context)
         nm.notify(200, builder.build())
