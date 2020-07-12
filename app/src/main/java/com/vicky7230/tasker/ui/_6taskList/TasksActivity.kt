@@ -9,7 +9,6 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -17,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.work.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.vicky7230.tasker.R
@@ -33,6 +31,8 @@ import com.vicky7230.tasker.widget.ElasticDragDismissFrameLayout
 import com.vicky7230.tasker.worker.UpdateTaskWorker
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_tasks.*
+import kotlinx.android.synthetic.main.bottom_sheet_delete_list.*
+import kotlinx.android.synthetic.main.bottom_sheet_rename_list.*
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -50,20 +50,24 @@ class TasksActivity : BaseActivity() {
     private lateinit var listName: String
     private lateinit var chromeFader: ElasticDragDismissFrameLayout.SystemChromeFader
     private lateinit var listRenameDialog: BottomSheetDialog
+    private lateinit var listDeleteDialog: BottomSheetDialog
 
     companion object {
 
+        const val EXTRAS_LIST_ID = "list_id"
         const val EXTRAS_LIST_SLACK = "list_slack"
         const val EXTRAS_LIST_COLOR = "list_color"
         const val EXTRAS_LIST_NAME = "list_name"
 
         fun getStartIntent(
             context: Context,
+            listId: Long,
             listSlack: String,
             listColor: String,
             listName: String
         ): Intent {
             val intent = Intent(context, TasksActivity::class.java)
+            intent.putExtra(EXTRAS_LIST_ID, listId)
             intent.putExtra(EXTRAS_LIST_SLACK, listSlack)
             intent.putExtra(EXTRAS_LIST_COLOR, listColor)
             intent.putExtra(EXTRAS_LIST_NAME, listName)
@@ -119,6 +123,10 @@ class TasksActivity : BaseActivity() {
             showRenameListDialog()
         }
 
+        delete_list.setOnClickListener {
+            showConfirmDeleteDialog()
+        }
+
         tasksViewModel.listRenamed.observe(this, Observer {
             when (it) {
                 is Resource.Loading -> showLoading()
@@ -144,11 +152,17 @@ class TasksActivity : BaseActivity() {
             updateTask(taskLongId)
         })
 
+        tasksViewModel.listDeleted.observe(this, Observer { listDeleted: Boolean ->
+            onBackPressed()
+            //updateTask(taskLongId)
+        })
+
         chromeFader = object : ElasticDragDismissFrameLayout.SystemChromeFader(this) {
             override fun onDragDismissed() {
                 Timber.d("onDragDismissed")
                 list_name.visibility = View.GONE
                 edit_list_name.visibility = View.GONE
+                delete_list.visibility = View.GONE
                 supportFinishAfterTransition()
             }
         }
@@ -164,6 +178,7 @@ class TasksActivity : BaseActivity() {
             && intent.getStringExtra(EXTRAS_LIST_COLOR) != null
             && intent.getStringExtra(EXTRAS_LIST_NAME) != null
             && intent.getStringExtra(EXTRAS_LIST_SLACK) != null
+            && intent.getLongExtra(EXTRAS_LIST_ID, -1L) != -1L
         ) {
             val listColor = intent.getStringExtra(EXTRAS_LIST_COLOR)
             tasks.setBackgroundColor(Color.parseColor(listColor))
@@ -184,6 +199,7 @@ class TasksActivity : BaseActivity() {
                 list_name.setTextColor(colorBlack)
                 task_count.setTextColor(colorDarkGray)
                 edit_list_name.setColorFilter(colorBlack)
+                delete_list.setColorFilter(colorBlack)
             }
 
             val listSlack = intent.getStringExtra(EXTRAS_LIST_SLACK)
@@ -197,13 +213,8 @@ class TasksActivity : BaseActivity() {
         val view: View = layoutInflater.inflate(R.layout.bottom_sheet_rename_list, null)
         listRenameDialog = BottomSheetDialog(this, R.style.BottomSheetDialog)
         listRenameDialog.setContentView(view)
-
-        val newListName = listRenameDialog.findViewById<AppCompatEditText>(R.id.new_list_name)
-        val renameListButton =
-            listRenameDialog.findViewById<MaterialButton>(R.id.rename_list_button)
-
-        renameListButton?.setOnClickListener {
-            if (newListName!!.text!!.isEmpty()) {
+        listRenameDialog.rename_list_button.setOnClickListener {
+            if (listRenameDialog.new_list_name!!.text!!.isEmpty()) {
                 showToast("Please enter list name.")
                 return@setOnClickListener
             }
@@ -211,13 +222,33 @@ class TasksActivity : BaseActivity() {
             if (intent != null && intent.getStringExtra(EXTRAS_LIST_SLACK) != null) {
                 val listSlack = intent.getStringExtra(EXTRAS_LIST_SLACK)
                 tasksViewModel.renameTaskList(
-                    newListName.text.toString(),
+                    listRenameDialog.new_list_name.text.toString(),
                     listSlack!!
                 )
             }
         }
 
         listRenameDialog.show()
+    }
+
+    private fun showConfirmDeleteDialog() {
+        val view: View = layoutInflater.inflate(R.layout.bottom_sheet_delete_list, null)
+        listDeleteDialog = BottomSheetDialog(this, R.style.BottomSheetDialog)
+        listDeleteDialog.setContentView(view)
+
+        listDeleteDialog.delete_list_button_no.setOnClickListener {
+            listDeleteDialog.dismiss()
+        }
+
+        listDeleteDialog.delete_list_button_yes.setOnClickListener {
+
+            if (intent != null && intent.getLongExtra(EXTRAS_LIST_ID, -1L) != -1L) {
+                val listIdLong = intent.getLongExtra(EXTRAS_LIST_ID, -1L)
+                tasksViewModel.deleteTaskList(listIdLong)
+            }
+        }
+
+        listDeleteDialog.show()
     }
 
     private fun editButton(): UnderlayButton {

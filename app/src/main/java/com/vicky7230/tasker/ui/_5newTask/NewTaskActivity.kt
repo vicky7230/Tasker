@@ -199,7 +199,6 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
             calendarInstance.time.time,
             pendingIntent
         )
-
     }
 
     private fun updateReminder() {

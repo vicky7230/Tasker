@@ -7,11 +7,12 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.legacy.content.WakefulBroadcastReceiver
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.ui._1splash.SplashActivity
 import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
 
-class ReminderBroadcastReceiver : BroadcastReceiver() {
+class ReminderBroadcastReceiver : WakefulBroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
 
@@ -25,7 +26,7 @@ class ReminderBroadcastReceiver : BroadcastReceiver() {
         )
 
         val builder = NotificationCompat.Builder(context, "Notify_Task")
-            .setSmallIcon(R.mipmap.ic_launcher_round)
+            .setSmallIcon(R.drawable.ic_tasker_notification)
             .setContentTitle("Pending task")
             .setContentText(intent.getStringExtra(NewTaskActivity.EXTRAS_TASK))
             .setPriority(NotificationCompat.PRIORITY_HIGH)

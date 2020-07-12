@@ -61,7 +61,14 @@
             android:exported="false"
             tools:node="remove" />
 
-        <receiver android:name=".receiver.ReminderBroadcastReceiver"/>
+        <receiver
+            android:name=".receiver.ReminderBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.NOTIFY" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

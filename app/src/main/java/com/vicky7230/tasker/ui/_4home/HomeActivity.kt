@@ -1,6 +1,8 @@
 package com.vicky7230.tasker.ui._4home
 
 import android.annotation.SuppressLint
+import android.app.Notification
+import android.app.PendingIntent
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -10,7 +12,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
-import android.widget.AdapterView
 import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
@@ -18,6 +19,8 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -33,6 +36,7 @@ import com.vicky7230.tasker.R
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskListAndCount
 import com.vicky7230.tasker.data.network.Resource
 import com.vicky7230.tasker.ui._0base.BaseActivity
+import com.vicky7230.tasker.ui._1splash.SplashActivity
 import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
 import com.vicky7230.tasker.ui._6taskList.TasksActivity
 import com.vicky7230.tasker.ui._7finishedDeleted.FinishedDeletedTasksActivity
@@ -46,7 +50,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsAdapter.Callback {
+class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -83,6 +87,16 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
 
         setContentView(R.layout.activity_home)
         taskListsAdapter.setCallback(this)
+
+
+        val i = Intent(this, SplashActivity::class.java)
+
+        val pi = PendingIntent.getActivity(
+            this,
+            101,
+            i,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
         init()
     }
@@ -232,7 +246,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
                 }
                 is Resource.Success -> {
                     hideLoading()
-                    Timber.e(it.toString())
+                    //Timber.e(it.toString())
                     todaysTaskAdapter.updateItems(it.data)
                 }
             }
@@ -353,7 +367,9 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
         return calendar.time.time
     }
 
-
+    /**
+     * Create Popup Window from fab click
+     */
     private fun createPopup() {
 
         listPopupWindow = ListPopupWindow(this)
@@ -366,7 +382,14 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
             resources.getDimension(R.dimen.popup_vertical_offset).toInt()
         listPopupWindow.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.curved_bg))
         listPopupWindow.isModal = true
-        listPopupWindow.setOnItemClickListener(this)
+        listPopupWindow.setOnItemClickListener { parent, view, position, id ->
+            if (position == 0) {
+                startActivity(NewTaskActivity.getStartIntent(this@HomeActivity))
+            } else {
+                showCreateListDialog()
+            }
+            listPopupWindow.dismiss()
+        }
         listPopupWindow.setOnDismissListener {
             AnimUtilskt.rotateFab(
                 add_button,
@@ -375,15 +398,6 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
                 ContextCompat.getColor(this, R.color.colorBlue)
             )
         }
-    }
-
-    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        if (position == 0) {
-            startActivity(NewTaskActivity.getStartIntent(this))
-        } else {
-            showCreateListDialog()
-        }
-        listPopupWindow.dismiss()
     }
 
     private fun showCreateListDialog() {
@@ -484,6 +498,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
         startActivity(
             TasksActivity.getStartIntent(
                 this@HomeActivity,
+                taskListAndCount.id,
                 taskListAndCount.listSlack,
                 taskListAndCount.color,
                 taskListAndCount.name

@@ -26,7 +26,7 @@ interface TaskListDao {
                 FROM tasks t
                 WHERE t.list_slack = l.list_slack AND t.finished != 1 AND t.deleted != 1 
             ) AS task_count
-        FROM lists l;
+        FROM lists l WHERE l.deleted != 1;
         """
     )
     fun getAllListsWithTaskCount(): Flow<List<TaskListAndCount>>
@@ -36,4 +36,8 @@ interface TaskListDao {
 
     @Query("UPDATE lists SET name=:name WHERE list_slack=:listSlack")
     suspend fun updateTaskList(name: String, listSlack: String): Int
+
+    @Query("UPDATE lists SET deleted = 1 WHERE id =:id")
+    suspend fun setListDeleted(id: Long): Int
+
 }

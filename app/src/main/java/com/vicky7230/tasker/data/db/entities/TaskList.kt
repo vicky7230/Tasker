@@ -19,5 +19,8 @@ data class TaskList(
     var name: String,
 
     @ColumnInfo(name = "color")
-    var color: String
+    var color: String,
+
+    @ColumnInfo(name = "deleted")
+    var deleted: Int = 0
 )
