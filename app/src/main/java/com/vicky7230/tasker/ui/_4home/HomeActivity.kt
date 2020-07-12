@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -106,6 +107,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
             val dialog = BottomSheetDialog(this, R.style.BottomSheetDialog) // Style here
             dialog.setContentView(view)
             dialog.account_email.text = "You($userEmail)"
+
             dialog.finished_tasks.setOnClickListener {
                 startActivity(
                     FinishedDeletedTasksActivity.getStartIntent(
@@ -114,6 +116,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
                     )
                 )
             }
+
             dialog.deleted_tasks.setOnClickListener {
                 startActivity(
                     FinishedDeletedTasksActivity.getStartIntent(
@@ -122,11 +125,36 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
                     )
                 )
             }
+
             dialog.privacy_policy.setOnClickListener {
                 val i = Intent(Intent.ACTION_VIEW)
                 i.data = Uri.parse("https://tasker-1.flycricket.io/privacy.html")
                 startActivity(i)
             }
+
+            dialog.notification_settings.setOnClickListener {
+                val notificationSettingsIntent = Intent()
+                notificationSettingsIntent.action = "android.settings.APP_NOTIFICATION_SETTINGS"
+                notificationSettingsIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    notificationSettingsIntent.putExtra(
+                        "android.provider.extra.APP_PACKAGE",
+                        packageName
+                    )
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    notificationSettingsIntent.putExtra(
+                        "app_package",
+                        packageName
+                    )
+                    notificationSettingsIntent.putExtra(
+                        "app_uid",
+                        applicationInfo.uid
+                    )
+                }
+                startActivity(notificationSettingsIntent)
+            }
+
             dialog.rate.setOnClickListener {
                 val appPackageName = packageName
                 try {
@@ -145,6 +173,7 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
                     )
                 }
             }
+
             dialog.show()
         }
 
@@ -435,6 +464,9 @@ class HomeActivity : BaseActivity(), AdapterView.OnItemClickListener, TaskListsA
         colorsDialog.show()
     }
 
+    /**
+     * On task list click
+     */
     override fun onListClick(
         taskListAndCount: TaskListAndCount,
         taskListCard: CardView,

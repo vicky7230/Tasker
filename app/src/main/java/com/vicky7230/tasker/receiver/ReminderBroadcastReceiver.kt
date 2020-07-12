@@ -1,5 +1,6 @@
 package com.vicky7230.tasker.receiver
 
+import android.app.Notification
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -25,9 +26,12 @@ class ReminderBroadcastReceiver : BroadcastReceiver() {
 
         val builder = NotificationCompat.Builder(context, "Notify_Task")
             .setSmallIcon(R.mipmap.ic_launcher_round)
-            .setContentTitle("Tasker")
+            .setContentTitle("Pending task")
             .setContentText(intent.getStringExtra(NewTaskActivity.EXTRAS_TASK))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setDefaults(Notification.DEFAULT_LIGHTS)
+            .setDefaults(Notification.DEFAULT_SOUND)
+            .setDefaults(Notification.DEFAULT_VIBRATE)
             .setContentIntent(pi)
             .setAutoCancel(true)
 

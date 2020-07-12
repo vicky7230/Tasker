@@ -8,6 +8,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.media.AudioAttributes
+import android.media.AudioAttributes.Builder
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
@@ -185,9 +188,6 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
     }
 
     private fun createReminder() {
-
-        createNotificationChannel()
-
         val intent = Intent(this, ReminderBroadcastReceiver::class.java)
         intent.putExtra(EXTRAS_TASK, task_edit_text.text.toString())
         val pendingIntent =
@@ -203,9 +203,6 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
     }
 
     private fun updateReminder() {
-
-        createNotificationChannel()
-
         val intent = Intent(this, ReminderBroadcastReceiver::class.java)
         intent.putExtra(EXTRAS_TASK, task_edit_text.text.toString())
         val pendingIntent =
@@ -221,19 +218,6 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
             pendingIntent
         )
 
-    }
-
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Notify Task"
-            val description = "Channel for task reminder"
-            val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel("Notify_Task", name, importance)
-            channel.description = description
-
-            val notificationManager = getSystemService(NotificationManager::class.java)
-            notificationManager.createNotificationChannel(channel)
-        }
     }
 
     private fun setTaskListListeners() {

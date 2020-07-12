@@ -129,6 +129,32 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
+                android:src="@drawable/ic_baseline_notifications_active_24" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/notification_settings"
+                android:layout_width="326dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:gravity="center_vertical"
+                android:text="Notification Settings"
+                android:textColor="@color/colorBlue"
+                android:textSize="17sp"
+                app:layout_constraintRight_toRightOf="parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
                 android:src="@drawable/ic_baseline_rate_review_24" />
 
             <androidx.appcompat.widget.AppCompatTextView
