@@ -194,11 +194,22 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
             PendingIntent.getBroadcast(this, 101, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        alarmManager.set(
-            AlarmManager.RTC_WAKEUP,
-            calendarInstance.time.time,
-            pendingIntent
-        )
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                calendarInstance.timeInMillis,
+                pendingIntent
+            );
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            alarmManager.setExact(
+                AlarmManager.RTC_WAKEUP,
+                calendarInstance.timeInMillis,
+                pendingIntent
+            );
+        } else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendarInstance.timeInMillis, pendingIntent);
+        }
     }
 
     private fun updateReminder() {
@@ -208,15 +219,22 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
             PendingIntent.getBroadcast(this, 101, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-
         alarmManager.cancel(pendingIntent)
-
-        alarmManager.set(
-            AlarmManager.RTC_WAKEUP,
-            calendarInstance.time.time,
-            pendingIntent
-        )
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                calendarInstance.timeInMillis,
+                pendingIntent
+            );
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            alarmManager.setExact(
+                AlarmManager.RTC_WAKEUP,
+                calendarInstance.timeInMillis,
+                pendingIntent
+            );
+        } else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendarInstance.timeInMillis, pendingIntent);
+        }
     }
 
     private fun setTaskListListeners() {

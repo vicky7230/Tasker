@@ -7,12 +7,11 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.legacy.content.WakefulBroadcastReceiver
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.ui._1splash.SplashActivity
 import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
 
-class ReminderBroadcastReceiver : WakefulBroadcastReceiver() {
+class ReminderBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
 

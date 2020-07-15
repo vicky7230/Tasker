@@ -1,11 +1,11 @@
 package com.vicky7230.tasker.ui._4home
 
 import android.annotation.SuppressLint
-import android.app.Notification
-import android.app.PendingIntent
 import android.content.ActivityNotFoundException
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
@@ -19,8 +19,6 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityOptionsCompat
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -36,7 +34,6 @@ import com.vicky7230.tasker.R
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskListAndCount
 import com.vicky7230.tasker.data.network.Resource
 import com.vicky7230.tasker.ui._0base.BaseActivity
-import com.vicky7230.tasker.ui._1splash.SplashActivity
 import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
 import com.vicky7230.tasker.ui._6taskList.TasksActivity
 import com.vicky7230.tasker.ui._7finishedDeleted.FinishedDeletedTasksActivity
@@ -84,19 +81,8 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_home)
         taskListsAdapter.setCallback(this)
-
-
-        val i = Intent(this, SplashActivity::class.java)
-
-        val pi = PendingIntent.getActivity(
-            this,
-            101,
-            i,
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
 
         init()
     }
@@ -167,6 +153,124 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
                     )
                 }
                 startActivity(notificationSettingsIntent)
+            }
+
+            dialog.battery_settings.setOnClickListener {
+                //Code to open app info screen
+                //val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                //val intent = Intent(Settings.ACTION_BATTERY_SAVER_SETTINGS)
+                //intent.data = Uri.parse("package:$packageName")
+                //startActivity(intent)
+
+                /*try {
+                    val intent = Intent()
+                    intent.component = ComponentName(
+                        "com.miui.powerkeeper",
+                        "com.miui.powerkeeper.ui.HiddenAppsConfigActivity"
+                    )
+                    intent.putExtra("package_name", packageName)
+                    intent.putExtra("package_label", getText(R.string.app_name))
+                    startActivity(intent)
+                } catch (e: ActivityNotFoundException) {
+                    Timber.e("Not a Xioami Device : $e")
+                }
+
+
+                try {
+                    val intent = Intent()
+                    intent.component = ComponentName(
+                        "com.coloros.oppoguardelf",
+                        "com.coloros.powermanager.fuelgaue.PowerAppsBgSetting"
+                    )
+                    intent.putExtra("package_name", packageName)
+                    intent.putExtra("package_label", getText(R.string.app_name))
+                    startActivity(intent)
+                } catch (e: ActivityNotFoundException) {
+                    Timber.e("Not a Realme Device : $e")
+                }*/
+
+                val names = mutableListOf<ComponentName>()
+                names.add(
+                    ComponentName(
+                        "com.miui.powerkeeper",
+                        "com.miui.powerkeeper.ui.HiddenAppsConfigActivity"
+                    )
+                )
+                names.add(
+                    ComponentName(
+                        "com.letv.android.letvsafe",
+                        "com.letv.android.letvsafe.BackgroundAppManageActivity"
+                    )
+                )
+                names.add(
+                    ComponentName(
+                        "com.huawei.systemmanager",
+                        "com.huawei.systemmanager.optimize.process.ProtectActivity"
+                    )
+                )
+                names.add(
+                    ComponentName(
+                        "com.coloros.safecenter",
+                        "com.coloros.safecenter.permission.startup.StartupAppListActivity"
+                    )
+                )
+                names.add(
+                    ComponentName(
+                        "com.oppo.safe",
+                        "com.oppo.safe.permission.startup.StartupAppListActivity"
+                    )
+                )
+                names.add(
+                    ComponentName(
+                        "com.iqoo.secure",
+                        "com.iqoo.secure.ui.phoneoptimize.AddWhiteListActivity"
+                    )
+                )
+                names.add(
+                    ComponentName(
+                        "com.iqoo.secure",
+                        "com.iqoo.secure.ui.phoneoptimize.BgStartUpManager"
+                    )
+                )
+                names.add(
+                    ComponentName(
+                        "com.vivo.permissionmanager",
+                        "com.vivo.permissionmanager.activity.BgStartUpManagerActivity"
+                    )
+                )
+                names.add(
+                    ComponentName(
+                        "com.samsung.android.lool",
+                        "com.samsung.android.sm.ui.battery.BatteryActivity"
+                    )
+                )
+                names.add(
+                    ComponentName(
+                        "com.htc.pitroad",
+                        "com.htc.pitroad.landingpage.activity.LandingPageActivity"
+                    )
+                )
+                names.add(
+                    ComponentName(
+                        "com.asus.mobilemanager",
+                        "com.asus.mobilemanager.MainActivity"
+                    )
+                )
+
+
+                for (componentName in names) {
+                    val intent = Intent()
+                    intent.component = componentName
+                    if (packageManager.resolveActivity(
+                            intent,
+                            PackageManager.MATCH_DEFAULT_ONLY
+                        ) != null
+                    ) {
+                        intent.putExtra("package_name", packageName)
+                        intent.putExtra("package_label", getText(R.string.app_name))
+                        startActivity(intent)
+                    }
+                }
             }
 
             dialog.rate.setOnClickListener {
