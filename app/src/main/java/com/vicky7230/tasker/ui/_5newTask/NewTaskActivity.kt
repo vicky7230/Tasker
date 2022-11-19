@@ -280,7 +280,7 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
         }
         if (this::task.isInitialized) {
             val item = taskList2.filter {
-                task.id == it.id
+                task.listId == it.id
             }
             item[0].selected = true
             selectedTaskList2 = item[0]

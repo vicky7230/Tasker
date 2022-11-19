@@ -35,7 +35,7 @@ interface TaskDao {
         SELECT 
         * FROM tasks 
         WHERE 
-        id =:listID 
+        list_id =:listID 
         AND finished != 1 
         AND deleted != 1 
         ORDER BY id DESC
