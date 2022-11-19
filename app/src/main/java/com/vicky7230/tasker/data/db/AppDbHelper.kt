@@ -49,8 +49,8 @@ class AppDbHelper @Inject constructor(private val appDatabase: AppDatabase) : Db
         return appDatabase.taskDao().insertTasks(tasksAndListFromServer)
     }
 
-    override fun getTasksForList(listSlack: String): Flow<List<Task>> {
-        return appDatabase.taskDao().getTasksForList(listSlack)
+    override fun getTasksForList(listId: Long): Flow<List<Task>> {
+        return appDatabase.taskDao().getTasksForList(listId)
     }
 
     override suspend fun setTaskFinished(id: Long): Int {
@@ -61,8 +61,8 @@ class AppDbHelper @Inject constructor(private val appDatabase: AppDatabase) : Db
         return appDatabase.taskDao().setTaskDeleted(id)
     }
 
-    override suspend fun updateTaskList(name: String, listSlack: String): Int {
-        return appDatabase.tasklistDao().updateTaskList(name, listSlack)
+    override suspend fun updateTaskList(name: String, listId: Long): Int {
+        return appDatabase.tasklistDao().updateTaskList(name, listId)
     }
 
     override suspend fun getDeletedTasks(): List<TaskAndTaskList> {

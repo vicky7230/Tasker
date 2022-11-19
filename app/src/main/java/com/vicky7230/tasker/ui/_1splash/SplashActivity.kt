@@ -43,47 +43,8 @@ class SplashActivity : BaseActivity() {
 
     private fun init() {
 
-        retry_button.setOnClickListener {
-            splashViewModel.refreshToken()
-        }
-
-        splashViewModel.tokenRefreshed.observe(this, Observer { tokenUpdated: Resource<Boolean> ->
-            when (tokenUpdated) {
-                is Resource.Loading -> {
-                    retry_button.visibility = View.GONE
-                    progress_bar.visibility = View.VISIBLE
-                }
-                is Resource.Error -> {
-                    progress_bar.visibility = View.GONE
-                    retry_button.visibility = View.VISIBLE
-                    showError(tokenUpdated.exception.localizedMessage)
-                }
-                is Resource.Success -> {
-                    progress_bar.visibility = View.GONE
-                    if (tokenUpdated.data) {
-                        startActivity(HomeActivity.getStartIntent(this@SplashActivity))
-                        finish()
-                    } else {
-                        startActivity(LoginActivity.getStartIntent(this@SplashActivity))
-                        finish()
-                    }
-                }
-            }
-        })
-
-        splashViewModel.isUserLoggedIn.observe(this, Observer {
-            if (it) {
-                splashViewModel.refreshToken()
-            } else {
-                lifecycleScope.launch {
-                    delay(1500)
-                    startActivity(LoginActivity.getStartIntent(this@SplashActivity))
-                    finish()
-                }
-            }
-        })
-
-        splashViewModel.isUserLoggedIn()
+        startActivity(HomeActivity.getStartIntent(this@SplashActivity))
+        finish()
 
     }
 }

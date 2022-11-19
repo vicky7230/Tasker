@@ -28,7 +28,6 @@ import com.vicky7230.tasker.ui._4home.UnderlayButtonClickListener
 import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
 import com.vicky7230.tasker.utils.AppConstants
 import com.vicky7230.tasker.widget.ElasticDragDismissFrameLayout
-import com.vicky7230.tasker.worker.UpdateTaskWorker
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_tasks.*
 import kotlinx.android.synthetic.main.bottom_sheet_delete_list.*
@@ -55,20 +54,17 @@ class TasksActivity : BaseActivity() {
     companion object {
 
         const val EXTRAS_LIST_ID = "list_id"
-        const val EXTRAS_LIST_SLACK = "list_slack"
         const val EXTRAS_LIST_COLOR = "list_color"
         const val EXTRAS_LIST_NAME = "list_name"
 
         fun getStartIntent(
             context: Context,
             listId: Long,
-            listSlack: String,
             listColor: String,
             listName: String
         ): Intent {
             val intent = Intent(context, TasksActivity::class.java)
             intent.putExtra(EXTRAS_LIST_ID, listId)
-            intent.putExtra(EXTRAS_LIST_SLACK, listSlack)
             intent.putExtra(EXTRAS_LIST_COLOR, listColor)
             intent.putExtra(EXTRAS_LIST_NAME, listName)
             return intent
@@ -120,7 +116,7 @@ class TasksActivity : BaseActivity() {
     private fun init() {
 
         edit_list_name.setOnClickListener {
-            showRenameListDialog()
+            //showRenameListDialog()
         }
 
         delete_list.setOnClickListener {
@@ -145,11 +141,11 @@ class TasksActivity : BaseActivity() {
         })
 
         tasksViewModel.taskFinished.observe(this, Observer { taskLongId: Long ->
-            updateTask(taskLongId)
+            //updateTask(taskLongId)
         })
 
         tasksViewModel.taskDeleted.observe(this, Observer { taskLongId: Long ->
-            updateTask(taskLongId)
+            //updateTask(taskLongId)
         })
 
         tasksViewModel.listDeleted.observe(this, Observer { listDeleted: Boolean ->
@@ -177,7 +173,6 @@ class TasksActivity : BaseActivity() {
         if (intent != null
             && intent.getStringExtra(EXTRAS_LIST_COLOR) != null
             && intent.getStringExtra(EXTRAS_LIST_NAME) != null
-            && intent.getStringExtra(EXTRAS_LIST_SLACK) != null
             && intent.getLongExtra(EXTRAS_LIST_ID, -1L) != -1L
         ) {
             val listColor = intent.getStringExtra(EXTRAS_LIST_COLOR)
@@ -202,14 +197,14 @@ class TasksActivity : BaseActivity() {
                 delete_list.setColorFilter(colorBlack)
             }
 
-            val listSlack = intent.getStringExtra(EXTRAS_LIST_SLACK)
-            if (listSlack != null)
-                tasksViewModel.getTasks(listSlack)
+            val listId = intent.getLongExtra(EXTRAS_LIST_ID, -1)
+            if (listId != -1L)
+                tasksViewModel.getTasks(listId)
 
         }
     }
 
-    private fun showRenameListDialog() {
+    /*private fun showRenameListDialog() {
         val view: View = layoutInflater.inflate(R.layout.bottom_sheet_rename_list, null)
         listRenameDialog = BottomSheetDialog(this, R.style.BottomSheetDialog)
         listRenameDialog.setContentView(view)
@@ -229,7 +224,7 @@ class TasksActivity : BaseActivity() {
         }
 
         listRenameDialog.show()
-    }
+    }*/
 
     private fun showConfirmDeleteDialog() {
         val view: View = layoutInflater.inflate(R.layout.bottom_sheet_delete_list, null)
@@ -305,7 +300,7 @@ class TasksActivity : BaseActivity() {
         )
     }
 
-    private fun updateTask(taskLongId: Long) {
+    /*private fun updateTask(taskLongId: Long) {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
@@ -320,7 +315,7 @@ class TasksActivity : BaseActivity() {
             .setConstraints(constraints)
             .build()
         WorkManager.getInstance(this).enqueue(updateTaskWorkerRequest)
-    }
+    }*/
 
     override fun onBackPressed() {
         list_name.visibility = View.GONE

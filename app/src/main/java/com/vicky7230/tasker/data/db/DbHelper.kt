@@ -27,13 +27,13 @@ interface DbHelper {
 
     suspend fun insertTasks(tasksAndListFromServer: MutableList<Task>): List<Long>
 
-    fun getTasksForList(listSlack: String): Flow<List<Task>>
+    fun getTasksForList(listId: Long): Flow<List<Task>>
 
     suspend fun setTaskFinished(id: Long): Int
 
     suspend fun setTaskDeleted(id: Long): Int
 
-    suspend fun updateTaskList(name: String, listSlack: String): Int
+    suspend fun updateTaskList(name: String, listId: Long): Int
 
     suspend fun getDeletedTasks(): List<TaskAndTaskList>
 

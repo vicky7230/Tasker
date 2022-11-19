@@ -38,7 +38,6 @@ import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
 import com.vicky7230.tasker.ui._6taskList.TasksActivity
 import com.vicky7230.tasker.ui._7finishedDeleted.FinishedDeletedTasksActivity
 import com.vicky7230.tasker.utils.AnimUtilskt
-import com.vicky7230.tasker.worker.UpdateTaskWorker
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.bottom_sheet.*
@@ -61,7 +60,6 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var listPopupWindow: ListPopupWindow
     private var options = arrayListOf("Task", "List")
-    private lateinit var userEmail: String
     private var taskListColor: String = "-1"
     private lateinit var colorsDialog: BottomSheetDialog
 
@@ -106,7 +104,7 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
             val view: View = layoutInflater.inflate(R.layout.bottom_sheet, null)
             val dialog = BottomSheetDialog(this, R.style.BottomSheetDialog) // Style here
             dialog.setContentView(view)
-            dialog.account_email.text = "You($userEmail)"
+            //dialog.account_email.text = "You($userEmail)"
 
             dialog.finished_tasks.setOnClickListener {
                 startActivity(
@@ -299,33 +297,17 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
 
         setUpTodaysTasksRecyclerView()
 
-        homeViewModel.newListCreated.observe(this, Observer {
-            when (it) {
-                is Resource.Loading -> showLoading()
-                is Resource.Error -> {
-                    hideLoading()
-                    showToast(it.exception.localizedMessage)
-                }
-                is Resource.Success -> {
-                    if (this::colorsDialog.isInitialized) {
-                        colorsDialog.dismiss()
-                    }
-                    hideLoading()
-                }
-            }
-        })
-
-        homeViewModel.userEmail.observe(this, Observer {
+        /*homeViewModel.userEmail.observe(this, Observer {
             userEmail = it
-        })
+        })*/
 
-        homeViewModel.taskFinished.observe(this, Observer { taskLongId: Long ->
+        /*homeViewModel.taskFinished.observe(this, Observer { taskLongId: Long ->
             updateTask(taskLongId)
         })
 
         homeViewModel.taskDeleted.observe(this, Observer { taskLongId: Long ->
             updateTask(taskLongId)
-        })
+        })*/
 
         homeViewModel.taskListAndCount.observe(this, Observer {
             when (it) {
@@ -357,7 +339,6 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
         })
 
         homeViewModel.getData(getTodaysDateStart(), getTodaysDateEnd())
-        homeViewModel.getUserEmail()
     }
 
     private fun setUpTaskListsRecyclerView() {
@@ -532,6 +513,7 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
                 taskListColor,
                 colorsDialog.findViewById<AppCompatEditText>(R.id.new_list_name)!!.text!!.toString()
             )
+            colorsDialog.dismiss()
         }
         val listener = View.OnClickListener() {
             colorsDialog.findViewById<AppCompatImageView>(R.id.color_1)?.setImageDrawable(null)
@@ -603,7 +585,6 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
             TasksActivity.getStartIntent(
                 this@HomeActivity,
                 taskListAndCount.id,
-                taskListAndCount.listSlack,
                 taskListAndCount.color,
                 taskListAndCount.name
             ),
@@ -611,7 +592,7 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
         )
     }
 
-    private fun updateTask(taskLongId: Long) {
+    /*private fun updateTask(taskLongId: Long) {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
@@ -626,7 +607,7 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
             .setConstraints(constraints)
             .build()
         WorkManager.getInstance(this).enqueue(updateTaskWorkerRequest)
-    }
+    }*/
 
     override fun onResume() {
         add_button.show()

@@ -49,20 +49,6 @@ class VerifyOtpActivity : BaseActivity() {
     @SuppressLint("SetTextI18n")
     private fun init() {
 
-        verifyOtpViewModel.resource.observe(this, Observer {
-            when (it) {
-                is Resource.Loading -> showLoading()
-                is Resource.Error -> {
-                    hideLoading()
-                    showError(it.exception.localizedMessage)
-                }
-                is Resource.Success -> {
-                    hideLoading()
-                    startActivity(HomeActivity.getStartIntent(this@VerifyOtpActivity))
-                }
-            }
-        })
-
         if (intent != null && intent.getStringExtra(EXTRAS_EMAIL) != null)
             verification_text.text =
                 "Please type the verification code sent to ${intent.getStringExtra(EXTRAS_EMAIL)}"
@@ -71,9 +57,9 @@ class VerifyOtpActivity : BaseActivity() {
 
         otp_view.requestFocus()
 
-        otp_view.setOtpCompletionListener { otp ->
+        /*otp_view.setOtpCompletionListener { otp ->
             if (intent != null && intent.getStringExtra(EXTRAS_EMAIL) != null)
-                verifyOtpViewModel.verifyOtp(intent.getStringExtra(EXTRAS_EMAIL), otp)
-        }
+                //verifyOtpViewModel.verifyOtp(intent.getStringExtra(EXTRAS_EMAIL), otp)
+        }*/
     }
 }

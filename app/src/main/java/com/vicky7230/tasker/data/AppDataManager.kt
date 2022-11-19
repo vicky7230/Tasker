@@ -8,7 +8,6 @@ import com.vicky7230.tasker.data.db.joinReturnTypes.TaskAndTaskList
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskListAndCount
 import com.vicky7230.tasker.data.network.AppApiHelper
 import com.vicky7230.tasker.data.prefs.AppPreferencesHelper
-import com.vicky7230.tasker.worker.TaskData
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 import javax.inject.Inject
@@ -19,52 +18,6 @@ constructor(
     private val appDbHelper: AppDbHelper,
     private val appPreferencesHelper: AppPreferencesHelper
 ) : DataManager {
-
-    override suspend fun generateOtp(email: String): Response<JsonElement> {
-        return appApiHelper.generateOtp(email)
-    }
-
-    override suspend fun verifyOtp(email: String, otp: String): Response<JsonElement> {
-        return appApiHelper.verifyOtp(email, otp)
-    }
-
-    override suspend fun refreshToken(userId: String?, token: String?): Response<JsonElement> {
-        return appApiHelper.refreshToken(userId, token)
-    }
-
-    override suspend fun getUserTaskLists(userId: String?, token: String?): Response<JsonElement> {
-        return appApiHelper.getUserTaskLists(userId, token)
-    }
-
-    override suspend fun createTask(taskData: TaskData): Response<JsonElement> {
-        return appApiHelper.createTask(taskData)
-    }
-
-    override suspend fun updateTask(taskData: TaskData): Response<JsonElement> {
-        return appApiHelper.updateTask(taskData)
-    }
-
-    override suspend fun getUserTasks(userId: String?, token: String?): Response<JsonElement> {
-        return appApiHelper.getUserTasks(userId, token)
-    }
-
-    override suspend fun createNewList(
-        userId: String?,
-        token: String?,
-        listColor: String,
-        listName: String
-    ): Response<JsonElement> {
-        return appApiHelper.createNewList(userId, token, listColor, listName)
-    }
-
-    override suspend fun renameList(
-        userId: String?,
-        token: String?,
-        listName: String,
-        listSlack: String
-    ): Response<JsonElement> {
-        return appApiHelper.renameList(userId, token, listName, listSlack)
-    }
 
     override fun getAccessToken(): String? {
         return appPreferencesHelper.getAccessToken()
@@ -142,8 +95,8 @@ constructor(
         return appDbHelper.insertTasks(tasksAndListFromServer)
     }
 
-    override fun getTasksForList(listSlack: String): Flow<List<Task>> {
-        return appDbHelper.getTasksForList(listSlack)
+    override fun getTasksForList(listId: Long): Flow<List<Task>> {
+        return appDbHelper.getTasksForList(listId)
     }
 
     override suspend fun setTaskFinished(id: Long): Int {
@@ -154,8 +107,8 @@ constructor(
         return appDbHelper.setTaskDeleted(id)
     }
 
-    override suspend fun updateTaskList(name: String, listSlack: String): Int {
-        return appDbHelper.updateTaskList(name, listSlack)
+    override suspend fun updateTaskList(name: String, listId: Long): Int {
+        return appDbHelper.updateTaskList(name, listId)
     }
 
     override suspend fun getDeletedTasks(): List<TaskAndTaskList> {

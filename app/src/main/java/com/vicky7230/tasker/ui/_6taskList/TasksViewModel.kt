@@ -24,9 +24,9 @@ class TasksViewModel @Inject constructor(
     var listDeleted = MutableLiveData<Boolean>()
     var listRenamed = MutableLiveData<Resource<String>>()
 
-    fun getTasks(listSlack: String) {
+    fun getTasks(listId: Long) {
         viewModelScope.launch {
-            dataManager.getTasksForList(listSlack)
+            dataManager.getTasksForList(listId)
                 .collect { tasksForList: List<Task> ->
                     tasks.value = tasksForList
                 }
@@ -54,7 +54,7 @@ class TasksViewModel @Inject constructor(
         }
     }
 
-    fun renameTaskList(listName: String, listSlack: String) {
+    /*fun renameTaskList(listName: String, listSlack: String) {
         viewModelScope.launch {
             listRenamed.value = Resource.Loading
 
@@ -90,11 +90,11 @@ class TasksViewModel @Inject constructor(
                 }
             }
         }
-    }
+    }*/
 
-    private suspend fun updateTaskList(listSlack: String, listName: String) {
+    /*private suspend fun updateTaskList(listSlack: String, listName: String) {
         dataManager.updateTaskList(listName, listSlack)
-    }
+    }*/
 
     fun deleteTaskList(listId: Long) {
         viewModelScope.launch {

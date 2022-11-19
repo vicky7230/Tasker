@@ -28,8 +28,6 @@ import com.vicky7230.tasker.receiver.ReminderBroadcastReceiver
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.utils.AnimUtilskt
 import com.vicky7230.tasker.utils.ViewUtils
-import com.vicky7230.tasker.worker.CreateTaskWorker
-import com.vicky7230.tasker.worker.UpdateTaskWorker
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_new_task.*
 import kotlinx.coroutines.delay
@@ -130,17 +128,14 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
                     newTaskViewModel.insertTaskInDB(
                         Task(
                             0,
-                            RandomStringUtils.randomAlphanumeric(10),
-                            (-1).toString(),
                             task_edit_text.text.toString(),
                             calendarInstance.time.time,
-                            selectedTaskList2.listSlack
+                            selectedTaskList2.id
                         )
                     )
                 } else if (intent.getStringExtra(EXTRAS_OPERATION) == EXTRAS_OPERATION_UPDATE) {
                     task.task = task_edit_text.text.toString()
                     task.dateTime = calendarInstance.time.time
-                    task.listSlack = selectedTaskList2.listSlack
                     newTaskViewModel.updateTaskInDB(task)
                 }
 
@@ -148,16 +143,15 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
 
         newTaskViewModel.taskInsertedInDB.observe(this, Observer { taskLongId: Long ->
             createReminder()
-            createTaskOnServer(taskLongId)
             finish()
         })
 
-        newTaskViewModel.taskUpdatedInDB.observe(this, Observer { taskLongId: Long ->
+        /*newTaskViewModel.taskUpdatedInDB.observe(this, Observer { taskLongId: Long ->
             updateReminder()
             updateTaskOnServer(taskLongId)
             finish()
         })
-
+*/
         initializeDateAndTimeViews(Date())
 
         if (intent != null &&
@@ -262,7 +256,7 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
         }
     }
 
-    private fun updateTaskOnServer(taskLongId: Long) {
+    /*private fun updateTaskOnServer(taskLongId: Long) {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
@@ -277,16 +271,16 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
             .setConstraints(constraints)
             .build()
         WorkManager.getInstance(this).enqueue(updateTaskWorkerRequest)
-    }
+    }*/
 
     private fun initializeTaskListView(taskList: List<TaskList>) {
         val taskList2 = arrayListOf<TaskList2>()
         taskList.forEach {
-            taskList2.add(TaskList2(it.listSlack, it.name, it.color))
+            taskList2.add(TaskList2(it.id, it.name, it.color))
         }
         if (this::task.isInitialized) {
             val item = taskList2.filter {
-                task.listSlack == it.listSlack
+                task.id == it.id
             }
             item[0].selected = true
             selectedTaskList2 = item[0]
@@ -422,7 +416,7 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
             })
     }
 
-    private fun createTaskOnServer(taskLongId: Long) {
+    /*private fun createTaskOnServer(taskLongId: Long) {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
@@ -437,7 +431,7 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
             .setConstraints(constraints)
             .build()
         WorkManager.getInstance(this).enqueue(createTaskWorkerRequest)
-    }
+    }*/
 
     override fun onTaskListClick(taskList2: TaskList2) {
         selectedTaskList2 = taskList2

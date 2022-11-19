@@ -16,29 +16,4 @@ class LoginViewModel @Inject constructor(
 
     var resource = MutableLiveData<Resource<JsonElement>>()
 
-    fun generateOTP(email: String) {
-
-        viewModelScope.launch {
-            resource.value = Resource.Loading
-
-            val response = safeApiCall { dataManager.generateOtp(email) }
-
-            when (response) {
-                is Resource.Success -> {
-
-                    val jsonObject = response.data.asJsonObject
-
-                    if (jsonObject.get("success").asBoolean) {
-                        resource.value = response
-                    } else {
-                        resource.value =
-                            Resource.Error(IOException(jsonObject.get("message").asString))
-                    }
-                }
-                is Resource.Error -> {
-                    resource.value = response
-                }
-            }
-        }
-    }
 }

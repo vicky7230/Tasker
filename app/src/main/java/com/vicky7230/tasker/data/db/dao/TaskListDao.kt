@@ -20,11 +20,11 @@ interface TaskListDao {
     @Query(
         """
         SELECT 
-            l.id, l.list_slack, l.name, l.color , 
+            l.id, l.name, l.color , 
             (
                 SELECT COUNT(*)
                 FROM tasks t
-                WHERE t.list_slack = l.list_slack AND t.finished != 1 AND t.deleted != 1 
+                WHERE t.list_id = l.id AND t.finished != 1 AND t.deleted != 1 
             ) AS task_count
         FROM lists l WHERE l.deleted != 1;
         """
@@ -34,8 +34,8 @@ interface TaskListDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTaskLists(taskLists: List<TaskList>): List<Long>
 
-    @Query("UPDATE lists SET name=:name WHERE list_slack=:listSlack")
-    suspend fun updateTaskList(name: String, listSlack: String): Int
+    @Query("UPDATE lists SET name=:name WHERE id=:listId")
+    suspend fun updateTaskList(name: String, listId: Long): Int
 
     @Query("UPDATE lists SET deleted = 1 WHERE id =:id")
     suspend fun setListDeleted(id: Long): Int

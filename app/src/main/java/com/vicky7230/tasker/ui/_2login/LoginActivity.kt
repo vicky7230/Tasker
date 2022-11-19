@@ -74,7 +74,7 @@ class LoginActivity : BaseActivity() {
             if (!TextUtils.isEmpty(email_edit_text.text) &&
                 CommonUtils.isEmailValid(email_edit_text.text.toString())
             ) {
-                loginViewModel.generateOTP(email_edit_text.text.toString())
+                //loginViewModel.generateOTP(email_edit_text.text.toString())
             } else {
                 showError("Invalid Email")
             }

@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Build
 import androidx.work.Configuration
 import androidx.work.WorkManager
-import com.vicky7230.tasker.di.MyWorkerFactory
 import com.vicky7230.tasker.di.component.DaggerApplicationComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -21,9 +20,6 @@ class TaskerApplication : Application(), HasAndroidInjector {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
-
-    @Inject
-    lateinit var myWorkerFactory: MyWorkerFactory
 
     override fun onCreate() {
         super.onCreate()
@@ -39,11 +35,6 @@ class TaskerApplication : Application(), HasAndroidInjector {
             .inject(this)
 
         //DaggerApplicationComponent.builder().build().factory()
-
-        WorkManager.initialize(
-            this,
-            Configuration.Builder().setWorkerFactory(myWorkerFactory).build()
-        )
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "Notify Task"

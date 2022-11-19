@@ -7,11 +7,8 @@ data class TaskAndTaskList(
     @ColumnInfo(name = "id")
     var id: Long,
 
-    @ColumnInfo(name = "task_id")//local unique identifier
-    var taskId: String,
-
-    @ColumnInfo(name = "task_slack")//this is the server identifier of this task
-    var taskSlack: String,
+    @ColumnInfo(name = "list_id")//local unique identifier
+    var listId: Long,
 
     @ColumnInfo(name = "task")
     var task: String,
@@ -24,9 +21,6 @@ data class TaskAndTaskList(
 
     @ColumnInfo(name = "deleted")
     var deleted: Int,
-
-    @ColumnInfo(name = "list_slack")
-    var listSlack: String,
 
     @ColumnInfo(name = "list_name")
     var listName: String,

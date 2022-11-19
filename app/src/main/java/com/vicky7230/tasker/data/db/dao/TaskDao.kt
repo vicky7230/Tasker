@@ -19,9 +19,9 @@ interface TaskDao {
     @Query(
         """
         SELECT 
-        tasks.id, tasks.task_id, tasks.task_slack,tasks.list_slack, tasks.task, tasks.date_time, tasks.finished, tasks.deleted, lists.name as list_name, lists.color as list_color 
+        tasks.id,tasks.list_id, tasks.task, tasks.date_time, tasks.finished, tasks.deleted, lists.name as list_name, lists.color as list_color 
         FROM tasks LEFT JOIN lists 
-        ON tasks.list_slack = lists.list_slack 
+        ON tasks.list_id = lists.id 
         WHERE tasks.date_time >= :todaysDateStart 
         AND tasks.date_time <= :todaysDateEnd
         AND tasks.deleted != 1
@@ -35,13 +35,13 @@ interface TaskDao {
         SELECT 
         * FROM tasks 
         WHERE 
-        list_slack =:listSlack 
+        id =:listID 
         AND finished != 1 
         AND deleted != 1 
         ORDER BY id DESC
         """
     )
-    fun getTasksForList(listSlack: String): Flow<List<Task>>
+    fun getTasksForList(listID: Long): Flow<List<Task>>
 
     @Update
     suspend fun updateTask(task: Task): Int
@@ -55,9 +55,9 @@ interface TaskDao {
     @Query(
         """
         SELECT 
-        tasks.id, tasks.task_id, tasks.task_slack,tasks.list_slack, tasks.task, tasks.date_time, tasks.finished, tasks.deleted, lists.name as list_name, lists.color as list_color 
+        tasks.id,tasks.list_id, tasks.task, tasks.date_time, tasks.finished, tasks.deleted, lists.name as list_name, lists.color as list_color 
         FROM tasks LEFT JOIN lists 
-        ON tasks.list_slack = lists.list_slack
+        ON tasks.list_id = lists.id
         WHERE tasks.deleted = 1
         ORDER BY tasks.id DESC
         """
@@ -67,9 +67,9 @@ interface TaskDao {
     @Query(
         """
         SELECT 
-        tasks.id, tasks.task_id, tasks.task_slack,tasks.list_slack, tasks.task, tasks.date_time, tasks.finished, tasks.deleted, lists.name as list_name, lists.color as list_color 
+        tasks.id,tasks.list_id, tasks.task, tasks.date_time, tasks.finished, tasks.deleted, lists.name as list_name, lists.color as list_color 
         FROM tasks LEFT JOIN lists 
-        ON tasks.list_slack = lists.list_slack
+        ON tasks.list_id = lists.id
         WHERE tasks.finished = 1
         ORDER BY tasks.id DESC
         """

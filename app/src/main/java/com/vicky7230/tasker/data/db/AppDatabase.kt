@@ -11,8 +11,7 @@ import com.vicky7230.tasker.data.db.dao.TaskListDao
 import com.vicky7230.tasker.data.db.entities.Task
 import com.vicky7230.tasker.data.db.entities.TaskList
 
-
-@Database(entities = [Task::class, TaskList::class], version = 2, exportSchema = false)
+@Database(entities = [Task::class, TaskList::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun taskDao(): TaskDao
@@ -37,7 +36,8 @@ abstract class AppDatabase : RoomDatabase() {
                         AppDatabase::class.java,
                         "app.db"
                     )
-                        .addMigrations(MIGRATION_1_2)
+                        .addCallback(rdc)
+                        //.addMigrations(MIGRATION_1_2)
                         .build()
                 }
             }
@@ -47,5 +47,19 @@ abstract class AppDatabase : RoomDatabase() {
         fun destroyInstance() {
             INSTANCE = null
         }
+    }
+}
+
+var rdc: RoomDatabase.Callback = object : RoomDatabase.Callback() {
+    override fun onCreate(db: SupportSQLiteDatabase) {
+        // do something after database has been created
+        db.execSQL("INSERT INTO lists (name, color, deleted) VALUES('Work','#61DEA4',0)")
+        db.execSQL("INSERT INTO lists (name, color, deleted) VALUES('Shopping','#F45E6D',0)")
+        db.execSQL("INSERT INTO lists (name, color, deleted) VALUES('Family','#FFE761',0)")
+        db.execSQL("INSERT INTO lists (name, color, deleted) VALUES('Personal','#B678FF',0)")
+    }
+
+    override fun onOpen(db: SupportSQLiteDatabase) {
+        // do something every time database is open
     }
 }

@@ -26,8 +26,6 @@ class HomeViewModel @Inject constructor(
     var taskAndTaskList = MutableLiveData<Resource<List<TaskAndTaskList>>>()
     var taskFinished = MutableLiveData<Long>()
     var taskDeleted = MutableLiveData<Long>()
-    var userEmail = MutableLiveData<String>()
-    var newListCreated = MutableLiveData<Resource<JsonElement>>()
 
     fun getData(todaysDateStart: Long, todaysDateEnd: Long) {
 
@@ -46,103 +44,6 @@ class HomeViewModel @Inject constructor(
                         taskListAndCount.value = Resource.Success(taskListsFromDb)
                 }
         }
-
-
-        viewModelScope.launch {
-
-            if (!dataManager.areListsFetched()) {
-
-                taskListAndCount.value = Resource.Loading
-
-                val response1 = safeApiCall {
-                    dataManager.getUserTaskLists(
-                        dataManager.getUserId(),
-                        dataManager.getAccessToken()
-                    )
-                }
-
-                when (response1) {
-                    is Resource.Success -> {
-                        val jsonObject = response1.data.asJsonObject
-                        if (jsonObject["success"].asBoolean) {
-                            insertTaskListsInDb(jsonObject)
-                            dataManager.setListsFetched()
-                        } else {
-                            taskListAndCount.value =
-                                Resource.Error(IOException(jsonObject.get("message").asString))
-                        }
-                    }
-                    is Resource.Error -> {
-                        taskListAndCount.value = response1
-                    }
-                }
-            }
-
-            if (!dataManager.areTasksFetched()) {
-
-                taskAndTaskList.value = Resource.Loading
-
-                val response2 = safeApiCall {
-                    dataManager.getUserTasks(
-                        dataManager.getUserId(),
-                        dataManager.getAccessToken()
-                    )
-                }
-
-                when (response2) {
-                    is Resource.Success -> {
-                        val jsonObject = response2.data.asJsonObject
-                        if (jsonObject["success"].asBoolean) {
-                            insertTasksInDb(jsonObject)
-                            dataManager.setTasksFetched()
-                        } else {
-                            taskAndTaskList.value =
-                                Resource.Error(IOException(jsonObject["message"].asString))
-                        }
-                    }
-                    is Resource.Error -> {
-                        taskListAndCount.value = response2
-                    }
-                }
-            }
-        }
-    }
-
-    private suspend fun insertTaskListsInDb(jsonObject: JsonObject) {
-        val taskListsJsonArray = jsonObject["task_lists"].asJsonArray
-        val taskListsFromNetwork: MutableList<TaskList> = arrayListOf()
-        taskListsJsonArray.forEach { taskListJsonElement: JsonElement ->
-            taskListsFromNetwork.add(
-                TaskList(
-                    0,
-                    taskListJsonElement.asJsonObject["list_slack"].asString,
-                    taskListJsonElement.asJsonObject["name"].asString,
-                    taskListJsonElement.asJsonObject["color"].asString
-                )
-            )
-        }
-        dataManager.insertTaskLists(taskListsFromNetwork)
-    }
-
-    private suspend fun insertTasksInDb(jsonObject: JsonObject) {
-        val tasksJsonArray = jsonObject["tasks"].asJsonArray
-        val tasksAndListFromServer = mutableListOf<Task>()
-        tasksJsonArray.forEach { taskJsonElement: JsonElement ->
-            tasksAndListFromServer.add(
-                Task(
-                    0,
-                    taskJsonElement.asJsonObject["user_task_id"].asString,
-                    taskJsonElement.asJsonObject["task_slack"].asString,
-                    taskJsonElement.asJsonObject["task"].asString,
-                    taskJsonElement.asJsonObject["date_time"].asLong,
-                    taskJsonElement.asJsonObject["list_slack"].asString,
-                    taskJsonElement.asJsonObject["finished"].asString.toInt(),
-                    taskJsonElement.asJsonObject["deleted"].asString.toInt()
-                )
-            )
-        }
-
-        dataManager.insertTasks(tasksAndListFromServer)
     }
 
     fun setTaskFinished(task: TaskAndTaskList) {
@@ -165,50 +66,13 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getUserEmail() {
-        userEmail.value = dataManager.getUserEmail()
-    }
-
     fun createNewList(listColor: String, listName: String) {
         viewModelScope.launch {
-
-            newListCreated.value = Resource.Loading
-
-            val response = safeApiCall {
-                dataManager.createNewList(
-                    dataManager.getUserId(),
-                    dataManager.getAccessToken(),
-                    listColor,
-                    listName
-                )
-            }
-
-            when (response) {
-                is Resource.Success -> {
-                    val jsonObject = response.data.asJsonObject
-                    if (jsonObject["success"].asBoolean) {
-                        if (jsonObject["created"].asBoolean) {
-                            insertTaskList(jsonObject, listName, listColor)
-                            newListCreated.value = Resource.Success(response.data)
-                        } else {
-                            newListCreated.value =
-                                Resource.Error(IOException(jsonObject["message"].asString))
-                        }
-                    } else {
-                        newListCreated.value =
-                            Resource.Error(IOException(jsonObject["message"].asString))
-                        EventBus.getDefault().post(TokenExpireEvent())
-                    }
-                }
-                is Resource.Error -> {
-                    newListCreated.value = response
-                }
-            }
+            insertTaskList(listName, listColor)
         }
     }
 
     private suspend fun insertTaskList(
-        jsonObject: JsonObject,
         listName: String,
         listColor: String
     ) {
@@ -216,7 +80,6 @@ class HomeViewModel @Inject constructor(
         newTaskList.add(
             TaskList(
                 0,
-                jsonObject["list_slack"].asString,
                 listName,
                 listColor
             )
