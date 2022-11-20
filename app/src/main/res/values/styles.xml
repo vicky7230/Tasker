@@ -9,7 +9,7 @@
         <item name="colorOnError">@color/colorWhite</item>
         <item name="android:statusBarColor">@color/colorPrimary</item>
         <item name="android:windowBackground">@color/colorWindowBackground</item>
-        <item name="android:navigationBarColor">@color/colorNavigationBarColor</item>
+        <item name="android:navigationBarColor">@color/colorWhite</item>
         <item name="android:fontFamily">@font/sf_pro_medium</item>
         <item name="android:textColorHint">@color/colorHints</item>
         <item name="otpViewStyle">@style/OtpWidget.OtpView</item>

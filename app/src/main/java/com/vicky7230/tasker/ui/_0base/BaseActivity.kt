@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.events.TokenExpireEvent
-import com.vicky7230.tasker.ui._2login.LoginActivity
 import com.vicky7230.tasker.utils.CommonUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -31,8 +30,8 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         baseViewModel = getViewModel()
         baseViewModel.loggedOut.observe(this, Observer {
-            startActivity(LoginActivity.getStartIntentNewTask(this))
-            finish()
+            /*startActivity(LoginActivity.getStartIntentNewTask(this))
+            finish()*/
         })
     }
 

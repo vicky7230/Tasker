@@ -2,10 +2,6 @@ package com.vicky7230.tasker.di.module
 
 import com.vicky7230.tasker.ui._1splash.SplashActivity
 import com.vicky7230.tasker.ui._1splash.SplashModule
-import com.vicky7230.tasker.ui._2login.LoginActivity
-import com.vicky7230.tasker.ui._2login.LoginModule
-import com.vicky7230.tasker.ui._3verifyOTP.VerifyOtpActivity
-import com.vicky7230.tasker.ui._3verifyOTP.VerifyOtpModule
 import com.vicky7230.tasker.ui._4home.HomeActivity
 import com.vicky7230.tasker.ui._4home.HomeModule
 import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
@@ -25,12 +21,6 @@ abstract class ActivityBindingModule {
 
     @ContributesAndroidInjector(modules = [(SplashModule::class)])
     abstract fun bindSplashActivity(): SplashActivity
-
-    @ContributesAndroidInjector(modules = [(LoginModule::class)])
-    abstract fun bindLoginActivity(): LoginActivity
-
-    @ContributesAndroidInjector(modules = [(VerifyOtpModule::class)])
-    abstract fun bindVerifyOtpActivity(): VerifyOtpActivity
 
     @ContributesAndroidInjector(modules = [(HomeModule::class)])
     abstract fun bindHomeActivity(): HomeActivity

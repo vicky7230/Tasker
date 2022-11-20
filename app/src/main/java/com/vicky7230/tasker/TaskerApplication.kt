@@ -34,8 +34,6 @@ class TaskerApplication : Application(), HasAndroidInjector {
             .build()
             .inject(this)
 
-        //DaggerApplicationComponent.builder().build().factory()
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "Notify Task"
             val description = "Channel for task reminder"
