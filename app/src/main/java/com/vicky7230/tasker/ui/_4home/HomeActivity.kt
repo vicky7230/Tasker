@@ -130,147 +130,6 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
                 startActivity(i)
             }
 
-            dialog.notification_settings.setOnClickListener {
-                val notificationSettingsIntent = Intent()
-                notificationSettingsIntent.action = "android.settings.APP_NOTIFICATION_SETTINGS"
-                notificationSettingsIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    notificationSettingsIntent.putExtra(
-                        "android.provider.extra.APP_PACKAGE",
-                        packageName
-                    )
-                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    notificationSettingsIntent.putExtra(
-                        "app_package",
-                        packageName
-                    )
-                    notificationSettingsIntent.putExtra(
-                        "app_uid",
-                        applicationInfo.uid
-                    )
-                }
-                startActivity(notificationSettingsIntent)
-            }
-
-            dialog.battery_settings.setOnClickListener {
-                //Code to open app info screen
-                //val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                //val intent = Intent(Settings.ACTION_BATTERY_SAVER_SETTINGS)
-                //intent.data = Uri.parse("package:$packageName")
-                //startActivity(intent)
-
-                /*try {
-                    val intent = Intent()
-                    intent.component = ComponentName(
-                        "com.miui.powerkeeper",
-                        "com.miui.powerkeeper.ui.HiddenAppsConfigActivity"
-                    )
-                    intent.putExtra("package_name", packageName)
-                    intent.putExtra("package_label", getText(R.string.app_name))
-                    startActivity(intent)
-                } catch (e: ActivityNotFoundException) {
-                    Timber.e("Not a Xioami Device : $e")
-                }
-
-
-                try {
-                    val intent = Intent()
-                    intent.component = ComponentName(
-                        "com.coloros.oppoguardelf",
-                        "com.coloros.powermanager.fuelgaue.PowerAppsBgSetting"
-                    )
-                    intent.putExtra("package_name", packageName)
-                    intent.putExtra("package_label", getText(R.string.app_name))
-                    startActivity(intent)
-                } catch (e: ActivityNotFoundException) {
-                    Timber.e("Not a Realme Device : $e")
-                }*/
-
-                val names = mutableListOf<ComponentName>()
-                names.add(
-                    ComponentName(
-                        "com.miui.powerkeeper",
-                        "com.miui.powerkeeper.ui.HiddenAppsConfigActivity"
-                    )
-                )
-                names.add(
-                    ComponentName(
-                        "com.letv.android.letvsafe",
-                        "com.letv.android.letvsafe.BackgroundAppManageActivity"
-                    )
-                )
-                names.add(
-                    ComponentName(
-                        "com.huawei.systemmanager",
-                        "com.huawei.systemmanager.optimize.process.ProtectActivity"
-                    )
-                )
-                names.add(
-                    ComponentName(
-                        "com.coloros.safecenter",
-                        "com.coloros.safecenter.permission.startup.StartupAppListActivity"
-                    )
-                )
-                names.add(
-                    ComponentName(
-                        "com.oppo.safe",
-                        "com.oppo.safe.permission.startup.StartupAppListActivity"
-                    )
-                )
-                names.add(
-                    ComponentName(
-                        "com.iqoo.secure",
-                        "com.iqoo.secure.ui.phoneoptimize.AddWhiteListActivity"
-                    )
-                )
-                names.add(
-                    ComponentName(
-                        "com.iqoo.secure",
-                        "com.iqoo.secure.ui.phoneoptimize.BgStartUpManager"
-                    )
-                )
-                names.add(
-                    ComponentName(
-                        "com.vivo.permissionmanager",
-                        "com.vivo.permissionmanager.activity.BgStartUpManagerActivity"
-                    )
-                )
-                names.add(
-                    ComponentName(
-                        "com.samsung.android.lool",
-                        "com.samsung.android.sm.ui.battery.BatteryActivity"
-                    )
-                )
-                names.add(
-                    ComponentName(
-                        "com.htc.pitroad",
-                        "com.htc.pitroad.landingpage.activity.LandingPageActivity"
-                    )
-                )
-                names.add(
-                    ComponentName(
-                        "com.asus.mobilemanager",
-                        "com.asus.mobilemanager.MainActivity"
-                    )
-                )
-
-
-                for (componentName in names) {
-                    val intent = Intent()
-                    intent.component = componentName
-                    if (packageManager.resolveActivity(
-                            intent,
-                            PackageManager.MATCH_DEFAULT_ONLY
-                        ) != null
-                    ) {
-                        intent.putExtra("package_name", packageName)
-                        intent.putExtra("package_label", getText(R.string.app_name))
-                        startActivity(intent)
-                    }
-                }
-            }
-
             dialog.rate.setOnClickListener {
                 val appPackageName = packageName
                 try {
@@ -296,18 +155,6 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
         setUpTaskListsRecyclerView()
 
         setUpTodaysTasksRecyclerView()
-
-        /*homeViewModel.userEmail.observe(this, Observer {
-            userEmail = it
-        })*/
-
-        /*homeViewModel.taskFinished.observe(this, Observer { taskLongId: Long ->
-            updateTask(taskLongId)
-        })
-
-        homeViewModel.taskDeleted.observe(this, Observer { taskLongId: Long ->
-            updateTask(taskLongId)
-        })*/
 
         homeViewModel.taskListAndCount.observe(this, Observer {
             when (it) {
@@ -591,23 +438,6 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
             options.toBundle()
         )
     }
-
-    /*private fun updateTask(taskLongId: Long) {
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .build()
-        val taskToUpdate = workDataOf(UpdateTaskWorker.TASK_LONG_ID to taskLongId)
-        val updateTaskWorkerRequest = OneTimeWorkRequestBuilder<UpdateTaskWorker>()
-            .setBackoffCriteria(
-                BackoffPolicy.LINEAR,
-                OneTimeWorkRequest.MIN_BACKOFF_MILLIS,
-                TimeUnit.MILLISECONDS
-            )
-            .setInputData(taskToUpdate)
-            .setConstraints(constraints)
-            .build()
-        WorkManager.getInstance(this).enqueue(updateTaskWorkerRequest)
-    }*/
 
     override fun onResume() {
         add_button.show()

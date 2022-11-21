@@ -58,12 +58,16 @@ class TodaysTaskAdapter(private val todaysTasks: MutableList<TaskAndTaskList>) :
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
         fun onBind(task: TaskAndTaskList) {
-            if (task.finished == 1)
+            if (task.finished == 1) {
                 itemView.task_ring.setImageResource(R.drawable.ic_marked)
-            else
+                itemView.task_text.setTextColor(itemView.context.resources.getColor(R.color.colorDarkGray))
+            } else {
                 itemView.task_ring.setImageResource(R.drawable.ic_ring)
-            itemView.task_text.text = task.task
-            itemView.task_time.text = outputDateFormat.format(Date(task.dateTime))
+                itemView.task_text.setTextColor(itemView.context.resources.getColor(R.color.colorBlack))
+            }
+
+            itemView . task_text . text = task . task
+                    itemView.task_time.text = outputDateFormat.format(Date(task.dateTime))
             itemView.task_curved_dot.backgroundTintList =
                 ColorStateList.valueOf(Color.parseColor(task.listColor))
         }
