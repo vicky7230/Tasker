@@ -142,16 +142,14 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
         }
 
         newTaskViewModel.taskInsertedInDB.observe(this, Observer { taskLongId: Long ->
-            createReminder()
+            //createReminder()
             finish()
         })
 
-        /*newTaskViewModel.taskUpdatedInDB.observe(this, Observer { taskLongId: Long ->
-            updateReminder()
-            updateTaskOnServer(taskLongId)
+        newTaskViewModel.taskUpdatedInDB.observe(this, Observer { taskLongId: Long ->
+            //updateReminder()
             finish()
         })
-*/
         initializeDateAndTimeViews(Date())
 
         if (intent != null &&
@@ -181,56 +179,6 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
         }
     }
 
-    private fun createReminder() {
-        val intent = Intent(this, ReminderBroadcastReceiver::class.java)
-        intent.putExtra(EXTRAS_TASK, task_edit_text.text.toString())
-        val pendingIntent =
-            PendingIntent.getBroadcast(this, 101, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-
-        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            alarmManager.setExactAndAllowWhileIdle(
-                AlarmManager.RTC_WAKEUP,
-                calendarInstance.timeInMillis,
-                pendingIntent
-            );
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            alarmManager.setExact(
-                AlarmManager.RTC_WAKEUP,
-                calendarInstance.timeInMillis,
-                pendingIntent
-            );
-        } else {
-            alarmManager.set(AlarmManager.RTC_WAKEUP, calendarInstance.timeInMillis, pendingIntent);
-        }
-    }
-
-    private fun updateReminder() {
-        val intent = Intent(this, ReminderBroadcastReceiver::class.java)
-        intent.putExtra(EXTRAS_TASK, task_edit_text.text.toString())
-        val pendingIntent =
-            PendingIntent.getBroadcast(this, 101, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-
-        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        alarmManager.cancel(pendingIntent)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            alarmManager.setExactAndAllowWhileIdle(
-                AlarmManager.RTC_WAKEUP,
-                calendarInstance.timeInMillis,
-                pendingIntent
-            );
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            alarmManager.setExact(
-                AlarmManager.RTC_WAKEUP,
-                calendarInstance.timeInMillis,
-                pendingIntent
-            );
-        } else {
-            alarmManager.set(AlarmManager.RTC_WAKEUP, calendarInstance.timeInMillis, pendingIntent);
-        }
-    }
-
     private fun setTaskListListeners() {
         which_task_list.setOnClickListener { view: View ->
             if (!view.isSelected) {
@@ -255,23 +203,6 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
             AnimUtilskt.slideView(task_list_view_container, taskListViewContainerHeight, 0)
         }
     }
-
-    /*private fun updateTaskOnServer(taskLongId: Long) {
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .build()
-        val taskToUpdate = workDataOf(UpdateTaskWorker.TASK_LONG_ID to taskLongId)
-        val updateTaskWorkerRequest = OneTimeWorkRequestBuilder<UpdateTaskWorker>()
-            .setBackoffCriteria(
-                BackoffPolicy.LINEAR,
-                OneTimeWorkRequest.MIN_BACKOFF_MILLIS,
-                TimeUnit.MILLISECONDS
-            )
-            .setInputData(taskToUpdate)
-            .setConstraints(constraints)
-            .build()
-        WorkManager.getInstance(this).enqueue(updateTaskWorkerRequest)
-    }*/
 
     private fun initializeTaskListView(taskList: List<TaskList>) {
         val taskList2 = arrayListOf<TaskList2>()
