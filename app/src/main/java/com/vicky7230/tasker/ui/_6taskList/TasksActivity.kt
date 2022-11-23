@@ -312,7 +312,7 @@ class TasksActivity : BaseActivity() {
     override fun onStop() {
         //Fixes shared element transition
         //https://stackoverflow.com/questions/60876188/android-clears-activity-to-activity-shared-element-transition-exit-animation-aft
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q && !isFinishing) {
+        if (!isFinishing) {
             Instrumentation().callActivityOnSaveInstanceState(this, Bundle())
         }
         super.onStop()
