@@ -128,6 +128,7 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
                     )
                 } else if (intent.getStringExtra(EXTRAS_OPERATION) == EXTRAS_OPERATION_UPDATE) {
                     task.task = binding.taskEditText.text.toString()
+                    task.listId = selectedTaskList2.id
                     task.dateTime = calendarInstance.time.time
                     newTaskViewModel.updateTaskInDB(task)
                 }
