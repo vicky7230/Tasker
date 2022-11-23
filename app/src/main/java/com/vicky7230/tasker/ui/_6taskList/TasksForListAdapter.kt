@@ -4,12 +4,13 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.data.db.entities.Task
 import com.vicky7230.tasker.utils.AppConstants
-import kotlinx.android.synthetic.main.tasks_for_list_item_view.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -70,15 +71,17 @@ class TasksForListAdapter(
                     itemView.context,
                     R.color.colorBlack
                 )
-                itemView.task_text.setTextColor(colorBlack)
-                itemView.task_time.setTextColor(colorBlack)
-                itemView.clock_icon.setColorFilter(colorBlack)
+                itemView.findViewById<AppCompatTextView>(R.id.task_text).setTextColor(colorBlack)
+                itemView.findViewById<AppCompatTextView>(R.id.task_time).setTextColor(colorBlack)
+                itemView.findViewById<AppCompatImageView>(R.id.clock_icon)
+                    .setColorFilter(colorBlack)
                 val colorDarkGray = ContextCompat.getColor(
                     itemView.context,
                     R.color.colorDarkGray
                 )
-                itemView.task_ring.setColorFilter(colorDarkGray)
-                itemView.horizontal_line.setBackgroundColor(colorDarkGray)
+                itemView.findViewById<AppCompatImageView>(R.id.task_ring)
+                    .setColorFilter(colorDarkGray)
+                itemView.findViewById<View>(R.id.horizontal_line).setBackgroundColor(colorDarkGray)
             } else {
                 val colorWhite = ContextCompat.getColor(
                     itemView.context,
@@ -88,11 +91,12 @@ class TasksForListAdapter(
                     itemView.context,
                     R.color.colorGray
                 )
-                itemView.task_text.setTextColor(colorWhite)
-                itemView.task_ring.setColorFilter(colorGray)
+                itemView.findViewById<AppCompatTextView>(R.id.task_text).setTextColor(colorWhite)
+                itemView.findViewById<AppCompatImageView>(R.id.task_ring).setColorFilter(colorGray)
             }
-            itemView.task_text.text = task.task
-            itemView.task_time.text = outputDateFormat.format(Date(task.dateTime))
+            itemView.findViewById<AppCompatTextView>(R.id.task_text).text = task.task
+            itemView.findViewById<AppCompatTextView>(R.id.task_time).text =
+                outputDateFormat.format(Date(task.dateTime))
         }
     }
 }

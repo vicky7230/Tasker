@@ -4,11 +4,13 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.utils.AppConstants
-import kotlinx.android.synthetic.main.task_lists_item_view_2.view.*
 
 class TaskListsAdapter2(private val taskLists2: MutableList<TaskList2>) :
     RecyclerView.Adapter<TaskListsAdapter2.TaskListViewHolder2>() {
@@ -38,15 +40,16 @@ class TaskListsAdapter2(private val taskLists2: MutableList<TaskList2>) :
             )
         )
 
-        taskListViewHolder2.itemView.task_list_card.setOnClickListener {
-            val position = taskListViewHolder2.adapterPosition
-            taskLists2.forEach {
-                it.selected = false
+        taskListViewHolder2.itemView.findViewById<CardView>(R.id.task_list_card)
+            .setOnClickListener {
+                val position = taskListViewHolder2.adapterPosition
+                taskLists2.forEach {
+                    it.selected = false
+                }
+                taskLists2[position].selected = true
+                notifyDataSetChanged()
+                callback.onTaskListClick(taskLists2[position])
             }
-            taskLists2[position].selected = true
-            notifyDataSetChanged()
-            callback.onTaskListClick(taskLists2[position])
-        }
 
         return taskListViewHolder2
     }
@@ -62,24 +65,27 @@ class TaskListsAdapter2(private val taskLists2: MutableList<TaskList2>) :
     class TaskListViewHolder2(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun onBind(taskList2: TaskList2) {
             if (taskList2.name == AppConstants.LIST_FAMILY) {
-                    val colorBlack = ContextCompat.getColor(
-                        itemView.context,
-                        R.color.colorBlack
-                    )
-                    itemView.name.setTextColor(colorBlack)
-                } else {
+                val colorBlack = ContextCompat.getColor(
+                    itemView.context,
+                    R.color.colorBlack
+                )
+                itemView.findViewById<AppCompatTextView>(R.id.name).setTextColor(colorBlack)
+            } else {
                 val colorWhite = ContextCompat.getColor(
                     itemView.context,
                     R.color.colorWhite
                 )
-                itemView.name.setTextColor(colorWhite)
+                itemView.findViewById<AppCompatTextView>(R.id.name).setTextColor(colorWhite)
             }
-            itemView.name.text = taskList2.name
-            itemView.task_list_card.setCardBackgroundColor(Color.parseColor(taskList2.color))
+            itemView.findViewById<AppCompatTextView>(R.id.name).text = taskList2.name
+            itemView.findViewById<CardView>(R.id.task_list_card)
+                .setCardBackgroundColor(Color.parseColor(taskList2.color))
             if (taskList2.selected)
-                itemView.selected_indicator.visibility = View.VISIBLE
+                itemView.findViewById<AppCompatImageView>(R.id.selected_indicator).visibility =
+                    View.VISIBLE
             else
-                itemView.selected_indicator.visibility = View.GONE
+                itemView.findViewById<AppCompatImageView>(R.id.selected_indicator).visibility =
+                    View.GONE
         }
     }
 }

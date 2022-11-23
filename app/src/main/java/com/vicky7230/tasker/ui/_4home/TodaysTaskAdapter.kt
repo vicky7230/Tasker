@@ -6,10 +6,11 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskAndTaskList
-import kotlinx.android.synthetic.main.tasks_item_view.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -59,16 +60,21 @@ class TodaysTaskAdapter(private val todaysTasks: MutableList<TaskAndTaskList>) :
         @SuppressLint("SetTextI18n")
         fun onBind(task: TaskAndTaskList) {
             if (task.finished == 1) {
-                itemView.task_ring.setImageResource(R.drawable.ic_marked)
-                itemView.task_text.setTextColor(itemView.context.resources.getColor(R.color.colorDarkGray))
+                itemView.findViewById<AppCompatImageView>(R.id.task_ring)
+                    .setImageResource(R.drawable.ic_marked)
+                itemView.findViewById<AppCompatTextView>(R.id.task_text)
+                    .setTextColor(itemView.context.resources.getColor(R.color.colorDarkGray))
             } else {
-                itemView.task_ring.setImageResource(R.drawable.ic_ring)
-                itemView.task_text.setTextColor(itemView.context.resources.getColor(R.color.colorBlack))
+                itemView.findViewById<AppCompatImageView>(R.id.task_ring)
+                    .setImageResource(R.drawable.ic_ring)
+                itemView.findViewById<AppCompatTextView>(R.id.task_text)
+                    .setTextColor(itemView.context.resources.getColor(R.color.colorBlack))
             }
 
-            itemView . task_text . text = task . task
-                    itemView.task_time.text = outputDateFormat.format(Date(task.dateTime))
-            itemView.task_curved_dot.backgroundTintList =
+            itemView.findViewById<AppCompatTextView>(R.id.task_text).text = task.task
+            itemView.findViewById<AppCompatTextView>(R.id.task_time).text =
+                outputDateFormat.format(Date(task.dateTime))
+            itemView.findViewById<View>(R.id.task_curved_dot).backgroundTintList =
                 ColorStateList.valueOf(Color.parseColor(task.listColor))
         }
     }

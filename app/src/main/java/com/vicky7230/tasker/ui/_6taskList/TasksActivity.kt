@@ -82,7 +82,7 @@ class TasksActivity : BaseActivity() {
 
         binding = ActivityTasksBinding.inflate(layoutInflater)
         val view = binding.root
-        setContentView(R.layout.activity_tasks)
+        setContentView(view)
 
         binding.tasks.layoutManager = LinearLayoutManager(this)
         binding.tasks.adapter = tasksForListAdapter

@@ -6,13 +6,13 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskAndTaskList
-import kotlinx.android.synthetic.main.deleted_finished_tasks_item_view.view.*
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 class DeletedFinishedTasksAdapter(private val deletedFinishedTasks: MutableList<TaskAndTaskList>) :
     RecyclerView.Adapter<DeletedFinishedTasksAdapter.TaskViewHolder>() {
@@ -60,12 +60,15 @@ class DeletedFinishedTasksAdapter(private val deletedFinishedTasks: MutableList<
         @SuppressLint("SetTextI18n")
         fun onBind(task: TaskAndTaskList) {
             if (task.finished == 1)
-                itemView.task_icon.setImageResource(R.drawable.ic_marked)
+                itemView.findViewById<AppCompatImageView>(R.id.task_icon)
+                    .setImageResource(R.drawable.ic_marked)
             else
-                itemView.task_icon.setImageResource(R.drawable.ic_trash_blue)
-            itemView.task_text.text = task.task
-            itemView.task_time.text = outputDateFormat.format(Date(task.dateTime))
-            itemView.task_curved_dot.backgroundTintList =
+                itemView.findViewById<AppCompatImageView>(R.id.task_icon)
+                    .setImageResource(R.drawable.ic_trash_blue)
+            itemView.findViewById<AppCompatTextView>(R.id.task_text).text = task.task
+            itemView.findViewById<AppCompatTextView>(R.id.task_time).text =
+                outputDateFormat.format(Date(task.dateTime))
+            itemView.findViewById<View>(R.id.task_curved_dot).backgroundTintList =
                 ColorStateList.valueOf(Color.parseColor(task.listColor))
         }
     }
