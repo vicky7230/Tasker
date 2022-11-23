@@ -14,7 +14,7 @@ interface TaskListDao {
     @Query("SELECT * FROM lists")
     fun getAllLists(): Flow<List<TaskList>>
 
-    @Query("SELECT * FROM lists")
+    @Query("SELECT * FROM lists WHERE deleted != 1")
     suspend fun getLists(): List<TaskList>
 
     @Query(
