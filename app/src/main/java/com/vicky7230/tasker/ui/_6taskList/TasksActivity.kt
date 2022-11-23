@@ -9,17 +9,19 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.work.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.data.network.Resource
+import com.vicky7230.tasker.databinding.ActivityTasksBinding
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.ui._4home.RightSwipeListener
 import com.vicky7230.tasker.ui._4home.SwipeHelper
@@ -29,11 +31,7 @@ import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
 import com.vicky7230.tasker.utils.AppConstants
 import com.vicky7230.tasker.widget.ElasticDragDismissFrameLayout
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.activity_tasks.*
-import kotlinx.android.synthetic.main.bottom_sheet_delete_list.*
-import kotlinx.android.synthetic.main.bottom_sheet_rename_list.*
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -50,6 +48,8 @@ class TasksActivity : BaseActivity() {
     private lateinit var chromeFader: ElasticDragDismissFrameLayout.SystemChromeFader
     private lateinit var listRenameDialog: BottomSheetDialog
     private lateinit var listDeleteDialog: BottomSheetDialog
+
+    private lateinit var binding: ActivityTasksBinding
 
     companion object {
 
@@ -79,10 +79,13 @@ class TasksActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+
+        binding = ActivityTasksBinding.inflate(layoutInflater)
+        val view = binding.root
         setContentView(R.layout.activity_tasks)
 
-        tasks.layoutManager = LinearLayoutManager(this)
-        tasks.adapter = tasksForListAdapter
+        binding.tasks.layoutManager = LinearLayoutManager(this)
+        binding.tasks.adapter = tasksForListAdapter
 
         val rightSwipeListener = object : RightSwipeListener {
             override fun onRightSwiped(viewHolder: RecyclerView.ViewHolder) {
@@ -96,7 +99,7 @@ class TasksActivity : BaseActivity() {
 
         val swipeHelper = object : SwipeHelper(
             this,
-            tasks,
+            binding.tasks,
             resources.getDimension(R.dimen.underlay_button_width).toInt(),
             rightSwipeListener
         ) {
@@ -115,11 +118,11 @@ class TasksActivity : BaseActivity() {
     @SuppressLint("SetTextI18n")
     private fun init() {
 
-        edit_list_name.setOnClickListener {
-            //showRenameListDialog()
+        binding.editListName.setOnClickListener {
+            showRenameListDialog()
         }
 
-        delete_list.setOnClickListener {
+        binding.deleteList.setOnClickListener {
             showConfirmDeleteDialog()
         }
 
@@ -134,7 +137,7 @@ class TasksActivity : BaseActivity() {
                     if (this::listRenameDialog.isInitialized) {
                         listRenameDialog.dismiss()
                     }
-                    list_name.text = it.data
+                    binding.listName.text = it.data
                     hideLoading()
                 }
             }
@@ -150,23 +153,22 @@ class TasksActivity : BaseActivity() {
 
         tasksViewModel.listDeleted.observe(this, Observer { listDeleted: Boolean ->
             onBackPressed()
-            //updateTask(taskLongId)
         })
 
         chromeFader = object : ElasticDragDismissFrameLayout.SystemChromeFader(this) {
             override fun onDragDismissed() {
                 Timber.d("onDragDismissed")
-                list_name.visibility = View.GONE
-                edit_list_name.visibility = View.GONE
-                delete_list.visibility = View.GONE
+                binding.listName.visibility = View.GONE
+                binding.editListName.visibility = View.GONE
+                binding.deleteList.visibility = View.GONE
                 supportFinishAfterTransition()
             }
         }
 
-        draggable_layout.addListener(chromeFader)
+        binding.draggableLayout.addListener(chromeFader)
 
         tasksViewModel.tasks.observe(this, Observer {
-            task_count.text = "${it.size} task"
+            binding.taskCount.text = "${it.size} task"
             tasksForListAdapter.updateItems(it, listName)
         })
 
@@ -176,11 +178,12 @@ class TasksActivity : BaseActivity() {
             && intent.getLongExtra(EXTRAS_LIST_ID, -1L) != -1L
         ) {
             val listColor = intent.getStringExtra(EXTRAS_LIST_COLOR)
-            tasks.setBackgroundColor(Color.parseColor(listColor))
-            task_list_card.backgroundTintList = ColorStateList.valueOf(Color.parseColor(listColor))
+            binding.tasks.setBackgroundColor(Color.parseColor(listColor))
+            binding.taskListCard.backgroundTintList =
+                ColorStateList.valueOf(Color.parseColor(listColor))
 
             listName = intent.getStringExtra(EXTRAS_LIST_NAME)!!
-            list_name.text = listName
+            binding.listName.text = listName
 
             if (listName == AppConstants.LIST_FAMILY) {
                 val colorBlack = ContextCompat.getColor(
@@ -191,10 +194,10 @@ class TasksActivity : BaseActivity() {
                     this,
                     R.color.colorDarkGray
                 )
-                list_name.setTextColor(colorBlack)
-                task_count.setTextColor(colorDarkGray)
-                edit_list_name.setColorFilter(colorBlack)
-                delete_list.setColorFilter(colorBlack)
+                binding.listName.setTextColor(colorBlack)
+                binding.taskCount.setTextColor(colorDarkGray)
+                binding.editListName.setColorFilter(colorBlack)
+                binding.deleteList.setColorFilter(colorBlack)
             }
 
             val listId = intent.getLongExtra(EXTRAS_LIST_ID, -1)
@@ -204,38 +207,38 @@ class TasksActivity : BaseActivity() {
         }
     }
 
-    /*private fun showRenameListDialog() {
+    private fun showRenameListDialog() {
         val view: View = layoutInflater.inflate(R.layout.bottom_sheet_rename_list, null)
         listRenameDialog = BottomSheetDialog(this, R.style.BottomSheetDialog)
         listRenameDialog.setContentView(view)
-        listRenameDialog.rename_list_button.setOnClickListener {
-            if (listRenameDialog.new_list_name!!.text!!.isEmpty()) {
+        view.findViewById<MaterialButton>(R.id.rename_list_button).setOnClickListener {
+            if (view.findViewById<AppCompatEditText>(R.id.new_list_name)!!.text!!.isEmpty()) {
                 showToast("Please enter list name.")
                 return@setOnClickListener
             }
 
-            if (intent != null && intent.getStringExtra(EXTRAS_LIST_SLACK) != null) {
-                val listSlack = intent.getStringExtra(EXTRAS_LIST_SLACK)
-                tasksViewModel.renameTaskList(
-                    listRenameDialog.new_list_name.text.toString(),
-                    listSlack!!
+            if (intent != null && intent.getLongExtra(EXTRAS_LIST_ID, -1) != -1L) {
+                val listId = intent.getLongExtra(EXTRAS_LIST_ID, -1)
+                tasksViewModel.updateTaskList(
+                    listId,
+                    view.findViewById<AppCompatEditText>(R.id.new_list_name).text.toString()
                 )
             }
         }
 
         listRenameDialog.show()
-    }*/
+    }
 
     private fun showConfirmDeleteDialog() {
         val view: View = layoutInflater.inflate(R.layout.bottom_sheet_delete_list, null)
         listDeleteDialog = BottomSheetDialog(this, R.style.BottomSheetDialog)
         listDeleteDialog.setContentView(view)
 
-        listDeleteDialog.delete_list_button_no.setOnClickListener {
+        view.findViewById<MaterialButton>(R.id.delete_list_button_no).setOnClickListener {
             listDeleteDialog.dismiss()
         }
 
-        listDeleteDialog.delete_list_button_yes.setOnClickListener {
+        view.findViewById<MaterialButton>(R.id.delete_list_button_yes).setOnClickListener {
 
             if (intent != null && intent.getLongExtra(EXTRAS_LIST_ID, -1L) != -1L) {
                 val listIdLong = intent.getLongExtra(EXTRAS_LIST_ID, -1L)
@@ -276,13 +279,13 @@ class TasksActivity : BaseActivity() {
                     tasksForListAdapter.removeItem(position)
 
                     val snackBar: Snackbar = Snackbar.make(
-                        tasks,
+                        binding.tasks,
                         "Task was deleted.",
                         Snackbar.LENGTH_LONG
                     )
                     snackBar.setAction("UNDO") {
                         tasksForListAdapter.restoreItem(task, position)
-                        tasks.scrollToPosition(position)
+                        binding.tasks.scrollToPosition(position)
                     }
 
                     snackBar.addCallback(object :
@@ -300,26 +303,9 @@ class TasksActivity : BaseActivity() {
         )
     }
 
-    /*private fun updateTask(taskLongId: Long) {
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .build()
-        val taskToUpdate = workDataOf(UpdateTaskWorker.TASK_LONG_ID to taskLongId)
-        val updateTaskWorkerRequest = OneTimeWorkRequestBuilder<UpdateTaskWorker>()
-            .setBackoffCriteria(
-                BackoffPolicy.LINEAR,
-                OneTimeWorkRequest.MIN_BACKOFF_MILLIS,
-                TimeUnit.MILLISECONDS
-            )
-            .setInputData(taskToUpdate)
-            .setConstraints(constraints)
-            .build()
-        WorkManager.getInstance(this).enqueue(updateTaskWorkerRequest)
-    }*/
-
     override fun onBackPressed() {
-        list_name.visibility = View.GONE
-        edit_list_name.visibility = View.GONE
+        binding.listName.visibility = View.GONE
+        binding.editListName.visibility = View.GONE
         super.onBackPressed()
     }
 

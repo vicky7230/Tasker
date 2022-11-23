@@ -54,47 +54,11 @@ class TasksViewModel @Inject constructor(
         }
     }
 
-    /*fun renameTaskList(listName: String, listSlack: String) {
+    fun updateTaskList(listId: Long, listName: String) {
         viewModelScope.launch {
-            listRenamed.value = Resource.Loading
-
-            val response = safeApiCall {
-                dataManager.renameList(
-                    dataManager.getUserId(),
-                    dataManager.getAccessToken(),
-                    listName,
-                    listSlack
-                )
-            }
-
-            when (response) {
-                is Resource.Success -> {
-                    val jsonObject = response.data.asJsonObject
-                    if (jsonObject["success"].asBoolean) {
-                        if (jsonObject["renamed"].asBoolean) {
-                            updateTaskList(listSlack, listName)
-                            listRenamed.value = Resource.Success(listName)
-                        } else {
-                            listRenamed.value =
-                                Resource.Error(IOException(jsonObject["message"].asString))
-                        }
-                    } else {
-                        listRenamed.value =
-                            Resource.Error(IOException(jsonObject["message"].asString))
-                        EventBus.getDefault().post(TokenExpireEvent())
-                    }
-                }
-
-                is Resource.Error -> {
-                    listRenamed.value = response
-                }
-            }
+            dataManager.updateTaskList(listName, listId)
         }
-    }*/
-
-    /*private suspend fun updateTaskList(listSlack: String, listName: String) {
-        dataManager.updateTaskList(listName, listSlack)
-    }*/
+    }
 
     fun deleteTaskList(listId: Long) {
         viewModelScope.launch {

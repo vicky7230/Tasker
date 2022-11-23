@@ -6,8 +6,6 @@ import android.app.NotificationManager
 import android.media.AudioAttributes
 import android.net.Uri
 import android.os.Build
-import androidx.work.Configuration
-import androidx.work.WorkManager
 import com.vicky7230.tasker.di.component.DaggerApplicationComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector

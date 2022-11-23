@@ -1,17 +1,9 @@
 package com.vicky7230.tasker.ui._5newTask
 
-import android.app.AlarmManager
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.media.AudioAttributes
-import android.media.AudioAttributes.Builder
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -20,25 +12,21 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.work.*
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.data.db.entities.Task
 import com.vicky7230.tasker.data.db.entities.TaskList
-import com.vicky7230.tasker.receiver.ReminderBroadcastReceiver
+import com.vicky7230.tasker.databinding.ActivityNewTaskBinding
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.utils.AnimUtilskt
 import com.vicky7230.tasker.utils.ViewUtils
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.activity_new_task.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil
-import org.apache.commons.lang3.RandomStringUtils
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -49,6 +37,8 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
 
     @Inject
     lateinit var taskListsAdapter2: TaskListsAdapter2
+
+    private lateinit var binding: ActivityNewTaskBinding
 
     private lateinit var newTaskViewModel: NewTaskViewModel
     private lateinit var selectedTaskList2: TaskList2
@@ -88,7 +78,10 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_new_task)
+
+        binding = ActivityNewTaskBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         init()
     }
@@ -99,8 +92,8 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
 
         getTimeAndCalendarContainerHeight()
 
-        task_lists_2.layoutManager = LinearLayoutManager(this)
-        task_lists_2.adapter = taskListsAdapter2
+        binding.taskLists2.layoutManager = LinearLayoutManager(this)
+        binding.taskLists2.adapter = taskListsAdapter2
         taskListsAdapter2.setCallback(this)
 
         newTaskViewModel.taskList.observe(this, Observer { taskList: List<TaskList> ->
@@ -112,13 +105,13 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
 
         setTaskListListeners()
 
-        cancel_button.setOnClickListener {
+        binding.cancelButton.setOnClickListener {
             finish()
         }
 
-        done_button.setOnClickListener {
+        binding.doneButton.setOnClickListener {
 
-            if (TextUtils.isEmpty(task_edit_text.text)) {
+            if (TextUtils.isEmpty(binding.taskEditText.text)) {
                 showError("Task is empty.")
                 return@setOnClickListener
             }
@@ -128,13 +121,13 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
                     newTaskViewModel.insertTaskInDB(
                         Task(
                             0,
-                            task_edit_text.text.toString(),
+                            binding.taskEditText.text.toString(),
                             calendarInstance.time.time,
                             selectedTaskList2.id
                         )
                     )
                 } else if (intent.getStringExtra(EXTRAS_OPERATION) == EXTRAS_OPERATION_UPDATE) {
-                    task.task = task_edit_text.text.toString()
+                    task.task = binding.taskEditText.text.toString()
                     task.dateTime = calendarInstance.time.time
                     newTaskViewModel.updateTaskInDB(task)
                 }
@@ -162,16 +155,16 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
                 calendarInstance.time = date
                 val dateFormatter = SimpleDateFormat("d LLL yyyy", Locale.ENGLISH)
                 val formattedDate = dateFormatter.format(calendarInstance.time)
-                task_date.text = formattedDate
+                binding.taskDate.text = formattedDate
 
                 val timeFormatter = SimpleDateFormat("hh:mm a", Locale.ENGLISH)
                 val formattedTime = timeFormatter.format(calendarInstance.time)
-                task_time.text = formattedTime
+                binding.taskTime.text = formattedTime
 
-                calendar_view.minDate = calendarInstance.time.time
-                calendar_view.date = calendarInstance.time.time
+                binding.calendarView.minDate = calendarInstance.time.time
+                binding.calendarView.date = calendarInstance.time.time
 
-                task_edit_text.setText(task.task)
+                binding.taskEditText.setText(task.task)
             })
             newTaskViewModel.getData(intent.getLongExtra(EXTRAS_TASK_LONG_ID, -1L))
         } else {
@@ -180,27 +173,27 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
     }
 
     private fun setTaskListListeners() {
-        which_task_list.setOnClickListener { view: View ->
+        binding.whichTaskList.setOnClickListener { view: View ->
             if (!view.isSelected) {
                 UIUtil.hideKeyboard(this)
                 view.isSelected = true
-                calendar_view_container.visibility = View.GONE
-                time_view_container.visibility = View.GONE
-                task_list_view_container.visibility = View.VISIBLE
-                time_button.isSelected = false
-                calendar_button.isSelected = false
-                AnimUtilskt.slideView(task_list_view_container, 0, taskListViewContainerHeight)
+                binding.calendarViewContainer.visibility = View.GONE
+                binding.timeViewContainer.visibility = View.GONE
+                binding.taskListViewContainer.visibility = View.VISIBLE
+                binding.timeButton.isSelected = false
+                binding.calendarButton.isSelected = false
+                AnimUtilskt.slideView(binding.taskListViewContainer, 0, taskListViewContainerHeight)
             }
         }
 
-        task_list_cancel_button.setOnClickListener {
-            which_task_list.isSelected = false
-            AnimUtilskt.slideView(task_list_view_container, taskListViewContainerHeight, 0)
+        binding.taskListCancelButton.setOnClickListener {
+           binding.whichTaskList.isSelected = false
+            AnimUtilskt.slideView(binding.taskListViewContainer, taskListViewContainerHeight, 0)
         }
 
-        task_list_done_button.setOnClickListener {
-            which_task_list.isSelected = false
-            AnimUtilskt.slideView(task_list_view_container, taskListViewContainerHeight, 0)
+        binding.taskListDoneButton.setOnClickListener {
+            binding.whichTaskList.isSelected = false
+            AnimUtilskt.slideView(binding.taskListViewContainer, taskListViewContainerHeight, 0)
         }
     }
 
@@ -215,13 +208,13 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
             }
             item[0].selected = true
             selectedTaskList2 = item[0]
-            which_task_list.text = item[0].name
-            curved_dot.backgroundTintList = ColorStateList.valueOf(Color.parseColor(item[0].color))
+            binding.whichTaskList.text = item[0].name
+            binding.curvedDot.backgroundTintList = ColorStateList.valueOf(Color.parseColor(item[0].color))
         } else {
             taskList2[0].selected = true
             selectedTaskList2 = taskList2[0]
-            which_task_list.text = taskList2[0].name
-            curved_dot.backgroundTintList =
+            binding.whichTaskList.text = taskList2[0].name
+            binding.curvedDot.backgroundTintList =
                 ColorStateList.valueOf(Color.parseColor(taskList2[0].color))
         }
         taskListsAdapter2.updateItems(taskList2)
@@ -232,95 +225,95 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
         calendarInstance.time = date
         val dateFormatter = SimpleDateFormat("d LLL yyyy", Locale.ENGLISH)
         val formattedDate = dateFormatter.format(calendarInstance.time)
-        task_date.text = formattedDate
+        binding.taskDate.text = formattedDate
 
         val timeFormatter = SimpleDateFormat("hh:mm a", Locale.ENGLISH)
         val formattedTime = timeFormatter.format(calendarInstance.time)
-        task_time.text = formattedTime
+        binding.taskTime.text = formattedTime
 
-        calendar_view.minDate = calendarInstance.time.time
-        calendar_view.date = calendarInstance.time.time
+        binding.calendarView.minDate = calendarInstance.time.time
+        binding.calendarView.date = calendarInstance.time.time
 
-        calendar_view.setOnDateChangeListener { view, year, month, dayOfMonth ->
+        binding.calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             calendarInstance.set(year, month, dayOfMonth)
             val selectedDate = dateFormatter.format(calendarInstance.time)
-            task_date.text = selectedDate
+            binding.taskDate.text = selectedDate
         }
 
-        calendar_button.setOnClickListener { view: View ->
+        binding.calendarButton.setOnClickListener { view: View ->
             if (!view.isSelected) {
                 UIUtil.hideKeyboard(this)
                 view.isSelected = true
-                calendar_view_container.visibility = View.VISIBLE
-                time_view_container.visibility = View.GONE
-                task_list_view_container.visibility = View.GONE
-                time_button.isSelected = false
-                which_task_list.isSelected = false
-                AnimUtilskt.slideView(calendar_view_container, 0, calendarViewContainerHeight)
+                binding.calendarViewContainer.visibility = View.VISIBLE
+                binding.timeViewContainer.visibility = View.GONE
+                binding.taskListViewContainer.visibility = View.GONE
+                binding.timeButton.isSelected = false
+                binding.whichTaskList.isSelected = false
+                AnimUtilskt.slideView(binding.calendarViewContainer, 0, calendarViewContainerHeight)
             }
         }
 
-        date_cancel_button.setOnClickListener {
-            calendar_button.isSelected = false
-            AnimUtilskt.slideView(calendar_view_container, calendarViewContainerHeight, 0)
+        binding.dateCancelButton.setOnClickListener {
+            binding.calendarButton.isSelected = false
+            AnimUtilskt.slideView(binding.calendarViewContainer, calendarViewContainerHeight, 0)
         }
 
-        date_done_button.setOnClickListener {
-            calendar_button.isSelected = false
-            AnimUtilskt.slideView(calendar_view_container, calendarViewContainerHeight, 0)
+        binding.dateDoneButton.setOnClickListener {
+            binding.calendarButton.isSelected = false
+            AnimUtilskt.slideView(binding.calendarViewContainer, calendarViewContainerHeight, 0)
         }
 
-        time_view.setOnTimeChangedListener { view, hourOfDay, minute ->
+        binding.timeView.setOnTimeChangedListener { view, hourOfDay, minute ->
             calendarInstance.set(Calendar.HOUR_OF_DAY, hourOfDay)
             calendarInstance.set(Calendar.MINUTE, minute)
 
-            task_time.text = timeFormatter.format(calendarInstance.time)
+            binding.taskTime.text = timeFormatter.format(calendarInstance.time)
         }
 
-        time_button.setOnClickListener { view: View ->
+        binding.timeButton.setOnClickListener { view: View ->
             if (!view.isSelected) {
                 UIUtil.hideKeyboard(this)
                 view.isSelected = true
-                time_view_container.visibility = View.VISIBLE
-                calendar_view_container.visibility = View.GONE
-                task_list_view_container.visibility = View.GONE
-                calendar_button.isSelected = false
-                which_task_list.isSelected = false
-                AnimUtilskt.slideView(time_view_container, 0, timeViewContainerHeight)
+                binding.timeViewContainer.visibility = View.VISIBLE
+                binding.calendarViewContainer.visibility = View.GONE
+                binding.taskListViewContainer.visibility = View.GONE
+                binding.calendarButton.isSelected = false
+                binding.whichTaskList.isSelected = false
+                AnimUtilskt.slideView(binding.timeViewContainer, 0, timeViewContainerHeight)
             }
         }
 
-        time_cancel_button.setOnClickListener {
-            time_button.isSelected = false
-            AnimUtilskt.slideView(time_view_container, timeViewContainerHeight, 0)
+        binding.timeCancelButton.setOnClickListener {
+            binding.timeButton.isSelected = false
+            AnimUtilskt.slideView(binding.timeViewContainer, timeViewContainerHeight, 0)
         }
 
-        time_done_button.setOnClickListener {
-            time_button.isSelected = false
-            AnimUtilskt.slideView(time_view_container, timeViewContainerHeight, 0)
+        binding.timeDoneButton.setOnClickListener {
+            binding.timeButton.isSelected = false
+            AnimUtilskt.slideView(binding.timeViewContainer, timeViewContainerHeight, 0)
         }
     }
 
     private fun getTimeAndCalendarContainerHeight() {
-        time_view_container.viewTreeObserver.addOnGlobalLayoutListener(
+        binding.timeViewContainer.viewTreeObserver.addOnGlobalLayoutListener(
             object : OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
                     // gets called after layout has been done but before display
                     // so we can get the height then hide the view
-                    timeViewContainerHeight = time_view_container.height // Ahaha!  Gotcha
-                    time_view_container.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                    time_view_container.visibility = View.GONE
+                    timeViewContainerHeight = binding.timeViewContainer.height // Ahaha!  Gotcha
+                    binding.timeViewContainer.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    binding.timeViewContainer.visibility = View.GONE
                 }
             })
 
-        calendar_view_container.viewTreeObserver.addOnGlobalLayoutListener(
+        binding.calendarViewContainer.viewTreeObserver.addOnGlobalLayoutListener(
             object : OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
                     // gets called after layout has been done but before display
                     // so we can get the height then hide the view
-                    calendarViewContainerHeight = calendar_view_container.height // Ahaha!  Gotcha
-                    calendar_view_container.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                    calendar_view_container.visibility = View.GONE
+                    calendarViewContainerHeight = binding.calendarViewContainer.height // Ahaha!  Gotcha
+                    binding.calendarViewContainer.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    binding.calendarViewContainer.visibility = View.GONE
                 }
             })
     }
@@ -332,41 +325,24 @@ class NewTaskActivity : BaseActivity(), TaskListsAdapter2.Callback {
             object : KeyboardVisibilityEventListener {
                 override fun onVisibilityChanged(isOpen: Boolean) {
                     if (isOpen) {
-                        calendar_view_container.visibility = View.GONE
-                        time_view_container.visibility = View.GONE
-                        task_list_view_container.visibility = View.GONE
-                        calendar_button.isSelected = false
-                        time_button.isSelected = false
-                        which_task_list.isSelected = false
+                        binding.calendarViewContainer.visibility = View.GONE
+                        binding.timeViewContainer.visibility = View.GONE
+                        binding.taskListViewContainer.visibility = View.GONE
+                        binding.calendarButton.isSelected = false
+                        binding.timeButton.isSelected = false
+                        binding.whichTaskList.isSelected = false
                         lifecycleScope.launch {
                             delay(100)
-                            task_edit_text.requestFocus()
+                            binding.taskEditText.requestFocus()
                         }
                     }
                 }
             })
     }
 
-    /*private fun createTaskOnServer(taskLongId: Long) {
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .build()
-        val taskToCreate = workDataOf(CreateTaskWorker.TASK_LONG_ID to taskLongId)
-        val createTaskWorkerRequest = OneTimeWorkRequestBuilder<CreateTaskWorker>()
-            .setBackoffCriteria(
-                BackoffPolicy.LINEAR,
-                OneTimeWorkRequest.MIN_BACKOFF_MILLIS,
-                TimeUnit.MILLISECONDS
-            )
-            .setInputData(taskToCreate)
-            .setConstraints(constraints)
-            .build()
-        WorkManager.getInstance(this).enqueue(createTaskWorkerRequest)
-    }*/
-
     override fun onTaskListClick(taskList2: TaskList2) {
         selectedTaskList2 = taskList2
-        which_task_list.text = selectedTaskList2.name
-        curved_dot.backgroundTintList = ColorStateList.valueOf(Color.parseColor(taskList2.color))
+        binding.whichTaskList.text = selectedTaskList2.name
+        binding.curvedDot.backgroundTintList = ColorStateList.valueOf(Color.parseColor(taskList2.color))
     }
 }

@@ -6,12 +6,10 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.vicky7230.tasker.R
+import com.vicky7230.tasker.databinding.ActivityFinishedDeletedTasksBinding
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.ui._0base.BaseViewModel
-import com.vicky7230.tasker.widget.ElasticDragDismissFrameLayout
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.activity_finished_deleted_tasks.*
 import javax.inject.Inject
 
 class FinishedDeletedTasksActivity : BaseActivity() {
@@ -23,6 +21,8 @@ class FinishedDeletedTasksActivity : BaseActivity() {
     lateinit var finishedTasksAdapter: DeletedFinishedTasksAdapter
 
     private lateinit var finishedDeletedTasksViewModel: FinishedDeletedTasksViewModel
+
+    private lateinit var binding: ActivityFinishedDeletedTasksBinding
 
     companion object {
 
@@ -46,7 +46,10 @@ class FinishedDeletedTasksActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_finished_deleted_tasks)
+
+        binding = ActivityFinishedDeletedTasksBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         init()
 
@@ -54,8 +57,8 @@ class FinishedDeletedTasksActivity : BaseActivity() {
 
     private fun init() {
 
-        deleted_finished_tasks.layoutManager = LinearLayoutManager(this)
-        deleted_finished_tasks.adapter = finishedTasksAdapter
+        binding.deletedFinishedTasks.layoutManager = LinearLayoutManager(this)
+        binding.deletedFinishedTasks.adapter = finishedTasksAdapter
 
         finishedDeletedTasksViewModel.tasks.observe(this, Observer {
             finishedTasksAdapter.updateItems(it)

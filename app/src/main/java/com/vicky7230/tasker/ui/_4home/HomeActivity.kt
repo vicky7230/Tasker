@@ -2,13 +2,10 @@ package com.vicky7230.tasker.ui._4home
 
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -24,7 +21,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.work.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
@@ -33,17 +29,15 @@ import com.google.android.material.snackbar.Snackbar
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskListAndCount
 import com.vicky7230.tasker.data.network.Resource
+import com.vicky7230.tasker.databinding.ActivityHomeBinding
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
 import com.vicky7230.tasker.ui._6taskList.TasksActivity
 import com.vicky7230.tasker.ui._7finishedDeleted.FinishedDeletedTasksActivity
 import com.vicky7230.tasker.utils.AnimUtilskt
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.bottom_sheet.*
 import timber.log.Timber
 import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
@@ -56,6 +50,8 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
 
     @Inject
     lateinit var todaysTaskAdapter: TodaysTaskAdapter
+
+    private lateinit var binding: ActivityHomeBinding
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var listPopupWindow: ListPopupWindow
@@ -79,7 +75,11 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
         taskListsAdapter.setCallback(this)
 
         init()
@@ -90,9 +90,9 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
 
         createPopup()
 
-        add_button.setOnClickListener {
+        binding.addButton.setOnClickListener {
             AnimUtilskt.rotateFab(
-                add_button,
+                binding.addButton,
                 45.0F,
                 ContextCompat.getColor(this, R.color.colorBlue),
                 ContextCompat.getColor(this, R.color.colorWhite)
@@ -100,13 +100,13 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
             listPopupWindow.show()
         }
 
-        more_button.setOnClickListener {
+        binding.moreButton.setOnClickListener {
             val view: View = layoutInflater.inflate(R.layout.bottom_sheet, null)
             val dialog = BottomSheetDialog(this, R.style.BottomSheetDialog) // Style here
             dialog.setContentView(view)
             //dialog.account_email.text = "You($userEmail)"
 
-            dialog.finished_tasks.setOnClickListener {
+            view.findViewById<AppCompatTextView>(R.id.finished_tasks).setOnClickListener {
                 startActivity(
                     FinishedDeletedTasksActivity.getStartIntent(
                         this,
@@ -115,7 +115,7 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
                 )
             }
 
-            dialog.deleted_tasks.setOnClickListener {
+            view.findViewById<AppCompatTextView>(R.id.deleted_tasks).setOnClickListener {
                 startActivity(
                     FinishedDeletedTasksActivity.getStartIntent(
                         this,
@@ -124,13 +124,13 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
                 )
             }
 
-            dialog.privacy_policy.setOnClickListener {
+            view.findViewById<AppCompatTextView>(R.id.privacy_policy).setOnClickListener {
                 val i = Intent(Intent.ACTION_VIEW)
                 i.data = Uri.parse("https://tasker-1.flycricket.io/privacy.html")
                 startActivity(i)
             }
 
-            dialog.rate.setOnClickListener {
+            view.findViewById<AppCompatTextView>(R.id.rate).setOnClickListener {
                 val appPackageName = packageName
                 try {
                     startActivity(
@@ -189,16 +189,16 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
     }
 
     private fun setUpTaskListsRecyclerView() {
-        task_lists.layoutManager = LinearLayoutManager(this)
-        task_lists.isNestedScrollingEnabled = false
-        task_lists.adapter = taskListsAdapter
+        binding.taskLists.layoutManager = LinearLayoutManager(this)
+        binding.taskLists.isNestedScrollingEnabled = false
+        binding.taskLists.adapter = taskListsAdapter
     }
 
     private fun setUpTodaysTasksRecyclerView() {
 
-        todays_tasks.layoutManager = LinearLayoutManager(this)
-        todays_tasks.isNestedScrollingEnabled = false
-        todays_tasks.adapter = todaysTaskAdapter
+        binding.todaysTasks.layoutManager = LinearLayoutManager(this)
+        binding.todaysTasks.isNestedScrollingEnabled = false
+        binding.todaysTasks.adapter = todaysTaskAdapter
 
         val rightSwipeListener = object : RightSwipeListener {
             override fun onRightSwiped(viewHolder: RecyclerView.ViewHolder) {
@@ -212,7 +212,7 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
 
         val swipeHelper = object : SwipeHelper(
             this,
-            todays_tasks,
+            binding.todaysTasks,
             resources.getDimension(R.dimen.underlay_button_width).toInt(),
             rightSwipeListener
         ) {
@@ -256,13 +256,13 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
                     todaysTaskAdapter.removeItem(position)
 
                     val snackBar: Snackbar = Snackbar.make(
-                        todays_tasks,
+                        binding.todaysTasks,
                         "Task was deleted.",
                         Snackbar.LENGTH_LONG
                     )
                     snackBar.setAction("UNDO") {
                         todaysTaskAdapter.restoreItem(task, position)
-                        todays_tasks.scrollToPosition(position)
+                        binding.todaysTasks.scrollToPosition(position)
                     }
 
                     snackBar.addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar?>() {
@@ -306,7 +306,7 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
 
         listPopupWindow = ListPopupWindow(this)
         listPopupWindow.setAdapter(PopupAdapter(options))
-        listPopupWindow.anchorView = add_button
+        listPopupWindow.anchorView = binding.addButton
         listPopupWindow.setDropDownGravity(Gravity.END)
         listPopupWindow.width = resources.getDimension(R.dimen.popup_width).toInt()
         listPopupWindow.height = ListPopupWindow.WRAP_CONTENT
@@ -324,7 +324,7 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
         }
         listPopupWindow.setOnDismissListener {
             AnimUtilskt.rotateFab(
-                add_button,
+                binding.addButton,
                 0.0F,
                 ContextCompat.getColor(this, R.color.colorWhite),
                 ContextCompat.getColor(this, R.color.colorBlue)
@@ -420,7 +420,7 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
         listName: AppCompatTextView
     ) {
 
-        add_button.hide()
+        binding.addButton.hide()
 
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
             this,
@@ -440,7 +440,7 @@ class HomeActivity : BaseActivity(), TaskListsAdapter.Callback {
     }
 
     override fun onResume() {
-        add_button.show()
+        binding.addButton.show()
         super.onResume()
     }
 }
