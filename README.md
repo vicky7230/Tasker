@@ -19,19 +19,14 @@
   <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/a1.png" width="280">
   <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/a2.png" width="280">
   <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/a3.png" width="280">
-</p>
-<p align="center">
-  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/1.png" width="280">
-  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/2.png" width="280">
-  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/3.png" width="280">
+  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/a4.png" width="280">
 </p>
 
 #### The app has following packages:
 1. **data**: It contains all the data accessing and manipulating components.
 2. **di**: Dependency providing classes using Dagger2.
 3. **ui**: View classes along with their corresponding ViewModels.
-4. **worker**: Workers for the syncing data in background.
-5. **utils**: Utility classes.
+4. **utils**: Utility classes.
 
 #### Classes have been designed in such a way that it could be inherited and maximize the code reuse.
 
@@ -46,7 +41,7 @@
 
 ### License
 ```
-   Copyright (C) 2020 VIPIN KUMAR
+   Copyright (C) 2022 VIPIN KUMAR
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
