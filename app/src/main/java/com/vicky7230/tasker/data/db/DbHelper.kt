@@ -40,4 +40,6 @@ interface DbHelper {
     suspend fun getFinishedTasks(): List<TaskAndTaskList>
 
     suspend fun setListDeleted(id: Long): Int
+
+    suspend fun deleteListAndTasks(lisId: Long): Int
 }

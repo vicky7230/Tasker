@@ -22,7 +22,7 @@ class TasksViewModel @Inject constructor(
     var taskFinished = MutableLiveData<Long>()
     var taskDeleted = MutableLiveData<Long>()
     var listDeleted = MutableLiveData<Boolean>()
-    var listRenamed = MutableLiveData<Resource<String>>()
+    var listRenamed = MutableLiveData<String>()
 
     fun getTasks(listId: Long) {
         viewModelScope.launch {
@@ -30,7 +30,6 @@ class TasksViewModel @Inject constructor(
                 .collect { tasksForList: List<Task> ->
                     tasks.value = tasksForList
                 }
-
         }
     }
 
@@ -56,13 +55,14 @@ class TasksViewModel @Inject constructor(
 
     fun updateTaskList(listId: Long, listName: String) {
         viewModelScope.launch {
-            dataManager.updateTaskList(listName, listId)
+            if (dataManager.updateTaskList(listName, listId) > 0)
+                listRenamed.value = listName
         }
     }
 
     fun deleteTaskList(listId: Long) {
         viewModelScope.launch {
-            val count = dataManager.setListDeleted(listId)
+            val count = dataManager.deleteListAndTasks(listId)
             if (count > 0)
                 listDeleted.value = true
         }

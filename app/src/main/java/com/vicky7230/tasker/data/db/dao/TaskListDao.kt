@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import com.vicky7230.tasker.data.db.entities.TaskList
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskListAndCount
 import kotlinx.coroutines.flow.Flow
@@ -40,4 +41,19 @@ interface TaskListDao {
     @Query("UPDATE lists SET deleted = 1 WHERE id =:id")
     suspend fun setListDeleted(id: Long): Int
 
+    @Query("UPDATE tasks SET deleted = 1 WHERE list_id =:listId")
+    suspend fun setTaskDeletedFromList(listId: Long): Int
+
+    @Transaction
+    suspend fun deleteListAndTasks(listId: Long): Int {
+        if (setListDeleted(listId) > 0) {
+            if (setTaskDeletedFromList(listId) > 0) {
+                return 1
+            } else {
+                return 0
+            }
+        } else {
+            return 0
+        }
+    }
 }

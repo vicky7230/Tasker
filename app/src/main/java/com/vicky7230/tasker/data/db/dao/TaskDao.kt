@@ -25,6 +25,7 @@ interface TaskDao {
         WHERE tasks.date_time >= :todaysDateStart 
         AND tasks.date_time <= :todaysDateEnd
         AND tasks.deleted != 1
+        AND lists.deleted != 1
         ORDER BY tasks.id DESC
         """
     )

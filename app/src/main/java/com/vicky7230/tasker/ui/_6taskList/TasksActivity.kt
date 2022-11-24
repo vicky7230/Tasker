@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
@@ -20,7 +19,6 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.vicky7230.tasker.R
-import com.vicky7230.tasker.data.network.Resource
 import com.vicky7230.tasker.databinding.ActivityTasksBinding
 import com.vicky7230.tasker.ui._0base.BaseActivity
 import com.vicky7230.tasker.ui._4home.RightSwipeListener
@@ -127,20 +125,8 @@ class TasksActivity : BaseActivity() {
         }
 
         tasksViewModel.listRenamed.observe(this, Observer {
-            when (it) {
-                is Resource.Loading -> showLoading()
-                is Resource.Error -> {
-                    hideLoading()
-                    showToast(it.exception.localizedMessage)
-                }
-                is Resource.Success -> {
-                    if (this::listRenameDialog.isInitialized) {
-                        listRenameDialog.dismiss()
-                    }
-                    binding.listName.text = it.data
-                    hideLoading()
-                }
-            }
+            binding.listName.text = it
+            listRenameDialog.dismiss()
         })
 
         tasksViewModel.taskFinished.observe(this, Observer { taskLongId: Long ->

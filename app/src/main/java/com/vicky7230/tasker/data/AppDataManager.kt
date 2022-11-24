@@ -1,6 +1,5 @@
 package com.vicky7230.tasker.data
 
-import com.google.gson.JsonElement
 import com.vicky7230.tasker.data.db.AppDbHelper
 import com.vicky7230.tasker.data.db.entities.Task
 import com.vicky7230.tasker.data.db.entities.TaskList
@@ -9,7 +8,6 @@ import com.vicky7230.tasker.data.db.joinReturnTypes.TaskListAndCount
 import com.vicky7230.tasker.data.network.AppApiHelper
 import com.vicky7230.tasker.data.prefs.AppPreferencesHelper
 import kotlinx.coroutines.flow.Flow
-import retrofit2.Response
 import javax.inject.Inject
 
 class AppDataManager @Inject
@@ -121,6 +119,10 @@ constructor(
 
     override suspend fun setListDeleted(id: Long): Int {
         return appDbHelper.setListDeleted(id)
+    }
+
+    override suspend fun deleteListAndTasks(lisId: Long): Int {
+        return appDbHelper.deleteListAndTasks(lisId)
     }
 
     override fun areListsFetched(): Boolean {
