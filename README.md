@@ -16,10 +16,10 @@
 </p>
 
 <p align="center">
-  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/a1.png" width="280">
-  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/a2.png" width="280">
-  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/a3.png" width="280">
-  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/a4.png" width="280">
+  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/a1.PNG" width="280">
+  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/a2.PNG" width="280">
+  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/a3.PNG" width="280">
+  <img src="https://github.com/vicky7230/Tasker/blob/master/graphics/a4.PNG" width="280">
 </p>
 
 #### The app has following packages:
