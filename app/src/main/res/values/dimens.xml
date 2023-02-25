@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="popup_width">220dp</dimen>
-    <dimen name="popup_vertical_offset">-@dimen/_16dp</dimen>
+    <dimen name="popup_vertical_offset">-16dp</dimen>
     <dimen name="underlay_button_width">80dp</dimen>
 
-    <dimen name="_1dp">1dp</dimen>
     <dimen name="_0dp">0dp</dimen>
+    <dimen name="_1dp">1dp</dimen>
     <dimen name="_6dp">6dp</dimen>
     <dimen name="_5dp">5dp</dimen>
     <dimen name="_8dp">8dp</dimen>
