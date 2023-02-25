@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="popup_width">220dp</dimen>
-    <dimen name="popup_vertical_offset">-15dp</dimen>
+    <dimen name="popup_vertical_offset">-@dimen/_16dp</dimen>
     <dimen name="underlay_button_width">80dp</dimen>
+
+    <dimen name="_1dp">1dp</dimen>
+    <dimen name="_0dp">0dp</dimen>
+    <dimen name="_6dp">6dp</dimen>
+    <dimen name="_5dp">5dp</dimen>
+    <dimen name="_8dp">8dp</dimen>
+    <dimen name="_10dp">10dp</dimen>
+    <dimen name="_12dp">12dp</dimen>
+    <dimen name="_14dp">14dp</dimen>
+    <dimen name="_16dp">16dp</dimen>
+    <dimen name="_18dp">18dp</dimen>
+    <dimen name="_20dp">20dp</dimen>
+    <dimen name="_22dp">22dp</dimen>
+    <dimen name="_23dp">23dp</dimen>
+    <dimen name="_24dp">24dp</dimen>
+    <dimen name="_30dp">30dp</dimen>
+    <dimen name="_32dp">32dp</dimen>
+    <dimen name="_34dp">34dp</dimen>
+    <dimen name="_36dp">36dp</dimen>
+    <dimen name="_37dp">37dp</dimen>
+    <dimen name="_40dp">40dp</dimen>
+    <dimen name="_42dp">42dp</dimen>
+    <dimen name="_44dp">44dp</dimen>
+    <dimen name="_48dp">48dp</dimen>
+    <dimen name="_50dp">50dp</dimen>
+    <dimen name="_60dp">60dp</dimen>
+    <dimen name="_64dp">64dp</dimen>
+    <dimen name="_130dp">130dp</dimen>
+    <dimen name="_190dp">190dp</dimen>
+    <dimen name="_326dp">326dp</dimen>
+    <dimen name="_348dp">348dp</dimen>
+
+    <dimen name="_14sp">14sp</dimen>
+    <dimen name="_16sp">16sp</dimen>
+    <dimen name="_18sp">18sp</dimen>
+    <dimen name="_32sp">32sp</dimen>
+
 </resources>

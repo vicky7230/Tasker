@@ -146,9 +146,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(), TaskListsAdapter.Callb
     }
 
     private fun setUpTodayTasksRecyclerView() {
-        binding.todaysTasks.layoutManager = LinearLayoutManager(this)
-        binding.todaysTasks.isNestedScrollingEnabled = false
-        binding.todaysTasks.adapter = todayTaskAdapter
+        binding.todayTasks.layoutManager = LinearLayoutManager(this)
+        binding.todayTasks.isNestedScrollingEnabled = false
+        binding.todayTasks.adapter = todayTaskAdapter
     }
 
     private fun getTodayDateStart(): Long {

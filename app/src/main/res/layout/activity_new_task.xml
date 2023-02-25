@@ -12,15 +12,15 @@
             android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="@dimen/_16dp"
             android:layout_marginTop="23dp"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
             android:fontFamily="@font/sf_pro_regular"
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:textColor="@color/colorBlue"
-            android:textSize="18sp"
+            android:textSize="@dimen/_18sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,39 +28,39 @@
             android:id="@+id/done_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="23dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginTop="@dimen/_23dp"
+            android:layout_marginEnd="@dimen/_16dp"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
             android:fontFamily="@font/sf_pro_semi_bold"
-            android:text="Done"
+            android:text="@string/done"
             android:textColor="@color/colorBlue"
-            android:textSize="18sp"
+            android:textSize="@dimen/_18sp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ring"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="30dp"
+            android:layout_width="@dimen/_24dp"
+            android:layout_height="@dimen/_24dp"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_30dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cancel_button"
             app:srcCompat="@drawable/ic_ring" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/task_edit_text"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginLeft="18dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="16dp"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="@dimen/_0dp"
+            android:layout_marginStart="@dimen/_18dp"
+            android:layout_marginTop="@dimen/_30dp"
+            android:layout_marginEnd="@dimen/_16dp"
             android:background="@android:color/transparent"
             android:cursorVisible="true"
             android:gravity="top"
-            android:hint="What do you want to do?"
+            android:hint="@string/what_do_you_want_to_do"
             android:imeOptions="actionDone"
             android:inputType="textMultiLine"
             app:layout_constraintBottom_toTopOf="@id/lower_layer"
@@ -70,7 +70,7 @@
 
         <LinearLayout
             android:id="@+id/lower_layer"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/_0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -80,24 +80,24 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/_1dp"
                 android:background="@color/colorGray" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="@dimen/_60dp"
                 android:layout_weight="1">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/calendar_button"
-                    android:layout_width="44dp"
-                    android:layout_height="0dp"
+                    android:layout_width="@dimen/_44dp"
+                    android:layout_height="@dimen/_0dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:paddingLeft="14dp"
-                    android:paddingTop="18dp"
-                    android:paddingRight="6dp"
-                    android:paddingBottom="18dp"
+                    android:paddingStart="@dimen/_14dp"
+                    android:paddingTop="@dimen/_18dp"
+                    android:paddingEnd="@dimen/_6dp"
+                    android:paddingBottom="@dimen/_18dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -117,14 +117,14 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/time_button"
-                    android:layout_width="44dp"
-                    android:layout_height="0dp"
+                    android:layout_width="@dimen/_44dp"
+                    android:layout_height="@dimen/_0dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:paddingLeft="14dp"
-                    android:paddingTop="18dp"
-                    android:paddingRight="6dp"
-                    android:paddingBottom="18dp"
+                    android:paddingStart="@dimen/_14dp"
+                    android:paddingTop="@dimen/_18dp"
+                    android:paddingEnd="@dimen/_6dp"
+                    android:paddingBottom="@dimen/_18dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/task_date"
                     app:layout_constraintTop_toTopOf="parent"
@@ -145,11 +145,11 @@
                     android:id="@+id/which_task_list"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="@dimen/_8dp"
                     android:clickable="true"
                     android:focusable="true"
                     android:gravity="center"
-                    android:text="Work"
+                    android:text="@string/work"
                     android:textColor="@color/task_lists_pressable"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/curved_dot"
@@ -157,9 +157,9 @@
 
                 <View
                     android:id="@+id/curved_dot"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_width="@dimen/_12dp"
+                    android:layout_height="@dimen/_12dp"
+                    android:layout_marginEnd="@dimen/_16dp"
                     android:background="@drawable/curved_dot"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -169,7 +169,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/_1dp"
                 android:background="@color/colorGray" />
 
             <FrameLayout
@@ -192,13 +192,13 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="@dimen/_1dp"
                         android:background="@color/colorGray" />
 
                     <FrameLayout
                         android:id="@+id/calendar_view_controls"
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
+                        android:layout_height="@dimen/_48dp"
                         android:animateLayoutChanges="true"
                         android:orientation="horizontal">
 
@@ -210,8 +210,8 @@
                             android:background="?attr/selectableItemBackground"
                             android:clickable="true"
                             android:focusable="true"
-                            android:paddingLeft="16dp"
-                            android:paddingRight="16dp"
+                            android:paddingLeft="@dimen/_16dp"
+                            android:paddingRight="@dimen/_16dp"
                             app:srcCompat="@drawable/ic_close" />
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -222,8 +222,8 @@
                             android:background="?attr/selectableItemBackground"
                             android:clickable="true"
                             android:focusable="true"
-                            android:paddingLeft="16dp"
-                            android:paddingRight="16dp"
+                            android:paddingLeft="@dimen/_16dp"
+                            android:paddingRight="@dimen/_16dp"
                             android:src="@drawable/ic_done" />
 
                     </FrameLayout>
@@ -246,13 +246,13 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="@dimen/_1dp"
                         android:background="@color/colorGray" />
 
                     <FrameLayout
                         android:id="@+id/time_view_controls"
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
+                        android:layout_height="@dimen/_48dp"
                         android:animateLayoutChanges="true"
                         android:orientation="horizontal">
 
@@ -264,8 +264,8 @@
                             android:background="?attr/selectableItemBackground"
                             android:clickable="true"
                             android:focusable="true"
-                            android:paddingLeft="16dp"
-                            android:paddingRight="16dp"
+                            android:paddingLeft="@dimen/_16dp"
+                            android:paddingRight="@dimen/_16dp"
                             app:srcCompat="@drawable/ic_close" />
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -276,8 +276,8 @@
                             android:background="?attr/selectableItemBackground"
                             android:clickable="true"
                             android:focusable="true"
-                            android:paddingLeft="16dp"
-                            android:paddingRight="16dp"
+                            android:paddingLeft="@dimen/_16dp"
+                            android:paddingRight="@dimen/_16dp"
                             android:src="@drawable/ic_done" />
 
                     </FrameLayout>
@@ -286,7 +286,7 @@
                 <LinearLayout
                     android:id="@+id/task_list_view_container"
                     android:layout_width="match_parent"
-                    android:layout_height="348dp"
+                    android:layout_height="@dimen/_348dp"
                     android:layout_gravity="bottom"
                     android:orientation="vertical"
                     android:visibility="gone">
@@ -295,17 +295,17 @@
                         android:id="@+id/task_lists_2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp" />
+                        android:layout_marginTop="@dimen/_10dp" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="@dimen/_1dp"
                         android:background="@color/colorGray" />
 
                     <FrameLayout
                         android:id="@+id/task_list_view_controls"
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
+                        android:layout_height="@dimen/_48dp"
                         android:animateLayoutChanges="true"
                         android:orientation="horizontal">
 
@@ -317,8 +317,8 @@
                             android:background="?attr/selectableItemBackground"
                             android:clickable="true"
                             android:focusable="true"
-                            android:paddingLeft="16dp"
-                            android:paddingRight="16dp"
+                            android:paddingLeft="@dimen/_16dp"
+                            android:paddingRight="@dimen/_16dp"
                             app:srcCompat="@drawable/ic_close" />
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -329,14 +329,13 @@
                             android:background="?attr/selectableItemBackground"
                             android:clickable="true"
                             android:focusable="true"
-                            android:paddingLeft="16dp"
-                            android:paddingRight="16dp"
+                            android:paddingLeft="@dimen/_16dp"
+                            android:paddingRight="@dimen/_16dp"
                             android:src="@drawable/ic_done" />
 
                     </FrameLayout>
                 </LinearLayout>
 
-                <!--TODO-->
             </FrameLayout>
         </LinearLayout>
 

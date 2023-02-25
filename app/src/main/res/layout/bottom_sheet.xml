@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/curved_bg_bottom_sheet"
-    android:padding="15dp">
+    android:padding="@dimen/_16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:layout_marginBottom="@dimen/_10dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -21,48 +21,48 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="@dimen/_36dp"
+                android:layout_height="@dimen/_36dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_account_circle" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/account_email"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="@dimen/_40dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="18dp"
+                android:layout_marginStart="@dimen/_18dp"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:textColor="@color/colorBlue"
-                android:textSize="17sp"
+                android:textSize="@dimen/_18sp"
                 tools:text="You(vicky7230@gmail.com)" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="@dimen/_16dp"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/_30dp"
+                android:layout_height="@dimen/_30dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="5dp"
                 android:src="@drawable/ic_marked" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/finished_tasks"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
+                android:layout_height="@dimen/_40dp"
+                android:layout_marginStart="@dimen/_20dp"
                 android:gravity="center_vertical"
-                android:text="Finished Tasks"
+                android:text="@string/finished_tasks"
                 android:textColor="@color/colorBlue"
-                android:textSize="17sp"
+                android:textSize="@dimen/_18sp"
                 app:layout_constraintRight_toRightOf="parent" />
 
         </LinearLayout>
@@ -70,25 +70,25 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="@dimen/_16dp"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/_30dp"
+                android:layout_height="@dimen/_30dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="@dimen/_5dp"
                 android:src="@drawable/ic_trash_blue" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/deleted_tasks"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
+                android:layout_height="@dimen/_40dp"
+                android:layout_marginStart="@dimen/_20dp"
                 android:gravity="center_vertical"
-                android:text="Deleted Tasks"
+                android:text="@string/deleted_tasks"
                 android:textColor="@color/colorBlue"
-                android:textSize="17sp"
+                android:textSize="@dimen/_18sp"
                 app:layout_constraintRight_toRightOf="parent" />
 
         </LinearLayout>
@@ -96,25 +96,25 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="@dimen/_16dp"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/_30dp"
+                android:layout_height="@dimen/_30dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="@dimen/_5dp"
                 android:src="@drawable/ic_baseline_error_outline_24" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/privacy_policy"
-                android:layout_width="326dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
+                android:layout_width="@dimen/_326dp"
+                android:layout_height="@dimen/_40dp"
+                android:layout_marginStart="@dimen/_20dp"
                 android:gravity="center_vertical"
-                android:text="Privacy Policy"
+                android:text="@string/privacy_policy"
                 android:textColor="@color/colorBlue"
-                android:textSize="17sp"
+                android:textSize="@dimen/_18sp"
                 app:layout_constraintRight_toRightOf="parent" />
 
         </LinearLayout>
@@ -122,25 +122,25 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="@dimen/_16dp"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/_30dp"
+                android:layout_height="@dimen/_30dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="@dimen/_5dp"
                 android:src="@drawable/ic_baseline_rate_review_24" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/rate"
                 android:layout_width="326dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
+                android:layout_height="@dimen/_40dp"
+                android:layout_marginStart="@dimen/_20dp"
                 android:gravity="center_vertical"
-                android:text="Rate on Google Play"
+                android:text="@string/rate_on_google_play"
                 android:textColor="@color/colorBlue"
-                android:textSize="17sp"
+                android:textSize="@dimen/_18sp"
                 app:layout_constraintRight_toRightOf="parent" />
 
         </LinearLayout>
