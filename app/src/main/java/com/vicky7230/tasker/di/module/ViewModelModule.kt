@@ -4,11 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.vicky7230.tasker.di.ViewModelFactory
 import com.vicky7230.tasker.di.ViewModelKey
-import com.vicky7230.tasker.ui._1splash.SplashViewModel
-import com.vicky7230.tasker.ui._4home.HomeViewModel
-import com.vicky7230.tasker.ui._5newTask.NewTaskViewModel
-import com.vicky7230.tasker.ui._6taskList.TasksViewModel
-import com.vicky7230.tasker.ui._7finishedDeleted.FinishedDeletedTasksViewModel
+import com.vicky7230.tasker.ui.splash.SplashViewModel
+import com.vicky7230.tasker.ui.home.HomeViewModel
+import com.vicky7230.tasker.ui.newTask.NewTaskViewModel
+import com.vicky7230.tasker.ui.taskList.TasksViewModel
+import com.vicky7230.tasker.ui.finishedDeleted.FinishedDeletedTasksViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

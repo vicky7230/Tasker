@@ -6,13 +6,12 @@ import android.app.NotificationManager
 import android.media.AudioAttributes
 import android.net.Uri
 import android.os.Build
-import com.vicky7230.tasker.di.component.DaggerApplicationComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import timber.log.Timber
 import javax.inject.Inject
-
+import com.vicky7230.tasker.di.component.DaggerApplicationComponent
 
 class TaskerApplication : Application(), HasAndroidInjector {
 

@@ -1,341 +1,345 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui._5newTask.NewTaskActivity">
+<layout>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/cancel_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="23dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:fontFamily="@font/sf_pro_regular"
-        android:text="Cancel"
-        android:textColor="@color/colorBlue"
-        android:textSize="18sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.newTask.NewTaskActivity">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/done_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
-        android:layout_marginRight="16dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:fontFamily="@font/sf_pro_semi_bold"
-        android:text="Done"
-        android:textColor="@color/colorBlue"
-        android:textSize="18sp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="23dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/sf_pro_regular"
+            android:text="Cancel"
+            android:textColor="@color/colorBlue"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ring"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cancel_button"
-        app:srcCompat="@drawable/ic_ring" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/done_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="23dp"
+            android:layout_marginRight="16dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/sf_pro_semi_bold"
+            android:text="Done"
+            android:textColor="@color/colorBlue"
+            android:textSize="18sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/task_edit_text"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginLeft="18dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="16dp"
-        android:background="@android:color/transparent"
-        android:cursorVisible="true"
-        android:gravity="top"
-        android:hint="What do you want to do?"
-        android:imeOptions="actionDone"
-        android:inputType="textMultiLine"
-        app:layout_constraintBottom_toTopOf="@id/lower_layer"
-        app:layout_constraintLeft_toRightOf="@id/ring"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cancel_button" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ring"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cancel_button"
+            app:srcCompat="@drawable/ic_ring" />
 
-    <LinearLayout
-        android:id="@+id/lower_layer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/task_edit_text">
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/task_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="16dp"
+            android:background="@android:color/transparent"
+            android:cursorVisible="true"
+            android:gravity="top"
+            android:hint="What do you want to do?"
+            android:imeOptions="actionDone"
+            android:inputType="textMultiLine"
+            app:layout_constraintBottom_toTopOf="@id/lower_layer"
+            app:layout_constraintLeft_toRightOf="@id/ring"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cancel_button" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorGray" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_weight="1">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/calendar_button"
-                android:layout_width="44dp"
-                android:layout_height="0dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:paddingLeft="14dp"
-                android:paddingTop="18dp"
-                android:paddingRight="6dp"
-                android:paddingBottom="18dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/calendar_pressable" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/task_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/colorDarkGray"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/calendar_button"
-                app:layout_constraintRight_toLeftOf="@id/time_button"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="24 Feb 2020" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/time_button"
-                android:layout_width="44dp"
-                android:layout_height="0dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:paddingLeft="14dp"
-                android:paddingTop="18dp"
-                android:paddingRight="6dp"
-                android:paddingBottom="18dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/task_date"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/alarm_pressable" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/task_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/colorDarkGray"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/time_button"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="24 Feb 2020" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/which_task_list"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginRight="8dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:text="Work"
-                android:textColor="@color/task_lists_pressable"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/curved_dot"
-                app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:id="@+id/lower_layer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/task_edit_text">
 
             <View
-                android:id="@+id/curved_dot"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/curved_dot"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorGray" />
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:id="@+id/calendar_view_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:orientation="vertical"
-                android:visibility="invisible">
+                android:layout_height="1dp"
+                android:background="@color/colorGray" />
 
-                <CalendarView
-                    android:id="@+id/calendar_view"
-                    android:layout_width="match_parent"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/calendar_button"
+                    android:layout_width="44dp"
+                    android:layout_height="0dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingLeft="14dp"
+                    android:paddingTop="18dp"
+                    android:paddingRight="6dp"
+                    android:paddingBottom="18dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/calendar_pressable" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/task_date"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:dateTextAppearance="@style/CalendarViewTheme" />
+                    android:gravity="center"
+                    android:textColor="@color/colorDarkGray"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/calendar_button"
+                    app:layout_constraintRight_toLeftOf="@id/time_button"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="24 Feb 2020" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/time_button"
+                    android:layout_width="44dp"
+                    android:layout_height="0dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingLeft="14dp"
+                    android:paddingTop="18dp"
+                    android:paddingRight="6dp"
+                    android:paddingBottom="18dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/task_date"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/alarm_pressable" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/task_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorDarkGray"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/time_button"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="24 Feb 2020" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/which_task_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:text="Work"
+                    android:textColor="@color/task_lists_pressable"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/curved_dot"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/colorGray" />
+                    android:id="@+id/curved_dot"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/curved_dot"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <FrameLayout
-                    android:id="@+id/calendar_view_controls"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:animateLayoutChanges="true"
-                    android:orientation="horizontal">
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/date_cancel_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        app:srcCompat="@drawable/ic_close" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/date_done_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="end|center_vertical"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:src="@drawable/ic_done" />
-
-                </FrameLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/time_view_container"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:orientation="vertical"
-                android:visibility="invisible">
+                android:layout_height="1dp"
+                android:background="@color/colorGray" />
 
-                <TimePicker
-                    android:id="@+id/time_view"
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/calendar_view_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:theme="@style/TimePickerTheme"
-                    android:timePickerMode="spinner" />
+                    android:layout_gravity="bottom"
+                    android:orientation="vertical"
+                    android:visibility="invisible">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/colorGray" />
+                    <CalendarView
+                        android:id="@+id/calendar_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:dateTextAppearance="@style/CalendarViewTheme" />
 
-                <FrameLayout
-                    android:id="@+id/time_view_controls"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:animateLayoutChanges="true"
-                    android:orientation="horizontal">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorGray" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/time_cancel_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        app:srcCompat="@drawable/ic_close" />
+                    <FrameLayout
+                        android:id="@+id/calendar_view_controls"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:animateLayoutChanges="true"
+                        android:orientation="horizontal">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/time_done_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="end|center_vertical"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:src="@drawable/ic_done" />
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/date_cancel_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            app:srcCompat="@drawable/ic_close" />
 
-                </FrameLayout>
-            </LinearLayout>
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/date_done_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end|center_vertical"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:src="@drawable/ic_done" />
 
-            <LinearLayout
-                android:id="@+id/task_list_view_container"
-                android:layout_width="match_parent"
-                android:layout_height="348dp"
-                android:layout_gravity="bottom"
-                android:orientation="vertical"
-                android:visibility="gone">
+                    </FrameLayout>
+                </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/task_lists_2"
+                <LinearLayout
+                    android:id="@+id/time_view_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp" />
+                    android:layout_gravity="bottom"
+                    android:orientation="vertical"
+                    android:visibility="invisible">
 
-                <View
+                    <TimePicker
+                        android:id="@+id/time_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:theme="@style/TimePickerTheme"
+                        android:timePickerMode="spinner" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorGray" />
+
+                    <FrameLayout
+                        android:id="@+id/time_view_controls"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:animateLayoutChanges="true"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/time_cancel_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            app:srcCompat="@drawable/ic_close" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/time_done_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end|center_vertical"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:src="@drawable/ic_done" />
+
+                    </FrameLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/task_list_view_container"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/colorGray" />
+                    android:layout_height="348dp"
+                    android:layout_gravity="bottom"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-                <FrameLayout
-                    android:id="@+id/task_list_view_controls"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:animateLayoutChanges="true"
-                    android:orientation="horizontal">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/task_lists_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/task_list_cancel_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        app:srcCompat="@drawable/ic_close" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorGray" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/task_list_done_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="end|center_vertical"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:src="@drawable/ic_done" />
+                    <FrameLayout
+                        android:id="@+id/task_list_view_controls"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:animateLayoutChanges="true"
+                        android:orientation="horizontal">
 
-                </FrameLayout>
-            </LinearLayout>
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/task_list_cancel_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            app:srcCompat="@drawable/ic_close" />
 
-            <!--TODO-->
-        </FrameLayout>
-    </LinearLayout>
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/task_list_done_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end|center_vertical"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:src="@drawable/ic_done" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    </FrameLayout>
+                </LinearLayout>
+
+                <!--TODO-->
+            </FrameLayout>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

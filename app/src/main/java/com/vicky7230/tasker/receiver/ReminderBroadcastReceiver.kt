@@ -11,8 +11,8 @@ import androidx.core.app.NotificationManagerCompat
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.receiver.NotificationConfig.NOTIFICATION_ID
 import com.vicky7230.tasker.receiver.NotificationConfig.PENDING_INTENT_REQUEST_CODE
-import com.vicky7230.tasker.ui._1splash.SplashActivity
-import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
+import com.vicky7230.tasker.ui.splash.SplashActivity
+import com.vicky7230.tasker.ui.newTask.NewTaskActivity
 
 class ReminderBroadcastReceiver : BroadcastReceiver() {
 

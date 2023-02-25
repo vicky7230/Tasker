@@ -31,6 +31,7 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
+        dataBinding true
         viewBinding = true
     }
 }
@@ -70,6 +71,7 @@ dependencies {
     implementation 'com.google.dagger:dagger:2.35.1'
     implementation 'com.google.dagger:dagger-android:2.35.1'
     implementation 'com.google.dagger:dagger-android-support:2.35.1'
+    implementation 'androidx.databinding:databinding-runtime:7.1.2'
     kapt 'com.google.dagger:dagger-android-processor:2.35.1'
     kapt 'com.google.dagger:dagger-compiler:2.35.1'
 
