@@ -20,7 +20,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.vicky7230.tasker.R
 import com.vicky7230.tasker.databinding.ActivityTasksBinding
-import com.vicky7230.tasker.ui._0base.BaseActivity
+import com.vicky7230.tasker.ui.base.BaseActivity
 import com.vicky7230.tasker.ui._4home.RightSwipeListener
 import com.vicky7230.tasker.ui._4home.SwipeHelper
 import com.vicky7230.tasker.ui._4home.UnderlayButton

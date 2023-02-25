@@ -30,7 +30,7 @@ import com.vicky7230.tasker.R
 import com.vicky7230.tasker.data.db.joinReturnTypes.TaskListAndCount
 import com.vicky7230.tasker.data.network.Resource
 import com.vicky7230.tasker.databinding.ActivityHomeBinding
-import com.vicky7230.tasker.ui._0base.BaseActivity
+import com.vicky7230.tasker.ui.base.BaseActivity
 import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
 import com.vicky7230.tasker.ui._6taskList.TasksActivity
 import com.vicky7230.tasker.ui._7finishedDeleted.FinishedDeletedTasksActivity

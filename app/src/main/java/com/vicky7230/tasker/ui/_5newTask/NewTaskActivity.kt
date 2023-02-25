@@ -12,11 +12,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.vicky7230.tasker.R
 import com.vicky7230.tasker.data.db.entities.Task
 import com.vicky7230.tasker.data.db.entities.TaskList
 import com.vicky7230.tasker.databinding.ActivityNewTaskBinding
-import com.vicky7230.tasker.ui._0base.BaseActivity
+import com.vicky7230.tasker.ui.base.BaseActivity
 import com.vicky7230.tasker.utils.AnimUtilskt
 import com.vicky7230.tasker.utils.ViewUtils
 import dagger.android.AndroidInjection

@@ -2,16 +2,10 @@ package com.vicky7230.tasker.ui._6taskList
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.google.gson.JsonElement
 import com.vicky7230.tasker.data.DataManager
 import com.vicky7230.tasker.data.db.entities.Task
-import com.vicky7230.tasker.data.network.Resource
-import com.vicky7230.tasker.events.TokenExpireEvent
-import com.vicky7230.tasker.ui._0base.BaseViewModel
-import kotlinx.coroutines.flow.collect
+import com.vicky7230.tasker.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
-import org.greenrobot.eventbus.EventBus
-import java.io.IOException
 import javax.inject.Inject
 
 class TasksViewModel @Inject constructor(

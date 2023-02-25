@@ -3,7 +3,7 @@ package com.vicky7230.tasker.ui._1splash
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.vicky7230.tasker.R
-import com.vicky7230.tasker.ui._0base.BaseActivity
+import com.vicky7230.tasker.ui.base.BaseActivity
 import com.vicky7230.tasker.ui._4home.HomeActivity
 import dagger.android.AndroidInjection
 import javax.inject.Inject

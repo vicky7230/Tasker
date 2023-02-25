@@ -7,8 +7,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vicky7230.tasker.databinding.ActivityFinishedDeletedTasksBinding
-import com.vicky7230.tasker.ui._0base.BaseActivity
-import com.vicky7230.tasker.ui._0base.BaseViewModel
+import com.vicky7230.tasker.ui.base.BaseActivity
+import com.vicky7230.tasker.ui.base.BaseViewModel
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
