@@ -4,4 +4,37 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="notify_task">Notify Task</string>
+    <string name="pending_task">Pending task</string>
+    <string name="task">Task</string>
+    <string name="list">List</string>
+    <string name="not_initialized_yet">-1</string>
+    <string name="enter_last_name">Please enter list name.</string>
+    <string name="select_a_color">Please select a color.</string>
+    <string name="task_empty">Task is empty.</string>
+    <string name="_0_task">%s task</string>
+    <string name="_2_tasks">%s tasks</string>
+    <string name="today">Today</string>
+    <string name="lists">Lists</string>
+    <string name="cancel">Cancel</string>
+    <string name="done">Done</string>
+    <string name="what_do_you_want_to_do">What do you want to do?</string>
+    <string name="work">Work</string>
+    <string name="retry">Retry</string>
+    <string name="finished_tasks">Finished Tasks</string>
+    <string name="deleted_tasks">Deleted Tasks</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="rate_on_google_play">Rate on Google Play</string>
+    <string name="enter_list_name">Enter list name</string>
+    <string name="enter_here">Enter here</string>
+    <string name="select_a_color_single">Select a color</string>
+    <string name="work_single">Work</string>
+    <string name="create_list">CREATE LIST</string>
+    <string name="delete_this_list">Delete this list ?</string>
+    <string name="enter_new_name">Enter new name</string>
+    <string name="task_single">Task</string>
+    <string name="enter_here_single">Enter here</string>
+    <string name="rename_list">RENAME LIST</string>
+    <string name="no">No</string>
+    <string name="yes">YES</string>
 </resources>

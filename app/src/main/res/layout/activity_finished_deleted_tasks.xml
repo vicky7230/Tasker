@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/draggable_layout_2"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui._7finishedDeleted.FinishedDeletedTasksActivity">
+<layout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/deleted_finished_tasks"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/draggable_layout_2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp" />
+        android:layout_height="match_parent"
+        tools:context=".ui.finishedDeleted.FinishedDeletedTasksActivity">
 
-</FrameLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/deleted_finished_tasks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16dp" />
+
+    </FrameLayout>
+
+</layout>

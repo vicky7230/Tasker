@@ -1,15 +1,15 @@
 package com.vicky7230.tasker.di.module
 
-import com.vicky7230.tasker.ui._1splash.SplashActivity
-import com.vicky7230.tasker.ui._1splash.SplashModule
-import com.vicky7230.tasker.ui._4home.HomeActivity
-import com.vicky7230.tasker.ui._4home.HomeModule
-import com.vicky7230.tasker.ui._5newTask.NewTaskActivity
-import com.vicky7230.tasker.ui._5newTask.NewTaskModule
-import com.vicky7230.tasker.ui._6taskList.TasksActivity
-import com.vicky7230.tasker.ui._6taskList.TasksModule
-import com.vicky7230.tasker.ui._7finishedDeleted.FinishedDeletedTasksActivity
-import com.vicky7230.tasker.ui._7finishedDeleted.FinishedDeletedTasksModule
+import com.vicky7230.tasker.ui.splash.SplashActivity
+import com.vicky7230.tasker.ui.splash.SplashModule
+import com.vicky7230.tasker.ui.home.HomeActivity
+import com.vicky7230.tasker.ui.home.HomeModule
+import com.vicky7230.tasker.ui.newTask.NewTaskActivity
+import com.vicky7230.tasker.ui.newTask.NewTaskModule
+import com.vicky7230.tasker.ui.taskList.TasksActivity
+import com.vicky7230.tasker.ui.taskList.TasksModule
+import com.vicky7230.tasker.ui.finishedDeleted.FinishedDeletedTasksActivity
+import com.vicky7230.tasker.ui.finishedDeleted.FinishedDeletedTasksModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

@@ -15,13 +15,6 @@ import javax.inject.Inject
 class AppPreferencesHelper @Inject constructor(@ApplicationContext context: Context) :
     PreferencesHelper {
 
-    private val PREF_KEY_ARE_LISTS_FETCHED = "PREF_KEY_ARE_LISTS_FETCHED"
-    private val PREF_KEY_ARE_TASKS_FETCHED = "PREF_KEY_ARE_TASKS_FETCHED"
-    private val PREF_KEY_ACCESS_TOKEN = "PREF_KEY_ACCESS_TOKEN"
-    private val PREF_KEY_USER_EMAIL = "PREF_KEY_USER_EMAIL"
-    private val PREF_KEY_USER_ID = "PREF_KEY_USER_ID"
-    private val PREF_KEY_USER_LOGGED_IN = "PREF_KEY_USER_LOGGED_IN"
-
     private val sharedPreferences: SharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(context)
 
@@ -80,5 +73,14 @@ class AppPreferencesHelper @Inject constructor(@ApplicationContext context: Cont
             remove(PREF_KEY_USER_ID)
             remove(PREF_KEY_USER_LOGGED_IN)
         }
+    }
+
+    companion object {
+        private const val PREF_KEY_ARE_LISTS_FETCHED = "PREF_KEY_ARE_LISTS_FETCHED"
+        private const val PREF_KEY_ARE_TASKS_FETCHED = "PREF_KEY_ARE_TASKS_FETCHED"
+        private const val PREF_KEY_ACCESS_TOKEN = "PREF_KEY_ACCESS_TOKEN"
+        private const val PREF_KEY_USER_EMAIL = "PREF_KEY_USER_EMAIL"
+        private const val PREF_KEY_USER_ID = "PREF_KEY_USER_ID"
+        private const val PREF_KEY_USER_LOGGED_IN = "PREF_KEY_USER_LOGGED_IN"
     }
 }
